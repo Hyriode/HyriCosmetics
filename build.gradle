@@ -1,0 +1,58 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.0"
+}
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java-library'
+
+    group = 'fr.hyriode'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(8)
+        }
+    }
+
+    compileJava {
+        targetCompatibility = sourceCompatibility = JavaVersion.VERSION_1_8
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Javadoc) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+
+        maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+
+        repositories {
+            maven {
+                credentials {
+                    username System.getenv('USERNAME')
+                    password System.getenv('TOKEN')
+                }
+                name = "HyriAPI_maven"
+                url = "https://maven.pkg.github.com/Hyriode/HyriAPI"
+            }
+        }
+    }
+}
+
+version = '1.0.0'
+archivesBaseName = 'HyriCosmetics'
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+}
+
+dependencies {
+    api 'fr.hyriode:hyriapi:+'
+    implementation 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    implementation fileTree(dir: 'libs')
+    shadow project(':API')
+    shadow 'xyz.xenondevs:particle:1.7.1'
+}

@@ -1,0 +1,6 @@
+name: HyriCosmetics
+main: fr.hyriode.cosmetics.HyriCosmetics
+version: 0.0.1
+depend: [HyriAPI]
+commands:
+  test:

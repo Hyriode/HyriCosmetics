@@ -1,0 +1,41 @@
+apply plugin: 'maven-publish'
+
+version = '0.0.1'
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            pom {
+                groupId = project.group
+                artifactId = 'cosmetics-api'
+                version = project.version
+                name = 'HyriCosmetics-API'
+                description = 'The API to interact with HyriCosmetics'
+                url = 'https://github.com/Hyriode/HyriCosmetics'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username System.getenv('USERNAME')
+                password System.getenv('TOKEN')
+            }
+            name = "HyriAPI_maven"
+            url = "https://maven.pkg.github.com/Hyriode/HyriAPI"
+        }
+    }
+}
+
+dependencies {
+    api 'fr.hyriode:hyriapi:+'
+    implementation 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+}
