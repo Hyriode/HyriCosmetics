@@ -1,12 +1,8 @@
 package fr.hyriode.cosmetics;
 
-import fr.hyriode.cosmetics.cosmetic.CosmeticElement;
-import fr.hyriode.cosmetics.cosmetic.mesh.Mesh;
-import fr.hyriode.cosmetics.cosmetic.mesh.MeshEntity;
+import fr.hyriode.cosmetics.common.CosmeticCategory;
+import fr.hyriode.cosmetics.common.CosmeticManager;
 import fr.hyriode.cosmetics.task.TaskProvider;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 
 public abstract class HyriCosmetics {
 
@@ -22,4 +18,7 @@ public abstract class HyriCosmetics {
         return instance;
     }
 
+    public abstract void registerCategory(CosmeticCategory category, Class<? extends CosmeticManager> manager);
+
+    abstract <T extends CosmeticManager> T getManager(Class<? extends CosmeticManager> clazz);
 }
