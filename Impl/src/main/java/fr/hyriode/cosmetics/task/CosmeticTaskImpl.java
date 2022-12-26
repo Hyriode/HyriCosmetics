@@ -1,7 +1,5 @@
 package fr.hyriode.cosmetics.task;
 
-import fr.hyriode.cosmetics.task.node.TaskNode;
-
 import java.util.UUID;
 
 public class CosmeticTaskImpl implements CosmeticTask {
@@ -9,7 +7,7 @@ public class CosmeticTaskImpl implements CosmeticTask {
     private final UUID uuid;
     private final Runnable runnable;
 
-    private TaskNode node;
+    private SimpleTask node;
 
     public CosmeticTaskImpl(final Runnable runnable) {
         this.uuid = UUID.randomUUID();
@@ -22,12 +20,12 @@ public class CosmeticTaskImpl implements CosmeticTask {
     }
 
     @Override
-    public TaskNode getNode() {
+    public SimpleTask getNode() {
         return this.node;
     }
 
     @Override
-    public void assignNode(TaskNode node) {
+    public void assignNode(SimpleTask node) {
         this.node = node;
     }
 
