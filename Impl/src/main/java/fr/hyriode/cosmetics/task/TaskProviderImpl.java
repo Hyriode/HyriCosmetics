@@ -1,8 +1,5 @@
 package fr.hyriode.cosmetics.task;
 
-import fr.hyriode.cosmetics.task.node.TaskNode;
-import fr.hyriode.cosmetics.task.node.TaskNodeImpl;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class TaskProviderImpl implements TaskProvider {
 
-    private final List<TaskNode> nodes;
+    private final List<SimpleTask> nodes;
     private final List<CosmeticTask> tasks;
 
     public TaskProviderImpl() {
@@ -24,7 +21,7 @@ public class TaskProviderImpl implements TaskProvider {
         this.tasks.add(cosmeticTask);
 
         if (getAvailableNodes().isEmpty()) {
-            final TaskNode node = new TaskNodeImpl(this);
+            final SimpleTask node = new SimpleTaskImpl(this);
             this.nodes.add(node);
             cosmeticTask.assignNode(node);
             node.getTasksUUID().add(cosmeticTask.getUUID());
@@ -40,7 +37,7 @@ public class TaskProviderImpl implements TaskProvider {
     @Override
     public void remove(CosmeticTask task) {
         this.tasks.remove(task);
-        for (TaskNode node : this.nodes) {
+        for (SimpleTask node : this.nodes) {
             if (node.getTasksUUID().contains(task.getUUID())) {
                 node.getTasksUUID().remove(task.getUUID());
                 if (node.getTasksUUID().isEmpty()) {
@@ -50,12 +47,12 @@ public class TaskProviderImpl implements TaskProvider {
         }
     }
 
-    public List<TaskNode> getAvailableNodes() {
+    public List<SimpleTask> getAvailableNodes() {
         return this.nodes.stream().filter(taskNode -> taskNode.getCosmeticTasks().size() < 10).collect(Collectors.toList());
     }
 
     @Override
-    public List<TaskNode> getNodes() {
+    public List<SimpleTask> getNodes() {
         return this.nodes;
     }
 
@@ -70,7 +67,7 @@ public class TaskProviderImpl implements TaskProvider {
     }
 
     @Override
-    public void removeNode(TaskNode node) {
+    public void removeNode(SimpleTask node) {
         this.nodes.remove(node);
     }
 }
