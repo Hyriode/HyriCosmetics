@@ -3,19 +3,17 @@ package fr.hyriode.cosmetics.particle.effect;
 import fr.hyriode.api.rank.type.HyriPlayerRankType;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
-import fr.hyriode.cosmetics.particle.util.EffectUtil;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 public class FireTornadoParticle extends AbstractParticleImpl {
 
-    public FireTornadoParticle(final Player player) {
+    public FireTornadoParticle() {
         super(
                 "fire_tornado",
-                player,
                 CosmeticRarity.RARE,
                 HyriPlayerRankType.PLAYER,
                 150,
@@ -25,8 +23,8 @@ public class FireTornadoParticle extends AbstractParticleImpl {
     }
 
     @Override
-    public void tick() {
-        final Location location = getLocation();
+    public void tick(final CosmeticUser user) {
+        final Location location = user.getHyriPlayer().getPlayer().getLocation();
         float ratio;
         double angle, x, z;
 

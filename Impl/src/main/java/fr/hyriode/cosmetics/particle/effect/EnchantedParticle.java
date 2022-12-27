@@ -4,6 +4,7 @@ import fr.hyriode.api.rank.type.HyriPlayerRankType;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.particle.util.EffectUtil;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Location;
@@ -17,10 +18,9 @@ public class EnchantedParticle extends AbstractParticleImpl {
 
     private static final Random random = new SecureRandom();
 
-    public EnchantedParticle(final Player player) {
+    public EnchantedParticle() {
         super(
                 "enchanted",
-                player,
                 CosmeticRarity.RARE,
                 HyriPlayerRankType.PLAYER,
                 150,
@@ -30,12 +30,11 @@ public class EnchantedParticle extends AbstractParticleImpl {
     }
 
     @Override
-    public void tick() {
-        final Location location = getLocation();
+    public void tick(final CosmeticUser user) {
+        final Location location = user.getHyriPlayer().getPlayer().getLocation();
         float dx = (float) location.getX() + random.nextFloat() % 3f - 1.5f;
         float dy = (float) location.getY() + random.nextFloat() % 2f;
         float dz = (float) location.getZ() + random.nextFloat() % 3f - 1.5f;
         this.display(EnumParticle.ENCHANTMENT_TABLE, dx, dy, dz, 0, 0, 0, 0, 1);
     }
-
 }
