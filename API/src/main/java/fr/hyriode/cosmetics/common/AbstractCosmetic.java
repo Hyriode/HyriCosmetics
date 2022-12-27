@@ -1,13 +1,14 @@
 package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.rank.type.IHyriRankType;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public abstract class AbstractCosmetic {
 
     private final String id;
-    private final CosmeticType type;
     private final CosmeticRarity rarity;
     private final IHyriRankType requireRank;
     private final int tokenPrice;
@@ -15,11 +16,10 @@ public abstract class AbstractCosmetic {
     private final ItemBuilder icon;
     private final CosmeticCategory category;
 
-    public AbstractCosmetic(String id, CosmeticType type, CosmeticRarity rarity, IHyriRankType requireRank,
+    public AbstractCosmetic(String id, CosmeticRarity rarity, IHyriRankType requireRank,
                             int tokenPrice, int hyrisPrice, ItemBuilder icon, CosmeticCategory category)
     {
         this.id = id;
-        this.type = type;
         this.rarity = rarity;
         this.requireRank = requireRank;
         this.tokenPrice = tokenPrice;
@@ -30,10 +30,6 @@ public abstract class AbstractCosmetic {
 
     public String getId() {
         return id;
-    }
-
-    public CosmeticType getType() {
-        return type;
     }
 
     public CosmeticRarity getRarity() {
@@ -56,9 +52,11 @@ public abstract class AbstractCosmetic {
         return icon;
     }
 
-    protected abstract Location getLocation();
+    public abstract void onEquip(final CosmeticUser user);
 
-    public abstract void onEquip();
+    public abstract void onUnequip(final CosmeticUser user);
 
-    public abstract void onUnequip();
+    public CosmeticCategory getCategory() {
+        return category;
+    }
 }
