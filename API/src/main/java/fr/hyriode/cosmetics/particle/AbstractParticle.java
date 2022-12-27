@@ -5,41 +5,34 @@ import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
-import fr.hyriode.cosmetics.common.CosmeticType;
-import fr.hyriode.cosmetics.task.CosmeticTask;
+import fr.hyriode.cosmetics.user.CosmeticUser;
+import fr.hyriode.cosmetics.user.task.CosmeticTask;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.entity.Player;
 
 public abstract class AbstractParticle extends AbstractCosmetic {
 
-    protected final Player player;
-    protected final CosmeticTask task;
+    protected CosmeticTask task;
 
-    public AbstractParticle(String id, Player player, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemBuilder icon) {
-        super(id, CosmeticType.Default.PARTICLE, rarity, requireRank, tokenPrice, hyrisPrice, icon, CosmeticCategory.Default.PARTICLE);
-        this.player = player;
-        this.task = initTask();
+    public AbstractParticle(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemBuilder icon) {
+        super(id, rarity, requireRank, tokenPrice, hyrisPrice, icon, CosmeticCategory.Default.PARTICLE);
     }
 
-    abstract CosmeticTask initTask();
+    abstract CosmeticTask initTask(final CosmeticUser user);
 
-    abstract void tick();
-
-    public Player getPlayer() {
-        return player;
-    }
+    protected abstract void tick(final CosmeticUser user);
 
     public CosmeticTask getTask() {
         return task;
     }
 
     @Override
-    public void onEquip() {
+    public void onEquip(final CosmeticUser user) {
         HyriCosmetics.get().getTaskProvider().execute(task);
     }
 
     @Override
-    public void onUnequip() {
+    public void onUnequip(final CosmeticUser user) {
         HyriCosmetics.get().getTaskProvider().remove(task);
     }
 }

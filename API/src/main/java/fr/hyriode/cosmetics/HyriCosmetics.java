@@ -2,7 +2,8 @@ package fr.hyriode.cosmetics;
 
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.CosmeticManager;
-import fr.hyriode.cosmetics.task.TaskProvider;
+import fr.hyriode.cosmetics.user.CosmeticUserProvider;
+import fr.hyriode.cosmetics.user.task.TaskProvider;
 
 public abstract class HyriCosmetics {
 
@@ -21,4 +22,6 @@ public abstract class HyriCosmetics {
     public abstract void registerCategory(CosmeticCategory category, Class<? extends CosmeticManager> manager);
 
     abstract <T extends CosmeticManager> T getManager(Class<? extends CosmeticManager> clazz);
+
+    public abstract CosmeticUserProvider getUserManager();
 }

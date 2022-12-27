@@ -2,12 +2,11 @@ package fr.hyriode.cosmetics;
 
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.CosmeticManager;
-import fr.hyriode.cosmetics.gadget.GadgetManager;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.EntityListener;
-import fr.hyriode.cosmetics.particle.ParticleManager;
-import fr.hyriode.cosmetics.particle.ParticleManagerImpl;
-import fr.hyriode.cosmetics.task.TaskProvider;
+import fr.hyriode.cosmetics.user.CosmeticUserProvider;
+import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
+import fr.hyriode.cosmetics.user.task.TaskProvider;
 import fr.hyriode.cosmetics.task.TaskProviderImpl;
 import fr.hyriode.hyrame.HyrameLoader;
 import fr.hyriode.hyrame.IHyrame;
@@ -23,22 +22,24 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     private final IHyrame hyrame;
 
     private final TaskProvider taskProvider;
+    private final CosmeticUserProvider userProvider;
 
-    private final Map<Class<? extends CosmeticManager>, CosmeticCategory> categories;
+    private final Map<Class<? extends CosmeticManager<?>>, CosmeticCategory> categories;
 
     public HyriCosmeticsImpl(JavaPlugin plugin) {
         this.plugin = plugin;
         this.hyrame = HyrameLoader.load(new HyriCosmeticsProvider(plugin));
 
         this.taskProvider = new TaskProviderImpl();
+        this.userProvider = new CosmeticUserProviderImpl();
 
         this.categories = new HashMap<>();
         for (CosmeticCategory category : CosmeticCategory.Default.values()) {
-            switch (category.getManager()) {
+           /* switch (category.getManager()) {
                 case ParticleManager.class: {
                     this.categories.put(category.getManager(), new ParticleManagerImpl());
                 }
-            }
+            }*/
         }
 
         Bukkit.getServer().getPluginManager().registerEvents(new ConnectionListener(), plugin);
@@ -52,7 +53,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
     @Override
     public void registerCategory(final CosmeticCategory category, final Class<? extends CosmeticManager> manager) {
-        this.categories.put(manager, category);
+        //this.categories.put(manager, category);
     }
 
     @Override
@@ -61,5 +62,10 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
             return (T) this.categories.get(clazz);
         }
         throw new IllegalArgumentException("No manager found for " + clazz.getName());
+    }
+
+    @Override
+    public CosmeticUserProvider getUserManager() {
+        return this.userProvider;
     }
 }
