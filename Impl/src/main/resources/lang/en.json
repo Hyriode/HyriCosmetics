@@ -1,7 +1,18 @@
 {
+
   "cosmetic.type.gadget.name": "Gadgets",
+  "cosmetic.type.gadget.description": "Liven up the server by displaying your many gadgets from the future!",
+
   "cosmetic.type.pet.name": "Pets",
+  "cosmetic.type.pet.description": "Astfaster please do the descriptions",
+
   "cosmetic.type.mount.name": "Mounts",
+  "cosmetic.type.mount.description": "Astfaster please do the descriptions",
+
   "cosmetic.type.particle.name": "Particles",
-  "cosmetic.type.armor.name": "Armors"
+  "cosmetic.type.particle.description": "Astfaster please do the descriptions",
+
+  "cosmetic.type.armor.name": "Armors",
+  "cosmetic.type.armor.description": "Astfaster please do the descriptions"
+
 }
