@@ -5,6 +5,8 @@ import fr.hyriode.cosmetics.common.CosmeticManager;
 import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.user.task.TaskProvider;
 
+import java.util.List;
+
 public abstract class HyriCosmetics {
 
     private static HyriCosmetics instance;
@@ -19,9 +21,9 @@ public abstract class HyriCosmetics {
         return instance;
     }
 
-    public abstract void registerCategory(CosmeticCategory category, Class<? extends CosmeticManager> manager);
-
-    abstract <T extends CosmeticManager> T getManager(Class<? extends CosmeticManager> clazz);
+    public abstract void registerCategory(CosmeticCategory category);
 
     public abstract CosmeticUserProvider getUserManager();
+
+    public abstract List<CosmeticCategory> getCategories();
 }

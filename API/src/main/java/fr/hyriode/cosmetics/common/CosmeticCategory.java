@@ -19,28 +19,36 @@ public interface CosmeticCategory {
         return HyriLanguageMessage.get("cosmetic.type." + this.getName() + ".name");
     }
 
+    default HyriLanguageMessage getTranslatedDescription() {
+        return HyriLanguageMessage.get("cosmetic.type." + this.getName() + ".description");
+    }
+
     ItemBuilder getIcon();
 
     Class<? extends CosmeticManager> getManager();
 
+    int getGuiSlot();
+
     enum Default implements CosmeticCategory {
 
-        GADGET("gadget", new ItemBuilder(Material.CARROT_STICK), GadgetManager.class),
-        PET("pet", new ItemBuilder(Material.BONE), PetManager.class),
-        MOUNT("mount", new ItemBuilder(Material.SADDLE), MountManager.class),
-        PARTICLE("particle", new ItemBuilder(Material.BLAZE_POWDER), ParticleManager.class),
-        ARMOR("armor", new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA), ArmorManager.class),
-        COMPLEX("complex", new ItemBuilder(Material.CAULDRON), ComplexManager.class);
+        GADGET("gadget", new ItemBuilder(Material.CARROT_STICK), GadgetManager.class, 20),
+        PET("pet", new ItemBuilder(Material.BONE), PetManager.class, 21),
+        MOUNT("mount", new ItemBuilder(Material.SADDLE), MountManager.class, 23),
+        PARTICLE("particle", new ItemBuilder(Material.BLAZE_POWDER), ParticleManager.class, 24),
+        ARMOR("armor", new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA), ArmorManager.class, 25),
+        COMPLEX("complex", new ItemBuilder(Material.CAULDRON), ComplexManager.class, 31);
         ;
 
         private final String name;
         private final ItemBuilder icon;
-        private final Class<? extends CosmeticManager> manager;
+        private final Class<? extends CosmeticManager<?>> manager;
+        private final int guiSlot;
 
-        Default(String name, ItemBuilder icon, Class<? extends CosmeticManager> manager) {
+        Default(final String name, final ItemBuilder icon, final Class<? extends CosmeticManager<?>> manager, final int guiSlot) {
             this.name = name;
             this.icon = icon;
             this.manager = manager;
+            this.guiSlot = guiSlot;
         }
 
         @Override
@@ -56,6 +64,11 @@ public interface CosmeticCategory {
         @Override
         public Class<? extends CosmeticManager> getManager() {
             return manager;
+        }
+
+        @Override
+        public int getGuiSlot() {
+            return guiSlot;
         }
     }
 
