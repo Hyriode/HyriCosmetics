@@ -1,5 +1,6 @@
 package fr.hyriode.cosmetics;
 
+import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.EntityListener;
@@ -12,8 +13,7 @@ import fr.hyriode.hyrame.IHyrame;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class HyriCosmeticsImpl extends HyriCosmetics {
 
@@ -23,7 +23,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     private final TaskProvider taskProvider;
     private final CosmeticUserProvider userProvider;
 
-    private final List<CosmeticCategory> categories;
+    private final Map<CosmeticCategory, List<AbstractCosmetic>> cosmetics;
 
     public HyriCosmeticsImpl(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -32,7 +32,8 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         this.taskProvider = new TaskProviderImpl();
         this.userProvider = new CosmeticUserProviderImpl();
 
-        this.categories = new ArrayList<>();
+        this.cosmetics = new HashMap<>();
+
         for (CosmeticCategory category : CosmeticCategory.Default.values()) {
             this.registerCategory(category);
         }
@@ -47,8 +48,20 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     @Override
-    public void registerCategory(final CosmeticCategory category) {
-        this.categories.add(category);
+    public void registerCategory(final CosmeticCategory category, final AbstractCosmetic... cosmetics) {
+        this.cosmetics.put(category, new ArrayList<>(Arrays.asList(cosmetics)));
+    }
+
+    @Override
+    public void registerCosmetic(final AbstractCosmetic cosmetic) {
+        this.cosmetics.get(cosmetic.getCategory()).add(cosmetic);
+    }
+
+    @Override
+    public void registerCosmetic(final AbstractCosmetic... cosmetic) {
+        for (AbstractCosmetic abstractCosmetic : cosmetic) {
+            this.registerCosmetic(abstractCosmetic);
+        }
     }
 
     @Override
@@ -58,6 +71,6 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
     @Override
     public List<CosmeticCategory> getCategories() {
-        return categories;
+        return new ArrayList<>(cosmetics.keySet());
     }
 }

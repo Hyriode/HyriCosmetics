@@ -1,5 +1,6 @@
 package fr.hyriode.cosmetics;
 
+import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.task.TaskProvider;
@@ -20,7 +21,11 @@ public abstract class HyriCosmetics {
         return instance;
     }
 
-    public abstract void registerCategory(CosmeticCategory category);
+    public abstract void registerCategory(CosmeticCategory category, final AbstractCosmetic... cosmetics);
+
+    public abstract void registerCosmetic(AbstractCosmetic cosmetic);
+
+    public abstract void registerCosmetic(AbstractCosmetic... cosmetic);
 
     public abstract CosmeticUserProvider getUserManager();
 
