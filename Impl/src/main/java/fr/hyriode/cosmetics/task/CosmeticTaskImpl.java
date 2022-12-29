@@ -1,8 +1,5 @@
 package fr.hyriode.cosmetics.task;
 
-import fr.hyriode.cosmetics.user.task.CosmeticTask;
-import fr.hyriode.cosmetics.user.task.SimpleTask;
-
 import java.util.UUID;
 
 public class CosmeticTaskImpl implements CosmeticTask {

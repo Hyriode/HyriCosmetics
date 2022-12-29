@@ -1,5 +1,6 @@
 package fr.hyriode.cosmetics.user;
 
+import fr.hyriode.api.player.HyriPlayerData;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.hyrame.game.HyriGamePlayer;

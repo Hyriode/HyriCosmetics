@@ -1,4 +1,4 @@
-package fr.hyriode.cosmetics.user.task;
+package fr.hyriode.cosmetics.task;
 
 import java.util.UUID;
 

@@ -6,9 +6,8 @@ import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.user.CosmeticUser;
-import fr.hyriode.cosmetics.user.task.CosmeticTask;
+import fr.hyriode.cosmetics.task.CosmeticTask;
 import fr.hyriode.hyrame.item.ItemBuilder;
-import org.bukkit.entity.Player;
 
 public abstract class AbstractParticle extends AbstractCosmetic {
 

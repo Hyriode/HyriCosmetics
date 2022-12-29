@@ -4,7 +4,7 @@ import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.complex.animation.AnimationPoint;
 import fr.hyriode.cosmetics.complex.animation.CosmeticAnimation;
 import fr.hyriode.cosmetics.complex.point.Point;
-import fr.hyriode.cosmetics.user.task.CosmeticTask;
+import fr.hyriode.cosmetics.task.CosmeticTask;
 import org.bukkit.Location;
 
 import java.util.ArrayList;

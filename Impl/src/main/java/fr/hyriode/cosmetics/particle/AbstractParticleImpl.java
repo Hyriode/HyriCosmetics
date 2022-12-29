@@ -4,11 +4,10 @@ import fr.hyriode.api.rank.type.IHyriRankType;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.particle.util.EffectUtil;
 import fr.hyriode.cosmetics.user.CosmeticUser;
-import fr.hyriode.cosmetics.user.task.CosmeticTask;
+import fr.hyriode.cosmetics.task.CosmeticTask;
 import fr.hyriode.cosmetics.task.CosmeticTaskImpl;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.EnumParticle;
-import org.bukkit.entity.Player;
 
 public abstract class AbstractParticleImpl extends AbstractParticle {
 

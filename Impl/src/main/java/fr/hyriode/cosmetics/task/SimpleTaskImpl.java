@@ -1,9 +1,6 @@
 package fr.hyriode.cosmetics.task;
 
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
-import fr.hyriode.cosmetics.user.task.CosmeticTask;
-import fr.hyriode.cosmetics.user.task.SimpleTask;
-import fr.hyriode.cosmetics.user.task.TaskProvider;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;

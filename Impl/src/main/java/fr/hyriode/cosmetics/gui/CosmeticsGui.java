@@ -24,7 +24,7 @@ public class CosmeticsGui extends HyriInventory {
                     category.getGuiSlot(),
                     category.getIcon()
                             .withName("§b" + category.getTranslatedName().getValue(account))
-                            .withLore("§7" + category.getTranslatedName().getValue(account))
+                            .withLore("§7" + category.getTranslatedDescription().getValue(account))
                             .build()
             );
         }

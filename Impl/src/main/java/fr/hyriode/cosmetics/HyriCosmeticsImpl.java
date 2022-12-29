@@ -5,7 +5,7 @@ import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.EntityListener;
 import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
-import fr.hyriode.cosmetics.user.task.TaskProvider;
+import fr.hyriode.cosmetics.task.TaskProvider;
 import fr.hyriode.cosmetics.task.TaskProviderImpl;
 import fr.hyriode.hyrame.HyrameLoader;
 import fr.hyriode.hyrame.IHyrame;

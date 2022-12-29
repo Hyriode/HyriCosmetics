@@ -1,9 +1,8 @@
 package fr.hyriode.cosmetics;
 
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.CosmeticManager;
 import fr.hyriode.cosmetics.user.CosmeticUserProvider;
-import fr.hyriode.cosmetics.user.task.TaskProvider;
+import fr.hyriode.cosmetics.task.TaskProvider;
 
 import java.util.List;
 

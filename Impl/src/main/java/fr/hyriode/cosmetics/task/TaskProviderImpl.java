@@ -1,9 +1,5 @@
 package fr.hyriode.cosmetics.task;
 
-import fr.hyriode.cosmetics.user.task.CosmeticTask;
-import fr.hyriode.cosmetics.user.task.SimpleTask;
-import fr.hyriode.cosmetics.user.task.TaskProvider;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
