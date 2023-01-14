@@ -2,8 +2,11 @@ package fr.hyriode.cosmetics;
 
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
+import fr.hyriode.cosmetics.common.CosmeticManager;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.EntityListener;
+import fr.hyriode.cosmetics.particle.effect.EnchantedParticle;
+import fr.hyriode.cosmetics.particle.effect.FireTornadoParticle;
 import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
 import fr.hyriode.cosmetics.task.TaskProvider;
@@ -24,6 +27,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     private final CosmeticUserProvider userProvider;
 
     private final Map<CosmeticCategory, List<AbstractCosmetic>> cosmetics;
+    private final Map<CosmeticCategory, CosmeticManager<?>> comseticManagers;
 
     public HyriCosmeticsImpl(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -33,6 +37,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         this.userProvider = new CosmeticUserProviderImpl();
 
         this.cosmetics = new HashMap<>();
+        this.comseticManagers = new HashMap<>();
 
         for (CosmeticCategory category : CosmeticCategory.Default.values()) {
             this.registerCategory(category);
@@ -40,6 +45,119 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
         Bukkit.getServer().getPluginManager().registerEvents(new ConnectionListener(), plugin);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(), plugin);
+
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
+        this.registerCosmetic(new FireTornadoParticle());
+        this.registerCosmetic(new EnchantedParticle());
     }
 
     @Override
@@ -48,8 +166,8 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     @Override
-    public void registerCategory(final CosmeticCategory category, final AbstractCosmetic... cosmetics) {
-        this.cosmetics.put(category, new ArrayList<>(Arrays.asList(cosmetics)));
+    public void registerCategory(final CosmeticCategory category) {
+        this.cosmetics.put(category, new ArrayList<>());
     }
 
     @Override
@@ -73,4 +191,43 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     public List<CosmeticCategory> getCategories() {
         return new ArrayList<>(cosmetics.keySet());
     }
+
+    @Override
+    public CosmeticCategory getCategory(String name) {
+        for (CosmeticCategory category : this.getCategories()) {
+            if (category.getName().equalsIgnoreCase(name)) {
+                return category;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Map<CosmeticCategory, List<AbstractCosmetic>> getCosmetics() {
+        return cosmetics;
+    }
+
+    @Override
+    public AbstractCosmetic getCosmetic(final String name) {
+        for (CosmeticCategory category : this.cosmetics.keySet()) {
+            for (AbstractCosmetic cosmetic : this.cosmetics.get(category)) {
+                if (cosmetic.getId().equalsIgnoreCase(name)) {
+                    return cosmetic;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public AbstractCosmetic getCosmetic(final String name, final CosmeticCategory category) {
+        for (AbstractCosmetic cosmetic : this.cosmetics.get(category)) {
+            if (cosmetic.getId().equalsIgnoreCase(name)) {
+                return cosmetic;
+            }
+        }
+        return null;
+    }
+
 }

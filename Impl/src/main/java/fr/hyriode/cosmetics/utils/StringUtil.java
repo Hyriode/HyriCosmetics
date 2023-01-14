@@ -1,16 +1,24 @@
 package fr.hyriode.cosmetics.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringUtil {
 
-    public static String cutString(String string, int maxLength) {
-        StringBuilder sb = new StringBuilder(string);
+    public static List<String> splitIntoPhrases(final String input, final int maxLineLength) {
+        final List<String> phrases = new ArrayList<>();
+        StringBuilder currentPhrase = new StringBuilder();
+        final String[] words = input.split(" ");
 
-        int i = 0;
-        while (i + maxLength < sb.length() && (i = sb.lastIndexOf(" ", i + maxLength)) != -1) {
-            sb.replace(i, i + 1, "\n");
+        for (final String word : words) {
+            if (currentPhrase.length() + word.length() + 1 > maxLineLength) {
+                phrases.add("§7" + currentPhrase);
+                currentPhrase = new StringBuilder();
+            }
+            currentPhrase.append(word).append(" ");
         }
-
-        return sb.toString();
+        phrases.add("§7" + currentPhrase.toString());
+        return phrases;
     }
 
 }

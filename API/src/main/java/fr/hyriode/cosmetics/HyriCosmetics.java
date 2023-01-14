@@ -6,6 +6,7 @@ import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.task.TaskProvider;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class HyriCosmetics {
 
@@ -21,7 +22,7 @@ public abstract class HyriCosmetics {
         return instance;
     }
 
-    public abstract void registerCategory(CosmeticCategory category, final AbstractCosmetic... cosmetics);
+    public abstract void registerCategory(CosmeticCategory category);
 
     public abstract void registerCosmetic(AbstractCosmetic cosmetic);
 
@@ -30,4 +31,12 @@ public abstract class HyriCosmetics {
     public abstract CosmeticUserProvider getUserManager();
 
     public abstract List<CosmeticCategory> getCategories();
+
+    public abstract CosmeticCategory getCategory(String name);
+
+    public abstract Map<CosmeticCategory, List<AbstractCosmetic>> getCosmetics();
+
+    public abstract AbstractCosmetic getCosmetic(String name);
+
+    public abstract AbstractCosmetic getCosmetic(String name, CosmeticCategory category);
 }

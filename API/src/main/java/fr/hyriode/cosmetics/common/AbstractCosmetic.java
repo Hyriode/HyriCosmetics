@@ -1,5 +1,6 @@
 package fr.hyriode.cosmetics.common;
 
+import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.rank.type.IHyriRankType;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
@@ -49,7 +50,7 @@ public abstract class AbstractCosmetic {
     }
 
     public ItemBuilder getIcon() {
-        return icon;
+        return new ItemBuilder(this.icon.build().clone());
     }
 
     public abstract void onEquip(final CosmeticUser user);
@@ -58,5 +59,13 @@ public abstract class AbstractCosmetic {
 
     public CosmeticCategory getCategory() {
         return category;
+    }
+
+    public HyriLanguageMessage getTranslatedName() {
+        return HyriLanguageMessage.get("cosmetic." + category.getName() + "." + getId() + ".name");
+    }
+
+    public HyriLanguageMessage getTranslatedDescription() {
+        return HyriLanguageMessage.get("cosmetic." + category.getName() + "." + getId() + ".description");
     }
 }

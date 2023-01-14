@@ -18,13 +18,13 @@ public class FireTornadoParticle extends AbstractParticleImpl {
                 HyriPlayerRankType.PLAYER,
                 150,
                 15000,
-                new ItemBuilder(Material.BLAZE_POWDER).withGlow()
+                new ItemBuilder(Material.BLAZE_POWDER)
         );
     }
 
     @Override
     public void tick(final CosmeticUser user) {
-        final Location location = user.getHyriPlayer().getPlayer().getLocation();
+        final Location location = user.asBukkit().getLocation();
         float ratio;
         double angle, x, z;
 

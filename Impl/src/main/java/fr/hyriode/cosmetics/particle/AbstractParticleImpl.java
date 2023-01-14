@@ -23,13 +23,13 @@ public abstract class AbstractParticleImpl extends AbstractParticle {
     @Override
     public void onEquip(final CosmeticUser user) {
         super.onEquip(user);
-        user.getHyriPlayer().sendMessage("§7You have equipped the particle §b" + getId());
+        user.asBukkit().sendMessage("§7You have equipped the particle §b" + getId());
     }
 
     @Override
     public void onUnequip(final CosmeticUser user) {
         super.onEquip(user);
-        user.getHyriPlayer().sendMessage("§7You have unequipped the particle §b" + getId());
+        user.asBukkit().sendMessage("§7You have unequipped the particle §b" + getId());
     }
 
     public abstract void tick(final CosmeticUser user);

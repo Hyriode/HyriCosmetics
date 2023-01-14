@@ -33,10 +33,10 @@ public interface CosmeticCategory {
 
         GADGET("gadget", new ItemBuilder(Material.CARROT_STICK), GadgetManager.class, 20),
         PET("pet", new ItemBuilder(Material.BONE), PetManager.class, 21),
-        MOUNT("mount", new ItemBuilder(Material.SADDLE), MountManager.class, 23),
-        PARTICLE("particle", new ItemBuilder(Material.BLAZE_POWDER), ParticleManager.class, 24),
-        ARMOR("armor", new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA), ArmorManager.class, 25),
-        COMPLEX("complex", new ItemBuilder(Material.CAULDRON), ComplexManager.class, 31);
+        MOUNT("mount", new ItemBuilder(Material.SADDLE), MountManager.class, 22),
+        PARTICLE("particle", new ItemBuilder(Material.BLAZE_POWDER), ParticleManager.class, 23),
+        ARMOR("armor", new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA).withAllItemFlags(), ArmorManager.class, 24),
+        COMPLEX("complex", new ItemBuilder(Material.GOLDEN_APPLE).withGlow().withAllItemFlags(), ComplexManager.class, 31);
         ;
 
         private final String name;

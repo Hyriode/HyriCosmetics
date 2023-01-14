@@ -25,13 +25,13 @@ public class EnchantedParticle extends AbstractParticleImpl {
                 HyriPlayerRankType.PLAYER,
                 150,
                 15000,
-                new ItemBuilder(Material.BLAZE_POWDER).withGlow()
+                new ItemBuilder(Material.BOOK_AND_QUILL)
         );
     }
 
     @Override
     public void tick(final CosmeticUser user) {
-        final Location location = user.getHyriPlayer().getPlayer().getLocation();
+        final Location location = user.asBukkit().getLocation();
         float dx = (float) location.getX() + random.nextFloat() % 3f - 1.5f;
         float dy = (float) location.getY() + random.nextFloat() % 2f;
         float dz = (float) location.getZ() + random.nextFloat() % 3f - 1.5f;

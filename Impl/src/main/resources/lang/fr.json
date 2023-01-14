@@ -3,16 +3,31 @@
   "cosmetic.type.gadget.name": "Gadgets",
   "cosmetic.type.gadget.description": "Animez le serveur en exposant vos nombreux gadgets venant du futur !",
 
+
   "cosmetic.type.pet.name": "Compagnions",
   "cosmetic.type.pet.description": "Astfaster fait les descriptions stp",
+
 
   "cosmetic.type.mount.name": "Montures",
   "cosmetic.type.mount.description": "Astfaster fait les descriptions stp",
 
+
+  "cosmetic.type.armor.name": "Armures",
+  "cosmetic.type.armor.description": "Astfaster fait les descriptions stp",
+
+
   "cosmetic.type.particle.name": "Particules",
   "cosmetic.type.particle.description": "Astfaster fait les descriptions stp",
 
-  "cosmetic.type.armor.name": "Armures",
-  "cosmetic.type.armor.description": "Astfaster fait les descriptions stp"
+  "cosmetic.particle.fire_tornado.name": "Tornade de feu",
+  "cosmetic.particle.fire_tornado.description": "Une tornade de feu qui tourne autour de vous !",
+
+  "cosmetic.particle.enchanted.name": "Enchanté",
+  "cosmetic.particle.enchanted.description": "Un aura enchanté qui vous suit",
+
+
+  "gui.cosmetic.name": "Cosmetiques",
+  "gui.cosmetic.rarity": "Rareté",
+  "gui.cosmetic.unlocked": "&b%percentage%% débloqué(s) &7(%unlocked%/%total%)"
 
 }

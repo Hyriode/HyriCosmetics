@@ -1,9 +1,11 @@
 package fr.hyriode.cosmetics.user;
 
-import fr.hyriode.api.player.HyriPlayerData;
+import fr.hyriode.api.HyriAPI;
+import fr.hyriode.api.player.IHyriPlayer;
+import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.hyrame.game.HyriGamePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,33 +13,54 @@ import java.util.Objects;
 
 public class CosmeticUserImpl implements CosmeticUser {
 
-    private final HyriGamePlayer player;
-    private final Map<CosmeticCategory, PlayerCosmetic<?>> cosmetics;
+    private final Player player;
+    private final Map<CosmeticCategory, PlayerCosmetic<?>> equippedCosmetics;
+    private final UserData data;
 
-    public CosmeticUserImpl(HyriGamePlayer player) {
+    public CosmeticUserImpl(Player player) {
         this.player = player;
-        this.cosmetics = new HashMap<>();
+        this.equippedCosmetics = new HashMap<>();
+
+        UserData data = HyriAPI.get().getPlayerManager().getPlayer(player.getUniqueId()).getData("cosmetics", UserData.class);
+
+        if (data == null) {
+            this.data = new UserData();
+        } else {
+            this.data = data;
+        }
+
+        if (!this.data.getEquippedCosmetics().isEmpty()) {
+            for (Map.Entry<String, String> entry : this.data.getEquippedCosmetics().entrySet()) {
+                final CosmeticCategory category = HyriCosmetics.get().getCategory(entry.getKey());
+                final AbstractCosmetic cosmetic = HyriCosmetics.get().getCosmetic(entry.getValue());
+
+                if (cosmetic != null) {
+                    this.equippedCosmetics.put(category, new PlayerCosmeticImpl<>(cosmetic, this));
+                }
+            }
+        }
+    }
+
+    @Override
+    public Player asBukkit() {
+        return this.player;
     }
 
     @Override
     public void equipCosmetic(AbstractCosmetic cosmetic) {
         Objects.requireNonNull(cosmetic, "cosmetic must not be null");
 
-        if (this.cosmetics.containsKey(cosmetic.getCategory())) {
-            this.cosmetics.get(cosmetic.getCategory()).unequip();
-            this.cosmetics.remove(cosmetic.getCategory());
-        }
-
-        this.cosmetics.put(cosmetic.getCategory(), new PlayerCosmeticImpl<>(cosmetic, this));
+        this.unequipCosmetic(cosmetic.getCategory());
+        this.equippedCosmetics.put(cosmetic.getCategory(), new PlayerCosmeticImpl<>(cosmetic, this));
     }
 
     @Override
     public void unequipCosmetic(CosmeticCategory category) {
         Objects.requireNonNull(category, "category must not be null");
 
-        if (this.cosmetics.containsKey(category)) {
-            this.cosmetics.get(category).unequip();
-            this.cosmetics.remove(category);
+        PlayerCosmetic<?> playerCosmetic = this.equippedCosmetics.remove(category);
+        if (playerCosmetic != null) {
+            playerCosmetic.unequip();
         }
     }
 
@@ -45,17 +68,24 @@ public class CosmeticUserImpl implements CosmeticUser {
     public PlayerCosmetic<?> getCosmetic(CosmeticCategory category) {
         Objects.requireNonNull(category, "category must not be null");
 
-        return this.cosmetics.get(category);
+        return this.equippedCosmetics.get(category);
     }
 
     @Override
-    public Map<CosmeticCategory, PlayerCosmetic<?>> getCosmetics() {
-        return this.cosmetics;
+    public Map<CosmeticCategory, PlayerCosmetic<?>> getEquippedCosmetics() {
+        return this.equippedCosmetics;
     }
 
     @Override
-    public HyriGamePlayer getHyriPlayer() {
-        return this.player;
+    public UserData getData() {
+        return data;
     }
 
+    @Override
+    public void updateData() {
+        IHyriPlayer hyriPlayer = HyriAPI.get().getPlayerManager().getPlayer(this.player.getUniqueId());
+        equippedCosmetics.forEach((category, playerCosmetic) -> data.getEquippedCosmetics().put(category.getName(), playerCosmetic.getCosmetic().getId()));
+        hyriPlayer.addData("cosmetics", this.data);
+        HyriAPI.get().getPlayerManager().updatePlayer(hyriPlayer);
+    }
 }
