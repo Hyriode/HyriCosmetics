@@ -8,7 +8,10 @@ import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.transaction.CosmeticTransaction;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CosmeticUserImpl implements CosmeticUser {
@@ -121,8 +124,8 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void updateData() {
-        final IHyriPlayer hyriPlayer = this.asHyriPlayer();
         equippedCosmetics.forEach((category, playerCosmetic) -> data.getEquippedCosmetics().put(category.getName(), playerCosmetic.getCosmetic().getId()));
+        final IHyriPlayer hyriPlayer = this.asHyriPlayer();
         hyriPlayer.addData("cosmetics", this.data);
         HyriAPI.get().getPlayerManager().updatePlayer(hyriPlayer);
     }

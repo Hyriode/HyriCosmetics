@@ -5,15 +5,15 @@ import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
-import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.task.CosmeticTask;
-import fr.hyriode.hyrame.item.ItemBuilder;
+import fr.hyriode.cosmetics.user.CosmeticUser;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractParticle extends AbstractCosmetic {
 
     protected CosmeticTask task;
 
-    public AbstractParticle(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemBuilder icon) {
+    public AbstractParticle(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemStack icon) {
         super(id, rarity, requireRank, tokenPrice, hyrisPrice, icon, CosmeticCategory.Default.PARTICLE);
     }
 

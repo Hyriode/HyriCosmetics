@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -37,7 +38,7 @@ public class CosmeticGui extends PaginatedInventory {
 
         this.setItem(
                 4,
-                category.getIcon()
+                new ItemBuilder(category.getIcon())
                         .withName("§b" + category.getTranslatedName().getValue(owner))
                         .withLore(StringUtil.splitIntoPhrases(category.getTranslatedDescription().getValue(owner), 40))
                         .appendLore("§7")
@@ -62,18 +63,19 @@ public class CosmeticGui extends PaginatedInventory {
         pagination.clear();
 
         for (AbstractCosmetic cosmetic : HyriCosmetics.get().getCosmetics().get(category)) {
-            pagination.add(PaginatedItem.from(this.createCosmeticItem(cosmetic).build(), this.clickEvent(cosmetic)));
+            pagination.add(PaginatedItem.from(this.createCosmeticItem(cosmetic), this.clickEvent(cosmetic)));
         }
 
         this.paginationManager.updateGUI();
     }
 
-    private ItemBuilder createCosmeticItem(final AbstractCosmetic cosmetic) {
-        return cosmetic.getIcon()
+    private ItemStack createCosmeticItem(final AbstractCosmetic cosmetic) {
+        return new ItemBuilder(cosmetic.getIcon())
                 .withName(ChatColor.AQUA + cosmetic.getTranslatedName().getValue(this.owner))
                 .withLore(StringUtil.splitIntoPhrases(cosmetic.getTranslatedDescription().getValue(this.owner), 35))
                 .appendLore("")
-                .appendLore(ChatColor.GRAY + HyriLanguageMessage.get("gui.cosmetic.rarity").getValue(this.owner) + ": " + cosmetic.getRarity().getColor() +  cosmetic.getRarity().getName());
+                .appendLore(ChatColor.GRAY + HyriLanguageMessage.get("gui.cosmetic.rarity").getValue(this.owner) + ": " + cosmetic.getRarity().getColor() +  cosmetic.getRarity().getName())
+                .build();
     }
 
     private Consumer<InventoryClickEvent> clickEvent(AbstractCosmetic cosmetic) {

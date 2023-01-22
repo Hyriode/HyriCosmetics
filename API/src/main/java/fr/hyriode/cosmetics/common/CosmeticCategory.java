@@ -10,6 +10,7 @@ import fr.hyriode.cosmetics.pet.PetManager;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public interface CosmeticCategory {
 
@@ -23,7 +24,7 @@ public interface CosmeticCategory {
         return HyriLanguageMessage.get("cosmetic.type." + this.getName() + ".description");
     }
 
-    ItemBuilder getIcon();
+    ItemStack getIcon();
 
     Class<? extends CosmeticManager> getManager();
 
@@ -31,20 +32,20 @@ public interface CosmeticCategory {
 
     enum Default implements CosmeticCategory {
 
-        GADGET("gadget", new ItemBuilder(Material.CARROT_STICK), GadgetManager.class, 20),
-        PET("pet", new ItemBuilder(Material.BONE), PetManager.class, 21),
-        MOUNT("mount", new ItemBuilder(Material.SADDLE), MountManager.class, 22),
-        PARTICLE("particle", new ItemBuilder(Material.BLAZE_POWDER), ParticleManager.class, 23),
-        ARMOR("armor", new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA).withAllItemFlags(), ArmorManager.class, 24),
-        COMPLEX("complex", new ItemBuilder(Material.GOLDEN_APPLE).withGlow().withAllItemFlags(), ComplexManager.class, 31);
+        GADGET("gadget", new ItemBuilder(Material.CARROT_STICK).build(), GadgetManager.class, 20),
+        PET("pet", new ItemBuilder(Material.BONE).build(), PetManager.class, 21),
+        MOUNT("mount", new ItemBuilder(Material.SADDLE).build(), MountManager.class, 22),
+        PARTICLE("particle", new ItemBuilder(Material.BLAZE_POWDER).build(), ParticleManager.class, 23),
+        ARMOR("armor", new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA).withAllItemFlags().build(), ArmorManager.class, 24),
+        COMPLEX("complex", new ItemBuilder(Material.GOLDEN_APPLE).withGlow().withAllItemFlags().build(), ComplexManager.class, 31);
         ;
 
         private final String name;
-        private final ItemBuilder icon;
+        private final ItemStack icon;
         private final Class<? extends CosmeticManager<?>> manager;
         private final int guiSlot;
 
-        Default(final String name, final ItemBuilder icon, final Class<? extends CosmeticManager<?>> manager, final int guiSlot) {
+        Default(final String name, final ItemStack icon, final Class<? extends CosmeticManager<?>> manager, final int guiSlot) {
             this.name = name;
             this.icon = icon;
             this.manager = manager;
@@ -57,8 +58,8 @@ public interface CosmeticCategory {
         }
 
         @Override
-        public ItemBuilder getIcon() {
-            return this.icon;
+        public ItemStack getIcon() {
+            return this.icon.clone();
         }
 
         @Override

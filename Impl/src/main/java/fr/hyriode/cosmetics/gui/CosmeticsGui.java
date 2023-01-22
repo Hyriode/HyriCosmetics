@@ -1,14 +1,12 @@
 package fr.hyriode.cosmetics.gui;
 
-import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.language.HyriLanguageMessage;
-import fr.hyriode.api.player.IHyriPlayer;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.user.CosmeticUser;
-import fr.hyriode.cosmetics.user.PlayerCosmetic;
 import fr.hyriode.cosmetics.utils.StringUtil;
 import fr.hyriode.hyrame.inventory.HyriInventory;
+import fr.hyriode.hyrame.item.ItemBuilder;
 import fr.hyriode.hyrame.language.HyrameMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,7 +30,7 @@ public class CosmeticsGui extends HyriInventory {
             final List<AbstractCosmetic> unlockedCosmetics = user.getUnlockedCosmetics(category);
             this.setItem(
                     category.getGuiSlot(),
-                    category.getIcon()
+                    new ItemBuilder(category.getIcon())
                             .withName(ChatColor.AQUA + category.getTranslatedName().getValue(owner))
                             .withLore(StringUtil.splitIntoPhrases(category.getTranslatedDescription().getValue(owner), 40))
                             .appendLore("")

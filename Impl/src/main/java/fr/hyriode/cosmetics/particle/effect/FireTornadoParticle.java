@@ -18,7 +18,7 @@ public class FireTornadoParticle extends AbstractParticleImpl {
                 HyriPlayerRankType.PLAYER,
                 150,
                 15000,
-                new ItemBuilder(Material.BLAZE_POWDER)
+                new ItemBuilder(Material.BLAZE_POWDER).build()
         );
     }
 
