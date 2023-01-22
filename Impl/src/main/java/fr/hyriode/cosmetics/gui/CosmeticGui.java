@@ -33,7 +33,7 @@ public class CosmeticGui extends PaginatedInventory {
         this.paginationManager.setArea(new PaginationArea(20, 33));
         this.applyDesign(Design.BORDER);
         final List<AbstractCosmetic> cosmetics = HyriCosmetics.get().getCosmetics().get(category);
-        final List<AbstractCosmetic> unlockedCosmetics = user.getData().getUnlockedCosmetics(category);
+        final List<AbstractCosmetic> unlockedCosmetics = user.getUnlockedCosmetics(category);
 
         this.setItem(
                 4,

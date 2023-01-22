@@ -29,7 +29,7 @@ public class CosmeticsGui extends HyriInventory {
         super.open();
         this.applyDesign(Design.BORDER);
         HyriCosmetics.get().getCosmetics().forEach((category, cosmetics) -> {
-            final List<AbstractCosmetic> unlockedCosmetics = user.getData().getUnlockedCosmetics(category);
+            final List<AbstractCosmetic> unlockedCosmetics = user.getUnlockedCosmetics(category);
             this.setItem(
                     category.getGuiSlot(),
                     category.getIcon()
