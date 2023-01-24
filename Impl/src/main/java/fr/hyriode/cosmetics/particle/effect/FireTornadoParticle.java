@@ -11,6 +11,9 @@ import org.bukkit.Material;
 
 public class FireTornadoParticle extends AbstractParticleImpl {
 
+    private static final double pi4 = Math.PI / 4;
+    private static final double pi2 = Math.PI / 2;
+
     public FireTornadoParticle() {
         super(
                 "fire_tornado",
@@ -25,18 +28,23 @@ public class FireTornadoParticle extends AbstractParticleImpl {
     @Override
     public void tick(final CosmeticUser user) {
         final Location location = user.asBukkit().getLocation();
+
         float ratio;
         double angle, x, z;
 
+        final double xloc = location.getX();
+        final double yloc = location.getY();
+        final double zloc = location.getZ();
+
         for (int i = 1; i <= 8; i++) {
+            angle = pi2 * i + pi4;
             for (int j = 1; j <= 80; j++) {
                 ratio = (float) j / 80;
-                angle = 10 * ratio * 2 * Math.PI / 8 + (2 * Math.PI * i / 8) + Math.PI / 4;
                 x = Math.cos(angle) * ratio * 10;
                 z = Math.sin(angle) * ratio * 10;
 
                 location.add(x, 0, z);
-                this.display(EnumParticle.FLAME, (float) location.getX(), (float) location.getY(), (float) location.getZ(), 0, 0, 0, 0, 1);
+                this.display(EnumParticle.FLAME, (float) xloc, (float) yloc, (float) zloc, 0, 0, 0, 0, 1);
                 location.subtract(x, 0, z);
             }
         }
