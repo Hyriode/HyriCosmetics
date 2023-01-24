@@ -3,9 +3,7 @@ package fr.hyriode.cosmetics.common;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.rank.type.IHyriRankType;
 import fr.hyriode.cosmetics.user.CosmeticUser;
-import fr.hyriode.hyrame.item.ItemBuilder;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractCosmetic {
 
@@ -14,11 +12,11 @@ public abstract class AbstractCosmetic {
     private final IHyriRankType requireRank;
     private final int tokenPrice;
     private final int hyrisPrice;
-    private final ItemBuilder icon;
+    private final ItemStack icon;
     private final CosmeticCategory category;
 
     public AbstractCosmetic(String id, CosmeticRarity rarity, IHyriRankType requireRank,
-                            int tokenPrice, int hyrisPrice, ItemBuilder icon, CosmeticCategory category)
+                            int tokenPrice, int hyrisPrice, ItemStack icon, CosmeticCategory category)
     {
         this.id = id;
         this.rarity = rarity;
@@ -49,8 +47,8 @@ public abstract class AbstractCosmetic {
         return hyrisPrice;
     }
 
-    public ItemBuilder getIcon() {
-        return new ItemBuilder(this.icon.build().clone());
+    public ItemStack getIcon() {
+        return this.icon.clone();
     }
 
     public abstract void onEquip(final CosmeticUser user);

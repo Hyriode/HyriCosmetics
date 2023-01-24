@@ -7,16 +7,19 @@ import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.EntityListener;
 import fr.hyriode.cosmetics.particle.effect.EnchantedParticle;
 import fr.hyriode.cosmetics.particle.effect.FireTornadoParticle;
-import fr.hyriode.cosmetics.user.CosmeticUserProvider;
-import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
 import fr.hyriode.cosmetics.task.TaskProvider;
 import fr.hyriode.cosmetics.task.TaskProviderImpl;
+import fr.hyriode.cosmetics.user.CosmeticUserProvider;
+import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
 import fr.hyriode.hyrame.HyrameLoader;
 import fr.hyriode.hyrame.IHyrame;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HyriCosmeticsImpl extends HyriCosmetics {
 

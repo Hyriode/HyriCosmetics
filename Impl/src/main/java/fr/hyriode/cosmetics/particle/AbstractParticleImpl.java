@@ -3,15 +3,15 @@ package fr.hyriode.cosmetics.particle;
 import fr.hyriode.api.rank.type.IHyriRankType;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.particle.util.EffectUtil;
-import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.task.CosmeticTask;
 import fr.hyriode.cosmetics.task.CosmeticTaskImpl;
-import fr.hyriode.hyrame.item.ItemBuilder;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractParticleImpl extends AbstractParticle {
 
-    public AbstractParticleImpl(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemBuilder icon) {
+    public AbstractParticleImpl(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemStack icon) {
         super(id, rarity, requireRank, tokenPrice, hyrisPrice, icon);
     }
 

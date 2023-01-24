@@ -3,13 +3,11 @@ package fr.hyriode.cosmetics.particle.effect;
 import fr.hyriode.api.rank.type.HyriPlayerRankType;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
-import fr.hyriode.cosmetics.particle.util.EffectUtil;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 import java.security.SecureRandom;
 import java.util.Random;
@@ -25,7 +23,7 @@ public class EnchantedParticle extends AbstractParticleImpl {
                 HyriPlayerRankType.PLAYER,
                 150,
                 15000,
-                new ItemBuilder(Material.BOOK_AND_QUILL)
+                new ItemBuilder(Material.BOOK_AND_QUILL).build()
         );
     }
 

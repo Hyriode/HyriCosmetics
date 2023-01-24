@@ -1,7 +1,6 @@
 package fr.hyriode.cosmetics.user;
 
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
-import org.bukkit.entity.Player;
 
 public class PlayerCosmeticImpl<T extends AbstractCosmetic> implements PlayerCosmetic<T> {
 

@@ -1,6 +1,5 @@
 package fr.hyriode.cosmetics.user;
 
-import fr.hyriode.hyrame.game.HyriGamePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
