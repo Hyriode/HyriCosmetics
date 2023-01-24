@@ -82,6 +82,9 @@ public class CosmeticGui extends PaginatedInventory {
         return event -> {
             if (event.isRightClick()) {
                 this.owner.playSound(this.owner.getLocation(), Sound.FIZZ, 0.5F, 1.0F);
+                if (this.user.getEquippedCosmetics().con) {
+                    this.user.equipCosmetic(cosmetic);
+                }
                 this.setupItems();
             }
         };

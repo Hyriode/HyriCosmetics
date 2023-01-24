@@ -24,7 +24,8 @@ public class CosmeticUserImpl implements CosmeticUser {
         this.player = player;
         this.equippedCosmetics = new HashMap<>();
 
-        UserData data = HyriAPI.get().getPlayerManager().getPlayer(player.getUniqueId()).getData("cosmetics", UserData.class);
+        UserData data = HyriAPI.get().getPlayerManager()
+                .getPlayer(player.getUniqueId()).getData("cosmetics", UserData.class);
 
         if (data == null) {
             this.data = new UserData();
@@ -59,16 +60,22 @@ public class CosmeticUserImpl implements CosmeticUser {
         Objects.requireNonNull(cosmetic, "cosmetic must not be null");
 
         this.unequipCosmetic(cosmetic.getCategory());
-        this.equippedCosmetics.put(cosmetic.getCategory(), new PlayerCosmeticImpl<>(cosmetic, this));
+        final PlayerCosmetic<?> equipedCosmetic = this.equippedCosmetics
+                .put(cosmetic.getCategory(), new PlayerCosmeticImpl<>(cosmetic, this));
+        if (equipedCosmetic != null) {
+            equipedCosmetic.equip();
+        }
     }
 
     @Override
     public void unequipCosmetic(CosmeticCategory category) {
         Objects.requireNonNull(category, "category must not be null");
 
-        PlayerCosmetic<?> playerCosmetic = this.equippedCosmetics.remove(category);
-        if (playerCosmetic != null) {
-            playerCosmetic.unequip();
+        if (this.equippedCosmetics.containsKey(category)) {
+            final PlayerCosmetic<?> playerCosmetic = this.equippedCosmetics.remove(category);
+            if (playerCosmetic != null) {
+                playerCosmetic.unequip();
+            }
         }
     }
 
