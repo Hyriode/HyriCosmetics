@@ -11,6 +11,7 @@ import fr.hyriode.hyrame.inventory.pagination.PaginatedItem;
 import fr.hyriode.hyrame.inventory.pagination.PaginationArea;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import fr.hyriode.hyrame.utils.Pagination;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -80,11 +81,9 @@ public class CosmeticGui extends PaginatedInventory {
 
     private Consumer<InventoryClickEvent> clickEvent(AbstractCosmetic cosmetic) {
         return event -> {
-            if (event.isRightClick()) {
+            if (event.isLeftClick()) {
                 this.owner.playSound(this.owner.getLocation(), Sound.FIZZ, 0.5F, 1.0F);
-                if (this.user.getEquippedCosmetics().con) {
-                    this.user.equipCosmetic(cosmetic);
-                }
+                this.user.equipCosmetic(cosmetic);
                 this.setupItems();
             }
         };

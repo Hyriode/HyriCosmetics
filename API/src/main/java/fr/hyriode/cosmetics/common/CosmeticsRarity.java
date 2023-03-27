@@ -12,13 +12,13 @@ public enum CosmeticsRarity {
     MYTHIC("mythic"),
     SUPREME("supreme");
 
-    private final String keyName;
+    private final String id;
 
-    CosmeticsRarity(String keyName) {
-        this.keyName = keyName;
+    CosmeticsRarity(final String id) {
+        this.id = id;
     }
 
-    public HyriLanguageMessage getKeyName() {
-        return HyriLanguageMessage.get("");
+    public HyriLanguageMessage getName() {
+        return HyriLanguageMessage.get("cosmetics.rarity." + this.id + ".name");
     }
 }

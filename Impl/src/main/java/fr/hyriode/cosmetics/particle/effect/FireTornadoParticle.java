@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.particle.effect;
 
-import fr.hyriode.api.rank.type.HyriPlayerRankType;
+import fr.hyriode.api.rank.PlayerRank;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
@@ -18,7 +18,7 @@ public class FireTornadoParticle extends AbstractParticleImpl {
         super(
                 "fire_tornado",
                 CosmeticRarity.RARE,
-                HyriPlayerRankType.PLAYER,
+                PlayerRank.PLAYER,
                 150,
                 15000,
                 new ItemBuilder(Material.BLAZE_POWDER).build()

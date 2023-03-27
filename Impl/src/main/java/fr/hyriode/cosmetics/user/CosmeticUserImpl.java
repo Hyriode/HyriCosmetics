@@ -8,10 +8,7 @@ import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.transaction.CosmeticTransaction;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CosmeticUserImpl implements CosmeticUser {
@@ -24,8 +21,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         this.player = player;
         this.equippedCosmetics = new HashMap<>();
 
-        UserData data = HyriAPI.get().getPlayerManager()
-                .getPlayer(player.getUniqueId()).getData("cosmetics", UserData.class);
+        UserData data = HyriAPI.get().getPlayerManager().getPlayer(player.getUniqueId()).getData().read("cosmetics", new UserData());
 
         if (data == null) {
             this.data = new UserData();
@@ -81,12 +77,18 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public List<AbstractCosmetic> getUnlockedCosmetics() {
-        return this.asHyriPlayer().getTransactions(CosmeticTransaction.TYPE)
-                .stream()
-                .map(o -> (CosmeticTransaction) o)
-                .map(CosmeticTransaction::getCosmeticId)
-                .map(HyriCosmetics.get()::getCosmetic)
-                .collect(Collectors.toList());
+        final List<AbstractCosmetic> result = new ArrayList<>();
+
+        if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
+            result.addAll(this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)
+                    .stream()
+                    .map(o -> (CosmeticTransaction) o)
+                    .map(CosmeticTransaction::getCosmeticId)
+                    .map(HyriCosmetics.get()::getCosmetic)
+                    .collect(Collectors.toList()));
+        }
+
+        return result;
     }
 
     @Override
@@ -99,12 +101,12 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void addUnlockedCosmetic(AbstractCosmetic cosmetic) {
-        this.asHyriPlayer().addTransaction(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
+        this.asHyriPlayer().getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
     }
 
     @Override
     public void removeUnlockedCosmetic(AbstractCosmetic cosmetic) {
-        this.asHyriPlayer().removeTransaction(CosmeticTransaction.TYPE, cosmetic.getId());
+        this.asHyriPlayer().getTransactions().remove(CosmeticTransaction.TYPE, cosmetic.getId());
     }
 
     @Override
@@ -133,7 +135,7 @@ public class CosmeticUserImpl implements CosmeticUser {
     public void updateData() {
         equippedCosmetics.forEach((category, playerCosmetic) -> data.getEquippedCosmetics().put(category.getName(), playerCosmetic.getCosmetic().getId()));
         final IHyriPlayer hyriPlayer = this.asHyriPlayer();
-        hyriPlayer.addData("cosmetics", this.data);
-        HyriAPI.get().getPlayerManager().updatePlayer(hyriPlayer);
+        hyriPlayer.getData().add("cosmetics", this.data);
+        hyriPlayer.update();
     }
 }

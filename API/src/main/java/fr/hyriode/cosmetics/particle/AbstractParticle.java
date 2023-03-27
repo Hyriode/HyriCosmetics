@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.particle;
 
-import fr.hyriode.api.rank.type.IHyriRankType;
+import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;

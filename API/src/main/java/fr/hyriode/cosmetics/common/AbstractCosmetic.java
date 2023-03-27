@@ -1,7 +1,7 @@
 package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
-import fr.hyriode.api.rank.type.IHyriRankType;
+import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.inventory.ItemStack;
 
