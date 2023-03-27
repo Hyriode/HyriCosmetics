@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "gradle",
+            "name": "BUILD",
+            "tasks": ["clean", "shadowJar"],
+        },
+        {
+            "type": "command",
+            "name": "START DEV SERVER",
+            "program": "$PROJECT_DIR$\\.fleet\\start_dev_server.bat",
+            "args": ["$USER_HOME$\\Desktop\\dev\\hyriode\\dev_serv", "$PROJECT_DIR$\\Impl\\build\\libs\\HyriCosmetics-1.0.jar", "HyriCosmetics"],
+        }
+    ]
+}
