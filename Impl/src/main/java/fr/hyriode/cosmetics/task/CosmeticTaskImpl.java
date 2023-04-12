@@ -33,5 +33,4 @@ public class CosmeticTaskImpl implements CosmeticTask {
     public void run() {
         this.runnable.run();
     }
-
 }

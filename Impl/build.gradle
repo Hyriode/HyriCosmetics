@@ -14,8 +14,8 @@ repositories {
         url = 'https://maven.pkg.github.com/Hyriode/Hyrame/'
 
         credentials {
-            username "Pas2Pseudo"
-            password "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"
+            username System.getenv("GITHUB_USERNAME")
+            password System.getenv("GITHUB_TOKEN")
         }
     }
 

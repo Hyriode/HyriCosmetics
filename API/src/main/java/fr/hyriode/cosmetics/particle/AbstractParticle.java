@@ -27,7 +27,7 @@ public abstract class AbstractParticle extends AbstractCosmetic {
 
     @Override
     public void onEquip(final CosmeticUser user) {
-        HyriCosmetics.get().getTaskProvider().execute(task);
+        HyriCosmetics.get().getTaskProvider().execute(() -> tick(user));
     }
 
     @Override

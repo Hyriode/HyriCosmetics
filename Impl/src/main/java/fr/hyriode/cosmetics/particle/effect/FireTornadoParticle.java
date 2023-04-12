@@ -27,7 +27,7 @@ public class FireTornadoParticle extends AbstractParticleImpl {
 
     @Override
     public void tick(final CosmeticUser user) {
-        final Location location = user.asBukkit().getLocation();
+        Location location = user.asBukkit().getLocation();
 
         float ratio;
         double angle, x, z;
@@ -43,9 +43,9 @@ public class FireTornadoParticle extends AbstractParticleImpl {
                 x = Math.cos(angle) * ratio * 10;
                 z = Math.sin(angle) * ratio * 10;
 
-                location.add(x, 0, z);
+                location = location.add(x, 0, z);
                 this.display(EnumParticle.FLAME, (float) xloc, (float) yloc, (float) zloc, 0, 0, 0, 0, 1);
-                location.subtract(x, 0, z);
+                location = location.subtract(x, 0, z);
             }
         }
     }

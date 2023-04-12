@@ -7,7 +7,10 @@ import fr.hyriode.cosmetics.task.CosmeticTask;
 import fr.hyriode.cosmetics.task.CosmeticTaskImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
+import xyz.xenondevs.particle.ParticleBuilder;
+import xyz.xenondevs.particle.ParticleEffect;
 
 public abstract class AbstractParticleImpl extends AbstractParticle {
 
@@ -35,7 +38,12 @@ public abstract class AbstractParticleImpl extends AbstractParticle {
     public abstract void tick(final CosmeticUser user);
 
     protected void display(EnumParticle effect, float x, float y, float z, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
+        new ParticleBuilder(ParticleEffect.valueOf(effect.name())).display();
         EffectUtil.particle(effect, x, y, z, offsetX, offsetY, offsetZ, speed, amount);
+    }
+
+    protected void display(EnumParticle effect, Location location, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
+        EffectUtil.particle(effect, (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ, speed, amount);
     }
 
 }

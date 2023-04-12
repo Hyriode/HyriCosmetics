@@ -30,7 +30,10 @@ public class SimpleTaskImpl extends BukkitRunnable implements SimpleTask {
 
     @Override
     public void run() {
-        getCosmeticTasks().forEach(CosmeticTask::run);
+        //getCosmeticTasks().forEach(CosmeticTask::run);
+        for (CosmeticTask task : getCosmeticTasks()) {
+            task.run();
+        }
     }
 
     @Override

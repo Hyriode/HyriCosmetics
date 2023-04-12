@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HyriCosmeticsImpl extends HyriCosmetics {
-
+    
     private final JavaPlugin plugin;
     private final IHyrame hyrame;
 

@@ -21,9 +21,5 @@ public class CosmeticsCommand extends HyriCommand<HyriCosmeticsPlugin> {
     @Override
     public void handle(HyriCommandContext ctx) {
         new CosmeticsGui((Player) ctx.getSender()).open();
-
-        for (CosmeticCategory category : HyriCosmetics.get().getCategories()) {
-            System.out.println(category.getName());
-        }
     }
 }
