@@ -1,19 +1,18 @@
 package fr.hyriode.cosmetics.task;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface TaskProvider {
 
-    CosmeticTask execute(Runnable task);
+    TaskNode initTaskNode(TaskNode taskNode);
 
-    void remove(CosmeticTask task);
+    boolean removeTaskNode(UUID nodeTaskUUID);
 
-    List<SimpleTask> getNodes();
+    void startTask(Task task);
 
-    List<CosmeticTask> getTasks();
+    void endTask(Task task);
 
-    CosmeticTask getTask(UUID uuid);
+    void shutdown();
 
-    void removeNode(SimpleTask node);
+    void stopTask(Task task);
 }

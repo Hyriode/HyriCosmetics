@@ -1,73 +1,70 @@
 package fr.hyriode.cosmetics.task;
 
+import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class TaskProviderImpl implements TaskProvider {
 
-    private final List<SimpleTask> nodes;
-    private final List<CosmeticTask> tasks;
+    private final List<Task> tasks;
+    private final BukkitScheduler bukkitScheduler;
 
     public TaskProviderImpl() {
-        this.nodes = new ArrayList<>();
         this.tasks = new ArrayList<>();
+        this.bukkitScheduler = Bukkit.getScheduler();
     }
 
     @Override
-    public CosmeticTask execute(Runnable task) {
-        final CosmeticTask cosmeticTask = new CosmeticTaskImpl(task);
-        this.tasks.add(cosmeticTask);
-
-        if (getAvailableNodes().isEmpty()) {
-            final SimpleTask node = new SimpleTaskImpl(this);
-            this.nodes.add(node);
-            cosmeticTask.assignNode(node);
-            node.getTasksUUID().add(cosmeticTask.getUUID());
-            node.init();
-        } else {
-            cosmeticTask.assignNode(getAvailableNodes().get(0));
-            getAvailableNodes().get(0).getTasksUUID().add(cosmeticTask.getUUID());
-        }
-
-        return cosmeticTask;
-    }
-
-    @Override
-    public void remove(CosmeticTask task) {
-        this.tasks.remove(task);
-        for (SimpleTask node : this.nodes) {
-            if (node.getTasksUUID().contains(task.getUUID())) {
-                node.getTasksUUID().remove(task.getUUID());
-                if (node.getTasksUUID().isEmpty()) {
-                    node.stop();
-                }
+    public TaskNode initTaskNode(final TaskNode taskNode) {
+        for (Task task : tasks) {
+            if (task.hasSpace()) {
+                return task.initTaskNode(taskNode);
             }
         }
-    }
-
-    public List<SimpleTask> getAvailableNodes() {
-        return this.nodes.stream().filter(taskNode -> taskNode.getCosmeticTasks().size() < 10).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<SimpleTask> getNodes() {
-        return this.nodes;
+        Task task = new TaskImpl();
+        tasks.add(task);
+        startTask(task);
+        return task.initTaskNode(taskNode);
     }
 
     @Override
-    public List<CosmeticTask> getTasks() {
-        return tasks;
+    public boolean removeTaskNode(final UUID nodeTaskUUID) {
+        for (Task task : tasks) {
+            if (task.removeTaskNode(nodeTaskUUID)) {
+                if (task.isEmpty()) {
+                    this.endTask(task);
+                    tasks.remove(task);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
-    public CosmeticTask getTask(UUID uuid) {
-        return this.tasks.stream().filter(cosmeticTask -> cosmeticTask.getUUID() == uuid).findFirst().orElse(null);
+    public void startTask(final Task task) {
+        final BukkitTask bukkitTask = bukkitScheduler.runTaskTimer(HyriCosmeticsPlugin.getPlugin(HyriCosmeticsPlugin.class), task, 0, 1L);
+        task.setTaskId(bukkitTask.getTaskId());
     }
 
     @Override
-    public void removeNode(SimpleTask node) {
-        this.nodes.remove(node);
+    public void endTask(final Task task) {
+        this.stopTask(task);
+        this.bukkitScheduler.cancelTask(task.getTaskId());
+    }
+
+    @Override
+    public void shutdown() {
+        this.bukkitScheduler.cancelTasks(HyriCosmeticsPlugin.getPlugin(HyriCosmeticsPlugin.class));
+    }
+
+    @Override
+    public void stopTask(final Task task) {
+        task.stop();
     }
 }
