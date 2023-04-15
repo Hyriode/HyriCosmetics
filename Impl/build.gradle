@@ -36,7 +36,7 @@ dependencies {
         exclude module: 'hyrame'
     }
 
-    compileOnly files('../libs/spigot-1.8.8-R0.1.jar')
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 tasks.withType(JavaCompile) {
