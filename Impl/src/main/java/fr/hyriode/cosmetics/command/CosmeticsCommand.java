@@ -1,9 +1,7 @@
 package fr.hyriode.cosmetics.command;
 
-import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
-import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.gui.CosmeticsGui;
+import fr.hyriode.cosmetics.gui.CosmeticsMainGui;
 import fr.hyriode.hyrame.command.HyriCommand;
 import fr.hyriode.hyrame.command.HyriCommandContext;
 import fr.hyriode.hyrame.command.HyriCommandInfo;
@@ -20,6 +18,6 @@ public class CosmeticsCommand extends HyriCommand<HyriCosmeticsPlugin> {
 
     @Override
     public void handle(HyriCommandContext ctx) {
-        new CosmeticsGui((Player) ctx.getSender()).open();
+        new CosmeticsMainGui((Player) ctx.getSender()).open();
     }
 }

@@ -1,34 +1,44 @@
 {
 
+  "cosmetics.equip": "§3Cosmetics §f| You have §aequipped §fthe cosmetic: §b%cosmetic%§f.",
+  "cosmetics.unequip": "§3Cosmetics §f| You have §cde-equipped §fthe cosmetic: §b%cosmetic%§f.",
+
   "cosmetic.type.gadget.name": "Gadgets",
   "cosmetic.type.gadget.description": "Liven up the server by displaying your many gadgets from the future!",
-
-
   "cosmetic.type.pet.name": "Pets",
   "cosmetic.type.pet.description": "Astfaster please do the descriptions",
-
-
   "cosmetic.type.mount.name": "Mounts",
   "cosmetic.type.mount.description": "Astfaster please do the descriptions",
-
-
   "cosmetic.type.armor.name": "Armors",
   "cosmetic.type.armor.description": "Astfaster please do the descriptions",
-
-
   "cosmetic.type.particle.name": "Particles",
   "cosmetic.type.particle.description": "Astfaster please do the descriptions",
 
-  "cosmetic.particle.fire_tornado.name": "Fire Tornado",
-  "cosmetic.particle.fire_tornado.description": "A fire tornado that follows you around",
+
+  "cosmetic.particle.fire_invocation.name": "Invocation of fire",
+  "cosmetic.particle.fire_invocation.description": "Invocation of the depths of the flames",
 
   "cosmetic.particle.enchanted.name": "Enchanted",
   "cosmetic.particle.enchanted.description": "A magical particle effect",
 
+  "cosmetic.particle.step_in_the_air.name": "Step in the air",
+  "cosmetic.particle.step_in_the_air.description": "Allows you to do a double jump!",
+
+  "cosmetic.particle.rainbow_twins.name": "Rainbow twins",
+  "cosmetic.particle.rainbow_twins.description": "Two little rainbows that follow you",
+
 
   "gui.cosmetic.name": "Cosmetics",
-  "gui.cosmetic.rarity": "Rarity",
-  "gui.cosmetic.unlocked": "&b%percentage%% unlocked &7(%unlocked%/%total%)"
+  "gui.cosmetic.filter.name": "Filters",
+  "gui.cosmetic.rarity": "§7Rarity",
+  "gui.cosmetic.unlocked": "§b%percentage%% unlocked §7(%unlocked%/%total%)",
+  "gui.cosmetic.price_two_option": "§7Price: %price1% §7or %price2%",
+  "gui.cosmetic.price_one_option": "§7Price: %price1%",
 
+  "gui.cosmetic.click_to_buy": "§3Click to buy",
+  "gui.cosmetic.click_to_equip": "§3Click to equip",
+  "gui.cosmetic.click_to_unequip": "§3Click to unequip",
+  "gui.cosmetic.click_to_edit": "§3Click to edit",
+  "gui.cosmetic.equipped.none.name": "§3No %type% equipped"
 
 }

@@ -2,6 +2,7 @@ package fr.hyriode.cosmetics.mount;
 
 import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
+import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
@@ -10,8 +11,8 @@ public abstract class AbstractMountImpl extends AbstractMount {
 
     private final Entity mountEntity;
 
-    public AbstractMountImpl(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemStack icon, Entity mountEntity) {
-        super(id, rarity, requireRank, tokenPrice, hyrisPrice, icon);
+    public AbstractMountImpl(CosmeticUser user, Cosmetics cosmetic, Entity mountEntity) {
+        super(user, cosmetic);
         this.mountEntity = mountEntity;
     }
 

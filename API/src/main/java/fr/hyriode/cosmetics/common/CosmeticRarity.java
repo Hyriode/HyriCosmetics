@@ -5,7 +5,7 @@ import fr.hyriode.api.color.HyriChatColor;
 public enum CosmeticRarity {
 
     COMMON("common",  HyriChatColor.WHITE),
-    RARE("rare", HyriChatColor.AQUA),
+    RARE("rare", HyriChatColor.YELLOW),
     EPIC("epic", HyriChatColor.DARK_PURPLE),
     LEGENDARY("legendary", HyriChatColor.GOLD)
     ;
@@ -25,4 +25,5 @@ public enum CosmeticRarity {
     public String getName() {
         return name;
     }
+
 }

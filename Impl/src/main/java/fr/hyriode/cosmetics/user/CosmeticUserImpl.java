@@ -2,9 +2,10 @@ package fr.hyriode.cosmetics.user;
 
 import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.player.IHyriPlayer;
+import fr.hyriode.api.rank.PlayerRank;
 import fr.hyriode.cosmetics.HyriCosmetics;
-import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
+import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.transaction.CosmeticTransaction;
 import org.bukkit.entity.Player;
 
@@ -16,6 +17,11 @@ public class CosmeticUserImpl implements CosmeticUser {
     private final Player player;
     private final Map<CosmeticCategory, PlayerCosmetic<?>> equippedCosmetics;
     private final UserData data;
+
+    private double lastX, lastY, lastZ;
+    private boolean isMoving = false;
+
+    private boolean doubleJumpEnabled = false;
 
     public CosmeticUserImpl(Player player) {
         this.player = player;
@@ -29,16 +35,21 @@ public class CosmeticUserImpl implements CosmeticUser {
             this.data = data;
         }
 
+        this.data.setUser(this);
+
         if (!this.data.getEquippedCosmetics().isEmpty()) {
             for (Map.Entry<String, String> entry : this.data.getEquippedCosmetics().entrySet()) {
-                final CosmeticCategory category = HyriCosmetics.get().getCategory(entry.getKey());
-                final AbstractCosmetic cosmetic = HyriCosmetics.get().getCosmetic(entry.getValue());
+                final Cosmetics cosmetic = HyriCosmetics.get().getCosmetic(entry.getValue());
 
                 if (cosmetic != null) {
-                    this.equippedCosmetics.put(category, new PlayerCosmeticImpl<>(cosmetic, this));
+                    this.equipCosmetic(cosmetic);
                 }
             }
         }
+
+        this.lastX = player.getLocation().getX();
+        this.lastY = player.getLocation().getY();
+        this.lastZ = player.getLocation().getZ();
     }
 
     @Override
@@ -52,15 +63,13 @@ public class CosmeticUserImpl implements CosmeticUser {
     }
 
     @Override
-    public void equipCosmetic(AbstractCosmetic cosmetic) {
+    public void equipCosmetic(Cosmetics cosmetic) {
         Objects.requireNonNull(cosmetic, "cosmetic must not be null");
 
         this.unequipCosmetic(cosmetic.getCategory());
-        final PlayerCosmetic<?> equipedCosmetic = this.equippedCosmetics
-                .put(cosmetic.getCategory(), new PlayerCosmeticImpl<>(cosmetic, this));
-        if (equipedCosmetic != null) {
-            equipedCosmetic.equip();
-        }
+        final PlayerCosmetic<?> equippedCosmetic = new PlayerCosmeticImpl<>(HyriCosmetics.get().createCosmetic(cosmetic, this), this);
+        this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
+        equippedCosmetic.equip();
     }
 
     @Override
@@ -68,16 +77,18 @@ public class CosmeticUserImpl implements CosmeticUser {
         Objects.requireNonNull(category, "category must not be null");
 
         if (this.equippedCosmetics.containsKey(category)) {
-            final PlayerCosmetic<?> playerCosmetic = this.equippedCosmetics.remove(category);
-            if (playerCosmetic != null) {
-                playerCosmetic.unequip();
-            }
+            this.equippedCosmetics.get(category).unequip();
+            this.equippedCosmetics.remove(category);
         }
     }
 
     @Override
-    public List<AbstractCosmetic> getUnlockedCosmetics() {
-        final List<AbstractCosmetic> result = new ArrayList<>();
+    public List<Cosmetics> getUnlockedCosmetics() {
+        final List<Cosmetics> result = new ArrayList<>();
+
+        for (Map.Entry<String, String> entry : this.data.getEquippedCosmetics().entrySet()) {
+
+        }
 
         if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
             result.addAll(this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)
@@ -92,7 +103,7 @@ public class CosmeticUserImpl implements CosmeticUser {
     }
 
     @Override
-    public List<AbstractCosmetic> getUnlockedCosmetics(CosmeticCategory category) {
+    public List<Cosmetics> getUnlockedCosmetics(CosmeticCategory category) {
         return this.getUnlockedCosmetics()
                 .stream()
                 .filter(cosmetic -> cosmetic.getCategory() == category)
@@ -100,17 +111,21 @@ public class CosmeticUserImpl implements CosmeticUser {
     }
 
     @Override
-    public void addUnlockedCosmetic(AbstractCosmetic cosmetic) {
-        this.asHyriPlayer().getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
+    public void addUnlockedCosmetic(Cosmetics cosmetic) {
+        final IHyriPlayer hyriPlayer = this.asHyriPlayer();
+        hyriPlayer.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
+        hyriPlayer.update();
     }
 
     @Override
-    public void removeUnlockedCosmetic(AbstractCosmetic cosmetic) {
-        this.asHyriPlayer().getTransactions().remove(CosmeticTransaction.TYPE, cosmetic.getId());
+    public void removeUnlockedCosmetic(Cosmetics cosmetic) {
+        final IHyriPlayer hyriPlayer = this.asHyriPlayer();
+        hyriPlayer.getTransactions().remove(CosmeticTransaction.TYPE, cosmetic.getId());
+        hyriPlayer.update();
     }
 
     @Override
-    public boolean hasUnlockedCosmetic(AbstractCosmetic cosmetic) {
+    public boolean hasUnlockedCosmetic(Cosmetics cosmetic) {
         return this.getUnlockedCosmetics().contains(cosmetic);
     }
 
@@ -133,9 +148,72 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void updateData() {
-        equippedCosmetics.forEach((category, playerCosmetic) -> data.getEquippedCosmetics().put(category.getName(), playerCosmetic.getCosmetic().getId()));
+        for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.equippedCosmetics.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null)
+                return;
+            this.data.getEquippedCosmetics().put(entry.getKey().getName(), entry.getValue().getCosmetic().getId());
+        }
         final IHyriPlayer hyriPlayer = this.asHyriPlayer();
         hyriPlayer.getData().add("cosmetics", this.data);
         hyriPlayer.update();
+    }
+
+    @Override
+    public boolean isDoubleJumpEnabled() {
+        return doubleJumpEnabled;
+    }
+
+    @Override
+    public void setDoubleJumpEnabled(boolean doubleJumpEnabled) {
+        if (doubleJumpEnabled) {
+            this.player.setAllowFlight(true);
+        } else {
+            if (!(HyriAPI.get().getServer().getType().equals("lobby") && (this.asHyriPlayer().getRank().isSuperior(PlayerRank.VIP_PLUS) || this.asHyriPlayer().getRank().isStaff()))) {
+                player.setAllowFlight(false);
+            }
+        }
+        this.doubleJumpEnabled = doubleJumpEnabled;
+    }
+
+    @Override
+    public double getLastX() {
+        return lastX;
+    }
+
+    @Override
+    public double getLastY() {
+        return lastY;
+    }
+
+    @Override
+    public double getLastZ() {
+        return lastZ;
+    }
+
+    @Override
+    public void updateLastLocation() {
+        this.lastX = player.getLocation().getX();
+        this.lastY = player.getLocation().getY();
+        this.lastZ = player.getLocation().getZ();
+    }
+
+    @Override
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    @Override
+    public void setMoving(boolean moving) {
+        isMoving = moving;
+    }
+
+    @Override
+    public boolean hasEquippedCosmetic(CosmeticCategory category) {
+        return this.equippedCosmetics.containsKey(category) && this.equippedCosmetics.get(category) != null;
+    }
+
+    @Override
+    public Cosmetics getEquippedCosmetic(CosmeticCategory category) {
+        return this.equippedCosmetics.get(category).getCosmetic().getCosmetic();
     }
 }

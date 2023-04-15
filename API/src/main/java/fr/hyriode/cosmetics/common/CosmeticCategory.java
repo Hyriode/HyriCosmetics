@@ -1,12 +1,11 @@
 package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
-import fr.hyriode.cosmetics.armor.ArmorManager;
-import fr.hyriode.cosmetics.complex.ComplexManager;
-import fr.hyriode.cosmetics.gadget.GadgetManager;
-import fr.hyriode.cosmetics.mount.MountManager;
-import fr.hyriode.cosmetics.particle.ParticleManager;
-import fr.hyriode.cosmetics.pet.PetManager;
+import fr.hyriode.cosmetics.armor.AbstractArmor;
+import fr.hyriode.cosmetics.gadget.AbstractGadget;
+import fr.hyriode.cosmetics.mount.AbstractMount;
+import fr.hyriode.cosmetics.particle.AbstractParticle;
+import fr.hyriode.cosmetics.pet.AbstractPet;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -26,29 +25,28 @@ public interface CosmeticCategory {
 
     ItemStack getIcon();
 
-    Class<? extends CosmeticManager> getManager();
-
     int getGuiSlot();
+
+    Class<? extends AbstractCosmetic> getCosmeticClass();
 
     enum Default implements CosmeticCategory {
 
-        GADGET("gadget", new ItemBuilder(Material.CARROT_STICK).build(), GadgetManager.class, 20),
-        PET("pet", new ItemBuilder(Material.BONE).build(), PetManager.class, 21),
-        MOUNT("mount", new ItemBuilder(Material.SADDLE).build(), MountManager.class, 22),
-        PARTICLE("particle", new ItemBuilder(Material.BLAZE_POWDER).build(), ParticleManager.class, 23),
-        ARMOR("armor", new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA).withAllItemFlags().build(), ArmorManager.class, 24),
-        COMPLEX("complex", new ItemBuilder(Material.GOLDEN_APPLE).withGlow().withAllItemFlags().build(), ComplexManager.class, 31);
+        GADGET("gadget", AbstractGadget.class, new ItemBuilder(Material.CARROT_STICK).build(), 20),
+        PET("pet", AbstractPet.class, new ItemBuilder(Material.BONE).build(), 21),
+        MOUNT("mount", AbstractMount.class, new ItemBuilder(Material.SADDLE).build(), 22),
+        PARTICLE("particle", AbstractParticle.class, new ItemBuilder(Material.BLAZE_POWDER).build(), 23),
+        ARMOR("armor", AbstractArmor.class, new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.AQUA).withAllItemFlags().build(), 24);
         ;
 
         private final String name;
         private final ItemStack icon;
-        private final Class<? extends CosmeticManager<?>> manager;
         private final int guiSlot;
+        private final Class<? extends AbstractCosmetic> cosmeticClass;
 
-        Default(final String name, final ItemStack icon, final Class<? extends CosmeticManager<?>> manager, final int guiSlot) {
+        Default(final String name, final Class<? extends AbstractCosmetic> cosmeticClass, final ItemStack icon, final int guiSlot) {
             this.name = name;
+            this.cosmeticClass = cosmeticClass;
             this.icon = icon;
-            this.manager = manager;
             this.guiSlot = guiSlot;
         }
 
@@ -63,13 +61,13 @@ public interface CosmeticCategory {
         }
 
         @Override
-        public Class<? extends CosmeticManager> getManager() {
-            return manager;
+        public int getGuiSlot() {
+            return guiSlot;
         }
 
         @Override
-        public int getGuiSlot() {
-            return guiSlot;
+        public Class<? extends AbstractCosmetic> getCosmeticClass() {
+            return cosmeticClass;
         }
     }
 

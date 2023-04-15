@@ -4,10 +4,13 @@ import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
+import fr.hyriode.cosmetics.common.Cosmetics;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractPet extends AbstractCosmetic {
-    public AbstractPet(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemStack icon, CosmeticCategory category) {
-        super(id, rarity, requireRank, tokenPrice, hyrisPrice, icon, category);
+
+    public AbstractPet(CosmeticUser user, Cosmetics cosmetic) {
+        super(user, cosmetic);
     }
 }

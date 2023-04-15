@@ -4,9 +4,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class HyriCosmeticsPlugin extends JavaPlugin {
 
+    private HyriCosmeticsImpl hyriCosmetics;
+
     @Override
     public void onEnable() {
-        new HyriCosmeticsImpl(this);
+        this.hyriCosmetics = new HyriCosmeticsImpl(this);
+    }
+
+    @Override
+    public void onDisable() {
+        hyriCosmetics.getTaskProvider().shutdown();
     }
 
 }

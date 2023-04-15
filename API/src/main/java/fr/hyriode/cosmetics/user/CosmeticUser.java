@@ -1,8 +1,8 @@
 package fr.hyriode.cosmetics.user;
 
 import fr.hyriode.api.player.IHyriPlayer;
-import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
+import fr.hyriode.cosmetics.common.Cosmetics;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -14,19 +14,19 @@ public interface CosmeticUser {
 
     IHyriPlayer asHyriPlayer();
 
-    void equipCosmetic(AbstractCosmetic cosmetic);
+    void equipCosmetic(Cosmetics cosmetic);
 
     void unequipCosmetic(CosmeticCategory category);
 
-    List<AbstractCosmetic> getUnlockedCosmetics();
+    List<Cosmetics> getUnlockedCosmetics();
 
-    List<AbstractCosmetic> getUnlockedCosmetics(CosmeticCategory category);
+    List<Cosmetics> getUnlockedCosmetics(CosmeticCategory category);
 
-    void addUnlockedCosmetic(AbstractCosmetic cosmetic);
+    void addUnlockedCosmetic(Cosmetics cosmetic);
 
-    void removeUnlockedCosmetic(AbstractCosmetic cosmetic);
+    void removeUnlockedCosmetic(Cosmetics cosmetic);
 
-    boolean hasUnlockedCosmetic(AbstractCosmetic cosmetic);
+    boolean hasUnlockedCosmetic(Cosmetics cosmetic);
 
     PlayerCosmetic<?> getCosmetic(CosmeticCategory category);
 
@@ -35,4 +35,24 @@ public interface CosmeticUser {
     UserData getData();
 
     void updateData();
+
+    boolean isDoubleJumpEnabled();
+
+    void setDoubleJumpEnabled(boolean doubleJumpEnabled);
+
+    double getLastX();
+
+    double getLastY();
+
+    double getLastZ();
+
+    void updateLastLocation();
+
+    boolean isMoving();
+
+    void setMoving(boolean moving);
+
+    boolean hasEquippedCosmetic(CosmeticCategory category);
+
+    Cosmetics getEquippedCosmetic(CosmeticCategory category);
 }

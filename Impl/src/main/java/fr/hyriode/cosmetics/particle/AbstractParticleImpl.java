@@ -1,49 +1,40 @@
 package fr.hyriode.cosmetics.particle;
 
-import fr.hyriode.api.rank.IHyriRankType;
-import fr.hyriode.cosmetics.common.CosmeticRarity;
-import fr.hyriode.cosmetics.particle.util.EffectUtil;
-import fr.hyriode.cosmetics.task.CosmeticTask;
-import fr.hyriode.cosmetics.task.CosmeticTaskImpl;
+import fr.hyriode.cosmetics.common.Cosmetics;
+import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
-import net.minecraft.server.v1_8_R3.EnumParticle;
+import fr.hyriode.hyrame.IHyrame;
 import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 
 public abstract class AbstractParticleImpl extends AbstractParticle {
 
-    public AbstractParticleImpl(String id, CosmeticRarity rarity, IHyriRankType requireRank, int tokenPrice, int hyrisPrice, ItemStack icon) {
-        super(id, rarity, requireRank, tokenPrice, hyrisPrice, icon);
+    public AbstractParticleImpl(CosmeticUser user, Cosmetics cosmetic) {
+        super(user, cosmetic);
     }
 
     @Override
-    CosmeticTask initTask(final CosmeticUser user) {
-        return new CosmeticTaskImpl(() -> this.tick(user));
+    TaskNode initTask(final CosmeticUser user) {
+        return new TaskNode(() -> this.tick(user));
     }
 
     @Override
     public void onEquip(final CosmeticUser user) {
         super.onEquip(user);
-        user.asBukkit().sendMessage("§7You have equipped the particle §b" + getId());
     }
 
     @Override
     public void onUnequip(final CosmeticUser user) {
-        super.onEquip(user);
-        user.asBukkit().sendMessage("§7You have unequipped the particle §b" + getId());
+        super.onUnequip(user);
     }
 
     public abstract void tick(final CosmeticUser user);
 
-    protected void display(EnumParticle effect, float x, float y, float z, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
-        new ParticleBuilder(ParticleEffect.valueOf(effect.name())).display();
-        EffectUtil.particle(effect, x, y, z, offsetX, offsetY, offsetZ, speed, amount);
-    }
-
-    protected void display(EnumParticle effect, Location location, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
-        EffectUtil.particle(effect, (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ, speed, amount);
+    protected void display(ParticleEffect effect, float x, float y, float z) {
+        new ParticleBuilder(ParticleEffect.valueOf(effect.name()), new Location(IHyrame.WORLD.get(), x, y, z))
+                .setAmount(1)
+                .display();
     }
 
 }

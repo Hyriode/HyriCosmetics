@@ -1,5 +1,7 @@
 package fr.hyriode.cosmetics.user;
 
+import fr.hyriode.cosmetics.HyriCosmetics;
+import fr.hyriode.cosmetics.common.CosmeticCategory;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -27,7 +29,16 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
 
     @Override
     public void deleteUser(Player player) {
-        this.users.get(player.getUniqueId()).updateData();
+        final CosmeticUser cosmeticUser = this.users.get(player.getUniqueId());
+        cosmeticUser.updateData();
+        for (CosmeticCategory category : HyriCosmetics.get().getCategories()) {
+            cosmeticUser.unequipCosmetic(category);
+        }
         this.users.remove(player.getUniqueId());
+    }
+
+    @Override
+    public Map<UUID, CosmeticUser> getUsers() {
+        return users;
     }
 }

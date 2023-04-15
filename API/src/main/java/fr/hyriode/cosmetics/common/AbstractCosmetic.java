@@ -3,52 +3,42 @@ package fr.hyriode.cosmetics.common;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.user.CosmeticUser;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractCosmetic {
 
-    private final String id;
-    private final CosmeticRarity rarity;
-    private final IHyriRankType requireRank;
-    private final int tokenPrice;
-    private final int hyrisPrice;
-    private final ItemStack icon;
-    private final CosmeticCategory category;
+    private final CosmeticUser user;
+    private final Cosmetics cosmetic;
 
-    public AbstractCosmetic(String id, CosmeticRarity rarity, IHyriRankType requireRank,
-                            int tokenPrice, int hyrisPrice, ItemStack icon, CosmeticCategory category)
-    {
-        this.id = id;
-        this.rarity = rarity;
-        this.requireRank = requireRank;
-        this.tokenPrice = tokenPrice;
-        this.hyrisPrice = hyrisPrice;
-        this.icon = icon;
-        this.category = category;
+    public AbstractCosmetic(CosmeticUser user, Cosmetics cosmetic) {
+        this.user = user;
+        this.cosmetic = cosmetic;
     }
 
     public String getId() {
-        return id;
+        return cosmetic.getId();
     }
 
     public CosmeticRarity getRarity() {
-        return rarity;
+        return cosmetic.getRarity();
     }
 
     public IHyriRankType getRequireRank() {
-        return requireRank;
+        return cosmetic.getRequireRank();
     }
 
-    public int getTokenPrice() {
-        return tokenPrice;
+    public int getHyodesPrice() {
+        return cosmetic.getHyodesPrice();
     }
 
     public int getHyrisPrice() {
-        return hyrisPrice;
+        return cosmetic.getHyrisPrice();
     }
 
     public ItemStack getIcon() {
-        return this.icon.clone();
+        return cosmetic.getIcon().clone();
     }
 
     public abstract void onEquip(final CosmeticUser user);
@@ -56,14 +46,33 @@ public abstract class AbstractCosmetic {
     public abstract void onUnequip(final CosmeticUser user);
 
     public CosmeticCategory getCategory() {
-        return category;
+        return cosmetic.getCategory();
     }
-
     public HyriLanguageMessage getTranslatedName() {
-        return HyriLanguageMessage.get("cosmetic." + category.getName() + "." + getId() + ".name");
+        return cosmetic.getTranslatedName();
     }
 
     public HyriLanguageMessage getTranslatedDescription() {
-        return HyriLanguageMessage.get("cosmetic." + category.getName() + "." + getId() + ".description");
+        return cosmetic.getTranslatedDescription();
+    }
+
+    public CosmeticUser getUser() {
+        return user;
+    }
+
+    public Cosmetics getCosmetic() {
+        return cosmetic;
+    }
+
+    public boolean isMoving() {
+        return user.isMoving();
+    }
+
+    public Location getLocation() {
+        return getPlayer().getLocation();
+    }
+
+    public Player getPlayer() {
+        return user.asBukkit();
     }
 }
