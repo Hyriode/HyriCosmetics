@@ -1,5 +1,18 @@
-plugins {
-    id 'java-library'
+apply plugin: 'idea'
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+group = 'fr.hyriode'
+version = '1.0.0'
+archivesBaseName = 'HyriCosmetics'
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
 }
 
 repositories {
@@ -10,8 +23,8 @@ repositories {
         url = 'https://maven.pkg.github.com/Hyriode/Hyrame/'
 
         credentials {
-            username "Pas2Pseudo"
-            password "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"
+            username System.getenv("GITHUB_USERNAME")
+            password System.getenv("GITHUB_TOKEN")
         }
     }
 
@@ -29,4 +42,32 @@ repositories {
 dependencies {
     api 'fr.hyriode:hyrame:1.3.9-SNAPSHOT'
     compileOnly files('../libs/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar')
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            pom {
+                groupId = project.group
+                artifactId = 'cosmetics'
+                version = project.version
+                name = 'HyriCosmetics'
+                description = 'Project with the abstract layer of the cosmetics API'
+                url = 'https://github.com/Hyriode/HyriCosmetics'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username System.getenv('GITHUB_USERNAME')
+                password System.getenv('GITHUB_TOKEN')
+            }
+            name = "HyriCosmetics_maven"
+            url = "https://maven.pkg.github.com/Hyriode/HyriCosmetics"
+        }
+    }
 }

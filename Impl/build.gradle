@@ -3,7 +3,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-group 'fr.hyriode.cosmetics'
+group 'fr.hyriode'
 version '1.0'
 
 repositories {
@@ -36,7 +36,7 @@ dependencies {
         exclude module: 'hyrame'
     }
 
-    compileOnly files('../libs/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar')
+    compileOnly files('../libs/spigot-1.8.8-R0.1.jar')
 }
 
 tasks.withType(JavaCompile) {
@@ -46,4 +46,10 @@ tasks.withType(JavaCompile) {
 shadowJar {
     archiveFileName = "HyriCosmetics-${version}.${extension}"
     configurations = [project.configurations.shadow]
+}
+
+processResources {
+    filter {
+        it.replace('@version@', "${ project.version }-${ commitSha }-${ buildNumber }")
+    }
 }
