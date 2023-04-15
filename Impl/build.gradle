@@ -5,6 +5,7 @@ plugins {
 
 group 'fr.hyriode'
 version '1.0'
+archivesBaseName = 'HyriCosmetics-Impl'
 
 repositories {
     mavenCentral()
@@ -44,7 +45,6 @@ tasks.withType(JavaCompile) {
 }
 
 shadowJar {
-    archiveFileName = "HyriCosmetics-${version}.${extension}"
     configurations = [project.configurations.shadow]
 }
 
