@@ -40,4 +40,4 @@ jobs:
           CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
           CONTAINER_NAME: ${{ secrets.DEV_CONTAINER }}
         with:
-          inlineScript: az storage blob upload-batch --connection-string $CONNECTION_STRING --source build/libs --destination $CONTAINER_NAME --destination-path cosmetics --overwrite
+          inlineScript: az storage blob upload-batch --connection-string $CONNECTION_STRING --source Impl/build/libs --destination $CONTAINER_NAME --destination-path cosmetics --overwrite
