@@ -20,16 +20,16 @@ jobs:
       - name: Download Spigot Jar
         uses: wei/curl@v1
         with:
-          args: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar --create-dirs -o libs/spigot.jar
+          args: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar --create-dirs -o Impl/libs/spigot.jar
 
       - name: Edit libraries folder permissions
-        run: sudo chmod -R 777 libs/
+        run: sudo chmod -R 777 Impl/libs/
 
       - name: Add SHORT_SHA env property with commit short sha
         run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
 
       - name: Build with Gradle
-        run: gradle build
+        run: gradle shadowJar
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}

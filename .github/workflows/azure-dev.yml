@@ -26,7 +26,7 @@ jobs:
         run: sudo chmod -R 777 Impl/libs/
 
       - name: Build  Jar
-        run: gradle build
+        run: gradle shadowJar
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
