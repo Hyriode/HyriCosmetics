@@ -1,5 +1,5 @@
 
-package fr.hyriode.cosmetics.algorythm;
+package fr.hyriode.cosmetics.algorithm;
 
 import fr.hyriode.cosmetics.utils.RGBValue;
 

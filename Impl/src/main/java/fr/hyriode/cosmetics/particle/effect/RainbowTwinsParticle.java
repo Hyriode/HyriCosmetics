@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.particle.effect;
 
-import fr.hyriode.cosmetics.algorythm.PowerConsciousHSV;
+import fr.hyriode.cosmetics.algorithm.PowerConsciousHSV;
 import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;

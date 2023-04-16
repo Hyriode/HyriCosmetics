@@ -2,9 +2,11 @@ package fr.hyriode.cosmetics.command;
 
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import fr.hyriode.cosmetics.gui.CosmeticsMainGui;
+import fr.hyriode.hyrame.IHyrame;
 import fr.hyriode.hyrame.command.HyriCommand;
 import fr.hyriode.hyrame.command.HyriCommandContext;
 import fr.hyriode.hyrame.command.HyriCommandInfo;
+import fr.hyriode.hyrame.language.HyrameMessage;
 import org.bukkit.entity.Player;
 
 public class CosmeticsCommand extends HyriCommand<HyriCosmeticsPlugin> {
@@ -18,6 +20,13 @@ public class CosmeticsCommand extends HyriCommand<HyriCosmeticsPlugin> {
 
     @Override
     public void handle(HyriCommandContext ctx) {
-        new CosmeticsMainGui((Player) ctx.getSender()).open();
+        final Player player = (Player) ctx.getSender();
+
+        if (IHyrame.get().getGameManager().getCurrentGame() != null) {
+            player.sendMessage(HyrameMessage.PERMISSION_ERROR.asString(player));
+            return;
+        }
+
+        new CosmeticsMainGui(player).open();
     }
 }

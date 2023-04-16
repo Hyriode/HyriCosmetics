@@ -70,7 +70,11 @@ public class CosmeticsGui extends PaginatedInventory {
             );
         }
 
-        this.setItem(49, new ItemBuilder(Material.ARROW).withName(name(owner, "go-back.display")).build(), event -> this.update());
+        this.setItem(49, new ItemBuilder(Material.ARROW).withName(name(owner, "go-back.display")).build(), event -> {
+            event.getWhoClicked().closeInventory();
+            new CosmeticsMainGui((Player) event.getWhoClicked()).open();
+        });
+
         this.setItem(51, new ItemBuilder(Material.RAILS).withName(name(owner, "gui.cosmetic.filter.item.name")).withLore(
                 name(owner, "gui.cosmetic.filter.item.lore")
                         //.replace("")
