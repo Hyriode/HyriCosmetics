@@ -4,11 +4,7 @@ import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.pet.AbstractPetImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.Chunk;
-import net.minecraft.server.v1_8_R3.EnumSkyBlock;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import xyz.xenondevs.particle.ParticleBuilder;
@@ -24,18 +20,7 @@ public class SnowManPet extends AbstractPetImpl {
     }
 
     @Override
-    public void onEquip(CosmeticUser user) {
-        this.spawn();
-        super.onEquip(user);
-    }
-
-    @Override
-    public void onUnequip(CosmeticUser user) {
-        this.remove();
-        super.onUnequip(user);
-    }
-
-    private void spawn() {
+    protected void spawn() {
         final Location l = getReferenceLocation();
         ArmorStand head = (ArmorStand) getPlayer().getWorld().spawnEntity(
                 new Location(l.getWorld(), l.getX(), l.getY() - 0.1, l.getZ(), l.getYaw(), l.getPitch()), EntityType.ARMOR_STAND);
@@ -59,7 +44,8 @@ public class SnowManPet extends AbstractPetImpl {
         this.moveAnimationTick();
     }
 
-    private void remove() {
+    @Override
+    protected void remove() {
         this.head.remove();
         this.head = null;
         this.body.remove();

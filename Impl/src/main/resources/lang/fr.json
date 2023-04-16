@@ -33,6 +33,9 @@
   "cosmetic.pet.snowman.name": "Bonhomme de neige",
   "cosmetic.pet.snowman.description": "Peu import la saison, il est toujours là ! (pas dit qu'il aime le soleil...)",
 
+  "cosmetic.pet.mini_me.name": "Mini moi",
+  "cosmetic.pet.mini_me.description": "Il vous ressemble étrangement... bizarre...",
+
 
   "gui.cosmetic.name": "Cosmetiques",
   "gui.cosmetic.filter.item.name": "§bTrier",

@@ -24,6 +24,7 @@ public enum Cosmetics {
 
     // == Pets ==
     SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 15000, 15000, Head.SNOWMAN_BODY.asItem()),
+    MINI_ME(Default.PET, "mini_me", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.SKULL_ITEM).withData((short) 3).build()),
     ;
 
     private static final Map<CosmeticCategory, List<Cosmetics>> cosmetics = new HashMap<>();

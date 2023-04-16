@@ -14,6 +14,7 @@ import fr.hyriode.cosmetics.particle.effect.EnchantedParticle;
 import fr.hyriode.cosmetics.particle.effect.FireInvocationParticle;
 import fr.hyriode.cosmetics.particle.effect.RainbowTwinsParticle;
 import fr.hyriode.cosmetics.particle.effect.StepInTheAirParticle;
+import fr.hyriode.cosmetics.pet.pets.MiniMe;
 import fr.hyriode.cosmetics.pet.pets.SnowManPet;
 import fr.hyriode.cosmetics.task.MainTask;
 import fr.hyriode.cosmetics.task.TaskProvider;
@@ -69,6 +70,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
         // == Pets ==
         this.registerCosmetic(Cosmetics.SNOWMAN, SnowManPet.class);
+        this.registerCosmetic(Cosmetics.MINI_ME, MiniMe.class);
     }
 
     @Override @SuppressWarnings("all")

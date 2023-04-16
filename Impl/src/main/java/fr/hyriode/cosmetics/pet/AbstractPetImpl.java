@@ -1,6 +1,7 @@
 package fr.hyriode.cosmetics.pet;
 
 import fr.hyriode.cosmetics.HyriCosmetics;
+import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
@@ -10,6 +11,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 
 public abstract class AbstractPetImpl extends AbstractPet {
@@ -26,22 +28,28 @@ public abstract class AbstractPetImpl extends AbstractPet {
         zombie.setTarget(user.asBukkit());
         zombie.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(Integer.MAX_VALUE, 1));
         zombie.addPotionEffect(PotionEffectType.SPEED.createEffect(Integer.MAX_VALUE, 1));
+        zombie.setMetadata("COSMETICS-PET", new FixedMetadataValue(
+                HyriCosmeticsPlugin.getProvidingPlugin(HyriCosmeticsPlugin.class),
+                this.getUser().asBukkit().getName())
+        );
     }
 
     @Override
     public void onEquip(final CosmeticUser user) {
         task = HyriCosmetics.get().getTaskProvider().initTaskNode(new TaskNode(() -> tick(user)));
+        this.spawn();
     }
 
     @Override
     public void onUnequip(final CosmeticUser user) {
         HyriCosmetics.get().getTaskProvider().removeTaskNode(task.getUUID());
+        this.remove();
     }
 
     @Override
     protected void tick(CosmeticUser user) {
         final double distance = zombie.getLocation().distance(getPlayer().getLocation());
-        if (zombie.getTarget() == null) {
+        if (zombie.getTarget() == null || !zombie.getTarget().getName().equals(getPlayer().getName())) {
             zombie.setTarget(getPlayer());
         }
 
@@ -60,6 +68,10 @@ public abstract class AbstractPetImpl extends AbstractPet {
             this.motionlessAnimationTick();
         }
     }
+
+    protected abstract void spawn();
+
+    protected abstract void remove();
 
     protected abstract void moveAnimationTick();
     public abstract void motionlessAnimationTick();
