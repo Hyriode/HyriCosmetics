@@ -1,7 +1,6 @@
 package fr.hyriode.cosmetics.listener;
 
 import fr.hyriode.cosmetics.HyriCosmetics;
-import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -13,6 +13,7 @@ import fr.hyriode.cosmetics.particle.effect.EnchantedParticle;
 import fr.hyriode.cosmetics.particle.effect.FireInvocationParticle;
 import fr.hyriode.cosmetics.particle.effect.RainbowTwinsParticle;
 import fr.hyriode.cosmetics.particle.effect.StepInTheAirParticle;
+import fr.hyriode.cosmetics.pet.pets.SnowManPet;
 import fr.hyriode.cosmetics.task.MainTask;
 import fr.hyriode.cosmetics.task.TaskProvider;
 import fr.hyriode.cosmetics.task.TaskProviderImpl;
@@ -56,10 +57,14 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     public void registerCosmetics() {
+        // == Particles ==
         this.registerCosmetic(Cosmetics.ENCHANTED, EnchantedParticle.class);
         this.registerCosmetic(Cosmetics.FIRE_INVOCATION, FireInvocationParticle.class);
         this.registerCosmetic(Cosmetics.STEP_IN_THE_AIR, StepInTheAirParticle.class);
         this.registerCosmetic(Cosmetics.RAINBOW_TWINS, RainbowTwinsParticle.class);
+
+        // == Pets ==
+        this.registerCosmetic(Cosmetics.SNOWMAN, SnowManPet.class);
     }
 
     @Override @SuppressWarnings("all")

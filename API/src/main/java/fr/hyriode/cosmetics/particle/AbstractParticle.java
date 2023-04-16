@@ -1,14 +1,10 @@
 package fr.hyriode.cosmetics.particle;
 
-import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
-import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
-import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractParticle extends AbstractCosmetic {
 
@@ -17,8 +13,6 @@ public abstract class AbstractParticle extends AbstractCosmetic {
     public AbstractParticle(CosmeticUser user, Cosmetics cosmetic) {
         super(user, cosmetic);
     }
-
-    abstract TaskNode initTask(final CosmeticUser user);
 
     protected abstract void tick(final CosmeticUser user);
 

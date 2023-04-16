@@ -2,9 +2,6 @@ package fr.hyriode.cosmetics.utils;
 
 import org.bukkit.util.Vector;
 
-import java.security.SecureRandom;
-import java.util.Random;
-
 public class MathUtil {
 
 

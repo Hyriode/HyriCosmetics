@@ -2,12 +2,10 @@ package fr.hyriode.cosmetics.listener;
 
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.spigotmc.event.entity.EntityDismountEvent;
 

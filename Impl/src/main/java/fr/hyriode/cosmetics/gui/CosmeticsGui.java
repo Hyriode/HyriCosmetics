@@ -2,7 +2,6 @@ package fr.hyriode.cosmetics.gui;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.HyriCosmetics;
-import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.user.CosmeticUser;

@@ -1,6 +1,5 @@
 package fr.hyriode.cosmetics.user;
 
-import fr.hyriode.api.language.HyriLanguage;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import org.bukkit.entity.Player;

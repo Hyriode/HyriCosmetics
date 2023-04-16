@@ -3,8 +3,8 @@ package fr.hyriode.cosmetics.common;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.api.rank.PlayerRank;
-import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory.Default;
+import fr.hyriode.cosmetics.utils.Head;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -16,10 +16,14 @@ import java.util.Map;
 
 public enum Cosmetics {
 
-    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.RARE, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.BOOK_AND_QUILL).build()),
+    // == Particles ==
+    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.RARE, PlayerRank.PLAYER, 15000, 15000, new ItemBuilder(Material.BOOK_AND_QUILL).build()),
     FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.LEGENDARY, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.LAVA_BUCKET).build()),
     STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP, -1, -1, new ItemBuilder(Material.FEATHER).build()),
     RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.INK_SACK, 1, 2).build()),
+
+    // == Pets ==
+    SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 15000, 15000, Head.SNOWMAN_BODY.asItem()),
     ;
 
     private static final Map<CosmeticCategory, List<Cosmetics>> cosmetics = new HashMap<>();

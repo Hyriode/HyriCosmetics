@@ -86,8 +86,15 @@ public class CosmeticUserImpl implements CosmeticUser {
     public List<Cosmetics> getUnlockedCosmetics() {
         final List<Cosmetics> result = new ArrayList<>();
 
-        for (Map.Entry<String, String> entry : this.data.getEquippedCosmetics().entrySet()) {
+        for (Map.Entry<CosmeticCategory, List<Cosmetics>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
+            final CosmeticCategory category = entry.getKey();
+            final List<Cosmetics> cosmetics = entry.getValue();
 
+            for (Cosmetics cosmetic : cosmetics) {
+//                if (this.asHyriPlayer().getRank().isSuperior(cosmetic.getRequireRank())) {
+//
+//                }
+            }
         }
 
         if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {

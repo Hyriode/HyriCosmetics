@@ -1,7 +1,6 @@
 package fr.hyriode.cosmetics.particle;
 
 import fr.hyriode.cosmetics.common.Cosmetics;
-import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.IHyrame;
 import org.bukkit.Location;
@@ -12,11 +11,6 @@ public abstract class AbstractParticleImpl extends AbstractParticle {
 
     public AbstractParticleImpl(CosmeticUser user, Cosmetics cosmetic) {
         super(user, cosmetic);
-    }
-
-    @Override
-    TaskNode initTask(final CosmeticUser user) {
-        return new TaskNode(() -> this.tick(user));
     }
 
     @Override
