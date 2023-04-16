@@ -9,6 +9,7 @@ import fr.hyriode.hyrame.inventory.HyriInventory;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import fr.hyriode.hyrame.language.HyrameMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -44,5 +45,9 @@ public class CosmeticsMainGui extends HyriInventory {
                             .build()
             , event -> new CosmeticsGui(owner, category).open());
         });
+
+        this.setItem(49, new ItemBuilder(Material.BARRIER)
+                .withName(ChatColor.RED + HyriLanguageMessage.get("gui.cosmetic.close").getValue(owner))
+                .build(), event -> owner.closeInventory());
     }
 }

@@ -45,4 +45,6 @@ public abstract class HyriCosmetics {
     public abstract Cosmetics getCosmetic(String name, CosmeticCategory category);
 
     public abstract Map<Cosmetics, Class<? extends AbstractCosmetic>> getCosmeticClasses();
+
+    public abstract boolean isLobbyServer();
 }

@@ -25,16 +25,16 @@ public class PlayerCosmeticImpl<T extends AbstractCosmetic> implements PlayerCos
     }
 
     @Override
-    public void equip() {
+    public void equip(boolean message) {
         final Player player = this.user.asBukkit();
-        this.user.asBukkit().sendMessage(HyriLanguageMessage.get("cosmetics.equip").getValue(player).replace("%cosmetic%", this.cosmetic.getTranslatedName().getValue(player)));
+        if (message) this.user.asBukkit().sendMessage(HyriLanguageMessage.get("cosmetics.equip").getValue(player).replace("%cosmetic%", this.cosmetic.getTranslatedName().getValue(player)));
         this.cosmetic.onEquip(this.user);
     }
 
     @Override
-    public void unequip() {
+    public void unequip(boolean message) {
         final Player player = this.user.asBukkit();
-        this.user.asBukkit().sendMessage(HyriLanguageMessage.get("cosmetics.unequip").getValue(player).replace("%cosmetic%", this.cosmetic.getTranslatedName().getValue(player)));
+        if (message) this.user.asBukkit().sendMessage(HyriLanguageMessage.get("cosmetics.unequip").getValue(player).replace("%cosmetic%", this.cosmetic.getTranslatedName().getValue(player)));
         this.cosmetic.onUnequip(this.user);
     }
 

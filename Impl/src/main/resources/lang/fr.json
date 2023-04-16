@@ -1,18 +1,20 @@
 {
 
-  "cosmetics.equip": "§3Cosmetics §f| Vous avez §aéquipé §fle cosmétique: §b%cosmetic%§f.",
-  "cosmetics.unequip": "§3Cosmetics §f| Vous avez §cdéséquipé §fle cosmétique: §b%cosmetic%§f.",
+  "cosmetics.equip": "§3Cosmetics §f┃ Vous avez §aéquipé §fle cosmétique: §b%cosmetic%§f.",
+  "cosmetics.unequip": "§3Cosmetics §f┃ Vous avez §cdéséquipé §fle cosmétique: §b%cosmetic%§f.",
 
   "cosmetic.type.gadget.name": "Gadgets",
   "cosmetic.type.gadget.description": "Animez le serveur en exposant vos nombreux gadgets venant du futur !",
-  "cosmetic.type.pet.name": "Compagnions",
+  "cosmetic.type.pet.name": "Companions",
   "cosmetic.type.pet.description": "Astfaster fait les descriptions stp",
-  "cosmetic.type.mount.name": "Montures",
-  "cosmetic.type.mount.description": "Astfaster fait les descriptions stp",
-  "cosmetic.type.armor.name": "Armures",
-  "cosmetic.type.armor.description": "Astfaster fait les descriptions stp",
   "cosmetic.type.particle.name": "Particules",
   "cosmetic.type.particle.description": "Astfaster fait les descriptions stp",
+  "cosmetic.type.balloon.name": "Ballons",
+  "cosmetic.type.balloon.description": "Astfaster fait les descriptions stp",
+  "cosmetic.type.bridger.name": "Bridger",
+  "cosmetic.type.bridger.description": "Astfaster please do the descriptions",
+  "cosmetic.type.bedwars.name": "Bedwars",
+  "cosmetic.type.bedwars.description": "Astfaster please do the descriptions",
 
 
   "cosmetic.particle.fire_invocation.name": "Invocation de feu",

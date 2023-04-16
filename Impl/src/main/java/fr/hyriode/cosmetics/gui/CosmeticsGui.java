@@ -86,7 +86,7 @@ public class CosmeticsGui extends PaginatedInventory {
                 new ItemBuilder(Material.HOPPER).withName(name(owner, "gui.cosmetic.click_to_unequip")).build(),
                 event -> {
                     if (user.hasEquippedCosmetic(category)) {
-                        user.unequipCosmetic(category);
+                        user.unequipCosmetic(category, true);
                         event.getWhoClicked().closeInventory();
                         update();
                         new CosmeticsGui((Player) event.getWhoClicked(), category).open();
@@ -140,7 +140,7 @@ public class CosmeticsGui extends PaginatedInventory {
         return event -> {
             if (event.isLeftClick()) {
                 this.owner.playSound(this.owner.getLocation(), Sound.VILLAGER_IDLE, 0.5F, 1.0F);
-                this.user.equipCosmetic(cosmetic);
+                this.user.equipCosmetic(cosmetic, true);
                 this.update();
             }
         };

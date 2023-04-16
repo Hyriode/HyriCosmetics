@@ -14,9 +14,9 @@ public interface CosmeticUser {
 
     IHyriPlayer asHyriPlayer();
 
-    void equipCosmetic(Cosmetics cosmetic);
+    void equipCosmetic(Cosmetics cosmetic, boolean message);
 
-    void unequipCosmetic(CosmeticCategory category);
+    void unequipCosmetic(CosmeticCategory category, boolean message);
 
     List<Cosmetics> getUnlockedCosmetics();
 

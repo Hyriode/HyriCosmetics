@@ -5,9 +5,10 @@ import fr.hyriode.api.color.HyriChatColor;
 public enum CosmeticRarity {
 
     COMMON("common",  HyriChatColor.WHITE),
-    RARE("rare", HyriChatColor.YELLOW),
+    RARE("rare", HyriChatColor.BLUE),
     EPIC("epic", HyriChatColor.DARK_PURPLE),
-    LEGENDARY("legendary", HyriChatColor.GOLD)
+    LEGENDARY("legendary", HyriChatColor.GOLD),
+    EXCLUSIVE("exclusive", HyriChatColor.LIGHT_PURPLE)
     ;
 
     private final String name;

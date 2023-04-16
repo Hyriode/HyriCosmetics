@@ -2,15 +2,17 @@ package fr.hyriode.cosmetics.pet.pets;
 
 import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.pet.AbstractPetImpl;
+import fr.hyriode.cosmetics.pet.PetPathFinder;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.Chunk;
+import net.minecraft.server.v1_8_R3.EnumSkyBlock;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftCreature;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.EulerAngle;
-import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 
@@ -88,12 +90,26 @@ public class SnowManPet extends AbstractPetImpl {
     @Override
     public void motionlessAnimationTick() {
         final Location l = getReferenceLocation();
-        head.teleport(new Location(l.getWorld(), l.getX(), l.getY() - 0.1, l.getZ(), l.getYaw(), l.getPitch()));
-//        leftArm.teleport(new Location(l.getWorld(), l.getX(), l.getY() - 0.1, l.getZ(), l.getYaw(), l.getPitch()));
-//        final Vector rightArmVector = l.getDirection().add(new Vector(0.6, -0.25, 0));
-//        rightArm.teleport(new Location(l.getWorld(), l.getX(), l.getY() - 0.6, l.getZ(), l.getYaw(), l.getPitch()).add(rightArmVector));
-        body.teleport(new Location(l.getWorld(), l.getX(), l.getY() - 1.4, l.getZ(), l.getYaw() - 180, l.getPitch()));
+
+        final Location headLocation = new Location(l.getWorld(), l.getX(), l.getY() - 0.1, l.getZ(), l.getYaw(), l.getPitch());
+        updateLightning(headLocation);
+        new PetPathFinder(((CraftCreature) head).getHandle(), headLocation, 1);
+
+        final Location bodyLocation = new Location(l.getWorld(), l.getX(), l.getY() - 1.4, l.getZ(), l.getYaw() - 180, l.getPitch());
+        updateLightning(bodyLocation);
+        new PetPathFinder(((CraftCreature) body).getHandle(), bodyLocation, 1);
+
         new ParticleBuilder(ParticleEffect.SNOW_SHOVEL, l).display();
     }
+
+    private void updateLightning(final Location location) {
+        BlockPosition bp = new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+        Chunk chunk = ((CraftWorld) location.getWorld()).getHandle().getChunkAtWorldCoords(bp);
+        chunk.a(EnumSkyBlock.SKY, bp, 15);
+    }
     //0.6, -1.3125, -0.25
+    /*
+    //        leftArm.teleport(new Location(l.getWorld(), l.getX(), l.getY() - 0.1, l.getZ(), l.getYaw(), l.getPitch()));
+//        final Vector rightArmVector = l.getDirection().add(new Vector(0.6, -0.25, 0));
+//        rightArm.teleport(new Location(l.getWorld(), l.getX(), l.getY() - 0.6, l.getZ(), l.getYaw(), l.getPitch()).add(rightArmVector));*/
 }

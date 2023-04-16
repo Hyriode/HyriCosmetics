@@ -1,5 +1,7 @@
 package fr.hyriode.cosmetics;
 
+import fr.hyriode.api.HyriAPI;
+import fr.hyriode.api.server.ILobbyAPI;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.Cosmetics;
@@ -7,7 +9,6 @@ import fr.hyriode.cosmetics.common.Filters.Owned;
 import fr.hyriode.cosmetics.common.Filters.Price;
 import fr.hyriode.cosmetics.common.Filters.Rarity;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
-import fr.hyriode.cosmetics.listener.EntityListener;
 import fr.hyriode.cosmetics.listener.PlayerListener;
 import fr.hyriode.cosmetics.particle.effect.EnchantedParticle;
 import fr.hyriode.cosmetics.particle.effect.FireInvocationParticle;
@@ -38,6 +39,8 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
     private final Map<Cosmetics, Class<? extends AbstractCosmetic>> cosmeticClasses;
 
+    private final boolean lobbyServer;
+
     public HyriCosmeticsImpl(JavaPlugin plugin) {
         this.plugin = plugin;
         this.hyrame = HyrameLoader.load(new HyriCosmeticsProvider(plugin));
@@ -50,10 +53,11 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         Bukkit.getScheduler().runTaskTimer(plugin, new MainTask(), 0, 1L);
 
         Bukkit.getServer().getPluginManager().registerEvents(new ConnectionListener(), plugin);
-        Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(), plugin);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), plugin);
 
         this.registerCosmetics();
+
+        this.lobbyServer = HyriAPI.get().getServer().getType().equals(ILobbyAPI.TYPE);
     }
 
     public void registerCosmetics() {
@@ -181,5 +185,10 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     @Override
     public Map<Cosmetics, Class<? extends AbstractCosmetic>> getCosmeticClasses() {
         return cosmeticClasses;
+    }
+
+    @Override
+    public boolean isLobbyServer() {
+        return lobbyServer;
     }
 }

@@ -8,7 +8,7 @@ public interface PlayerCosmetic<T extends AbstractCosmetic> {
 
     CosmeticUser getUser();
 
-    void equip();
+    void equip(boolean message);
 
-    void unequip();
+    void unequip(boolean message);
 }

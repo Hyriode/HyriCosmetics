@@ -1,54 +1,60 @@
 package fr.hyriode.cosmetics.pet;
 
-import com.google.gson.Gson;
+import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.Cosmetics;
+import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSilverfish;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Silverfish;
-import org.bukkit.potion.PotionEffect;
+import org.bukkit.entity.Zombie;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AbstractPetImpl extends AbstractPet {
 
+    protected Zombie zombie;
+    protected TaskNode task;
+
     public AbstractPetImpl(CosmeticUser user, Cosmetics cosmetic) {
-        super(user, cosmetic, (Silverfish) user.asBukkit().getWorld().spawnEntity(user.asBukkit().getLocation(), EntityType.SILVERFISH));
+        super(user, cosmetic);
+        this.zombie = (Zombie) user.asBukkit().getWorld().spawnEntity(user.asBukkit().getLocation(), EntityType.ZOMBIE);
         this.setEntitySilent();
 
-        silverfish.setTarget(user.asBukkit());
-        silverfish.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(Integer.MAX_VALUE, 1));
-        silverfish.addPotionEffect(PotionEffectType.SPEED.createEffect(Integer.MAX_VALUE, 1));
+        zombie.setBaby(true);
+        zombie.setTarget(user.asBukkit());
+        zombie.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(Integer.MAX_VALUE, 1));
+        zombie.addPotionEffect(PotionEffectType.SPEED.createEffect(Integer.MAX_VALUE, 1));
     }
 
     @Override
     public void onEquip(final CosmeticUser user) {
-        super.onEquip(user);
+        task = HyriCosmetics.get().getTaskProvider().initTaskNode(new TaskNode(() -> tick(user)));
     }
 
     @Override
     public void onUnequip(final CosmeticUser user) {
-        super.onUnequip(user);
+        HyriCosmetics.get().getTaskProvider().removeTaskNode(task.getUUID());
     }
 
     @Override
     protected void tick(CosmeticUser user) {
-        final double distance = silverfish.getLocation().distance(getPlayer().getLocation());
+        final double distance = zombie.getLocation().distance(getPlayer().getLocation());
+        if (zombie.getTarget() == null) {
+            zombie.setTarget(getPlayer());
+        }
 
         if ((isMoving() && distance > 2.5) || distance > 3) {
-            if (silverfish.hasPotionEffect(PotionEffectType.SLOW)) {
-                silverfish.removePotionEffect(PotionEffectType.SLOW);
+            if (zombie.hasPotionEffect(PotionEffectType.SLOW)) {
+                zombie.removePotionEffect(PotionEffectType.SLOW);
             }
             if (distance > 12) {
-                silverfish.teleport(getPlayer());
+                zombie.teleport(getPlayer());
             }
             this.moveAnimationTick();
         } else {
-            if (!silverfish.hasPotionEffect(PotionEffectType.SLOW)) {
-                silverfish.addPotionEffect(PotionEffectType.SLOW.createEffect(Integer.MAX_VALUE, 255));
+            if (!zombie.hasPotionEffect(PotionEffectType.SLOW)) {
+                zombie.addPotionEffect(PotionEffectType.SLOW.createEffect(Integer.MAX_VALUE, 255));
             }
             this.motionlessAnimationTick();
         }
@@ -58,10 +64,15 @@ public abstract class AbstractPetImpl extends AbstractPet {
     public abstract void motionlessAnimationTick();
 
     public void setEntitySilent() {
-        EntitySilverfish handle = ((CraftSilverfish) silverfish).getHandle();
+        EntityZombie handle = ((CraftZombie) zombie).getHandle();
         NBTTagCompound tag = new NBTTagCompound();
         handle.c(tag);
         tag.setBoolean("Silent", true);
         handle.f(tag);
+    }
+
+    @Override
+    public Location getReferenceLocation() {
+        return zombie.getLocation();
     }
 }

@@ -12,18 +12,6 @@ import org.spigotmc.event.entity.EntityDismountEvent;
 public class PlayerListener implements Listener {
 
     @EventHandler
-    public void onEntityDismount(EntityDismountEvent event) {
-        if (!(event.getEntity() instanceof Player)) return;
-        final CosmeticUser user = HyriCosmetics.get().getUserProvider().getUser((Player) event.getEntity());
-
-        if (user == null || user.getCosmetic(CosmeticCategory.Default.MOUNT) == null) {
-            return;
-        }
-
-        user.unequipCosmetic(CosmeticCategory.Default.MOUNT);
-    }
-
-    @EventHandler
     public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
         final CosmeticUser user = HyriCosmetics.get().getUserProvider().getUser(event.getPlayer());
 

@@ -1,6 +1,8 @@
 package fr.hyriode.cosmetics.particle;
 
+import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.Cosmetics;
+import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.IHyrame;
 import org.bukkit.Location;
@@ -9,18 +11,20 @@ import xyz.xenondevs.particle.ParticleEffect;
 
 public abstract class AbstractParticleImpl extends AbstractParticle {
 
+    protected TaskNode task;
+
     public AbstractParticleImpl(CosmeticUser user, Cosmetics cosmetic) {
         super(user, cosmetic);
     }
 
     @Override
     public void onEquip(final CosmeticUser user) {
-        super.onEquip(user);
+        task = HyriCosmetics.get().getTaskProvider().initTaskNode(new TaskNode(() -> tick(user)));
     }
 
     @Override
     public void onUnequip(final CosmeticUser user) {
-        super.onUnequip(user);
+        HyriCosmetics.get().getTaskProvider().removeTaskNode(task.getUUID());
     }
 
     public abstract void tick(final CosmeticUser user);

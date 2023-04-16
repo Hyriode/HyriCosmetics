@@ -3,6 +3,7 @@ package fr.hyriode.cosmetics.user;
 import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.player.IHyriPlayer;
 import fr.hyriode.api.rank.PlayerRank;
+import fr.hyriode.api.server.ILobbyAPI;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.Cosmetics;
@@ -37,19 +38,21 @@ public class CosmeticUserImpl implements CosmeticUser {
 
         this.data.setUser(this);
 
-        if (!this.data.getEquippedCosmetics().isEmpty()) {
-            for (Map.Entry<String, String> entry : this.data.getEquippedCosmetics().entrySet()) {
-                final Cosmetics cosmetic = HyriCosmetics.get().getCosmetic(entry.getValue());
+        if (HyriCosmetics.get().isLobbyServer()) {
+            if (!this.data.getEquippedCosmetics().isEmpty()) {
+                for (Map.Entry<String, String> entry : this.data.getEquippedCosmetics().entrySet()) {
+                    final Cosmetics cosmetic = HyriCosmetics.get().getCosmetic(entry.getValue());
 
-                if (cosmetic != null) {
-                    this.equipCosmetic(cosmetic);
+                    if (cosmetic != null) {
+                        this.equipCosmetic(cosmetic, false);
+                    }
                 }
             }
-        }
 
-        this.lastX = player.getLocation().getX();
-        this.lastY = player.getLocation().getY();
-        this.lastZ = player.getLocation().getZ();
+            this.lastX = player.getLocation().getX();
+            this.lastY = player.getLocation().getY();
+            this.lastZ = player.getLocation().getZ();
+        }
     }
 
     @Override
@@ -63,21 +66,21 @@ public class CosmeticUserImpl implements CosmeticUser {
     }
 
     @Override
-    public void equipCosmetic(Cosmetics cosmetic) {
+    public void equipCosmetic(Cosmetics cosmetic, boolean message) {
         Objects.requireNonNull(cosmetic, "cosmetic must not be null");
 
-        this.unequipCosmetic(cosmetic.getCategory());
+        this.unequipCosmetic(cosmetic.getCategory(), false);
         final PlayerCosmetic<?> equippedCosmetic = new PlayerCosmeticImpl<>(HyriCosmetics.get().createCosmetic(cosmetic, this), this);
         this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
-        equippedCosmetic.equip();
+        equippedCosmetic.equip(message);
     }
 
     @Override
-    public void unequipCosmetic(CosmeticCategory category) {
+    public void unequipCosmetic(CosmeticCategory category, boolean message) {
         Objects.requireNonNull(category, "category must not be null");
 
         if (this.equippedCosmetics.containsKey(category)) {
-            this.equippedCosmetics.get(category).unequip();
+            this.equippedCosmetics.get(category).unequip(message);
             this.equippedCosmetics.remove(category);
         }
     }
@@ -175,7 +178,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         if (doubleJumpEnabled) {
             this.player.setAllowFlight(true);
         } else {
-            if (!(HyriAPI.get().getServer().getType().equals("lobby") && (this.asHyriPlayer().getRank().isSuperior(PlayerRank.VIP_PLUS) || this.asHyriPlayer().getRank().isStaff()))) {
+            if (!(HyriCosmetics.get().isLobbyServer() && (this.asHyriPlayer().getRank().isSuperior(PlayerRank.VIP_PLUS) || this.asHyriPlayer().getRank().isStaff()))) {
                 player.setAllowFlight(false);
             }
         }

@@ -32,7 +32,7 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
         final CosmeticUser cosmeticUser = this.users.get(player.getUniqueId());
         cosmeticUser.updateData();
         for (CosmeticCategory category : HyriCosmetics.get().getCategories()) {
-            cosmeticUser.unequipCosmetic(category);
+            cosmeticUser.unequipCosmetic(category, false);
         }
         this.users.remove(player.getUniqueId());
     }
