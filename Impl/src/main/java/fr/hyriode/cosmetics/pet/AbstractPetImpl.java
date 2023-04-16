@@ -7,6 +7,7 @@ import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.bukkit.potion.PotionEffectType;
@@ -74,5 +75,14 @@ public abstract class AbstractPetImpl extends AbstractPet {
     @Override
     public Location getReferenceLocation() {
         return zombie.getLocation();
+    }
+
+    public void moveToPoint(final ArmorStand entity, final Location destination, final double speed) {
+        final Location origin = entity.getLocation();
+        final double distance = origin.distance(destination);
+        final double x = (1.0D + 0.07D * distance) * (destination.getX() - origin.getX()) / distance;
+        final double y = (1.0D + 0.03D * distance) * (destination.getY() - origin.getY()) / distance;
+        final double z = (1.0D + 0.07D * distance) * (destination.getZ() - origin.getZ()) / distance;
+        entity.setVelocity(entity.getVelocity().setX(x * speed).setY(y * speed).setZ(z * speed));
     }
 }
