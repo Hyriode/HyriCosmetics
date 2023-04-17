@@ -7,10 +7,9 @@ import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSilverfish;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Silverfish;
-import org.bukkit.entity.Zombie;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 
@@ -67,7 +66,7 @@ public abstract class AbstractComplexPet extends AbstractPetImpl {
     }
 
     public void setEntitySilent() {
-        EntityZombie handle = ((CraftZombie) referenceEntity).getHandle();
+        EntitySilverfish handle = ((CraftSilverfish) referenceEntity).getHandle();
         NBTTagCompound tag = new NBTTagCompound();
         handle.c(tag);
         tag.setBoolean("Silent", true);
