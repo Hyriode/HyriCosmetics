@@ -48,7 +48,7 @@
 
   "gui.cosmetic.click_to_buy": "§3Cliquer pour acheter",
   "gui.cosmetic.click_to_equip": "§3Cliquer pour équiper",
-  "gui.cosmetic.click_to_unequip": "§3Cliquer pour déséquiper",
+  "gui.cosmetic.click_to_unequip": "§cCliquer pour déséquiper",
   "gui.cosmetic.click_to_edit": "§3Cliquer pour modifier",
   "gui.cosmetic.equipped.none.name": "§3Pas de %type% équipé(e)",
   "gui.cosmetic.unequip.all": "§cTout déséquiper"

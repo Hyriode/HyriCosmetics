@@ -27,16 +27,17 @@ public class EnchantedParticle extends AbstractParticleImpl {
     public void tick(final CosmeticUser user) {
         if (isMoving()) {
             new ParticleBuilder(ParticleEffect.ENCHANTMENT_TABLE, getPlayer().getLocation().clone().add(getRandomVector()).add(0, 1, 0)).display();
-        } else {
-            this.i++;
-            if (this.i == 5) {
-                this.i = 0;
-                for (byte b = 0; b < this.points; b++) {
-                    double d = 6.283185307179586D * b / this.points;
-                    Location location = getPlayer().getLocation().clone().add(radius * Math.sin(d), 2.0D, radius * Math.cos(d));
-                    Vector vector = getPlayer().getLocation().add(0, 1, 0).toVector().subtract(getPlayer().getLocation().toVector()).normalize();
-                    new ParticleBuilder(ParticleEffect.ENCHANTMENT_TABLE, location.clone().add(0, -1, 0).add(vector)).display();
-                }
+            return;
+        }
+
+        this.i++;
+        if (this.i == 5) {
+            this.i = 0;
+            for (byte b = 0; b < this.points; b++) {
+                double d = 6.283185307179586D * b / this.points;
+                Location location = getPlayer().getLocation().clone().add(radius * Math.sin(d), 2.0D, radius * Math.cos(d));
+                Vector vector = getPlayer().getLocation().add(0, 1, 0).toVector().subtract(getPlayer().getLocation().toVector()).normalize();
+                new ParticleBuilder(ParticleEffect.ENCHANTMENT_TABLE, location.clone().add(0, -1, 0).add(vector)).display();
             }
         }
     }

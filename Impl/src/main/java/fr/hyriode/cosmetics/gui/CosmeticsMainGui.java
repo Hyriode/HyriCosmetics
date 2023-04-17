@@ -47,7 +47,7 @@ public class CosmeticsMainGui extends HyriInventory {
         });
 
         this.setItem(49, new ItemBuilder(Material.BARRIER)
-                .withName(ChatColor.RED + HyriLanguageMessage.get("gui.cosmetic.close").getValue(owner))
-                .build(), event -> owner.closeInventory());
+                .withName(ChatColor.RED + HyriLanguageMessage.get("gui.cosmetic.unequip.all").getValue(owner))
+                .build(), event -> user.getEquippedCosmetics().forEach((category, playerCosmetic) -> user.unequipCosmetic(category, true)));
     }
 }

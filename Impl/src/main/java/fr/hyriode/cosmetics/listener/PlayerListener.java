@@ -42,6 +42,7 @@ public class PlayerListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager().hasMetadata("COSMETICS-PET")) {
             event.setCancelled(true);
+            return;
         }
 
         if (event.getEntity().hasMetadata("COSMETICS-PET") && event.getDamager() instanceof Player) {
