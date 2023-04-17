@@ -4,10 +4,16 @@ import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockFadeEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
@@ -33,7 +39,7 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.MONITOR)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager().hasMetadata("COSMETICS-PET")) {
             event.setCancelled(true);
@@ -54,6 +60,13 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity().hasMetadata("COSMETICS-PET") && event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void on(EntityChangeBlockEvent event) {
+        if (event.getEntity().getType() == EntityType.SILVERFISH) {
             event.setCancelled(true);
         }
     }

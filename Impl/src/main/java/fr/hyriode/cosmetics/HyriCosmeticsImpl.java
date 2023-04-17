@@ -15,7 +15,7 @@ import fr.hyriode.cosmetics.particle.effect.FireInvocationParticle;
 import fr.hyriode.cosmetics.particle.effect.RainbowTwinsParticle;
 import fr.hyriode.cosmetics.particle.effect.StepInTheAirParticle;
 import fr.hyriode.cosmetics.pet.pets.MiniMe;
-import fr.hyriode.cosmetics.pet.pets.SnowManPet;
+import fr.hyriode.cosmetics.pet.pets.SnowManComplexPet;
 import fr.hyriode.cosmetics.task.MainTask;
 import fr.hyriode.cosmetics.task.TaskProvider;
 import fr.hyriode.cosmetics.task.TaskProviderImpl;
@@ -35,16 +35,18 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     private final JavaPlugin plugin;
     private final IHyrame hyrame;
 
+    private final boolean lobbyServer;
+
     private final TaskProvider taskProvider;
     private final CosmeticUserProvider userProvider;
 
     private final Map<Cosmetics, Class<? extends AbstractCosmetic>> cosmeticClasses;
 
-    private final boolean lobbyServer;
-
     public HyriCosmeticsImpl(JavaPlugin plugin) {
         this.plugin = plugin;
         this.hyrame = HyrameLoader.load(new HyriCosmeticsProvider(plugin));
+
+        this.lobbyServer = HyriAPI.get().getServer().getType().equals(ILobbyAPI.TYPE);
 
         this.taskProvider = new TaskProviderImpl();
         this.userProvider = new CosmeticUserProviderImpl();
@@ -54,11 +56,9 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         Bukkit.getScheduler().runTaskTimer(plugin, new MainTask(), 0, 1L);
 
         Bukkit.getServer().getPluginManager().registerEvents(new ConnectionListener(), plugin);
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), plugin);
+        if (this.lobbyServer) Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), plugin);
 
         this.registerCosmetics();
-
-        this.lobbyServer = HyriAPI.get().getServer().getType().equals(ILobbyAPI.TYPE);
     }
 
     public void registerCosmetics() {
@@ -69,7 +69,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         this.registerCosmetic(Cosmetics.RAINBOW_TWINS, RainbowTwinsParticle.class);
 
         // == Pets ==
-        this.registerCosmetic(Cosmetics.SNOWMAN, SnowManPet.class);
+        this.registerCosmetic(Cosmetics.SNOWMAN, SnowManComplexPet.class);
         this.registerCosmetic(Cosmetics.MINI_ME, MiniMe.class);
     }
 

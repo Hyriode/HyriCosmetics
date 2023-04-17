@@ -1,9 +1,8 @@
 package fr.hyriode.cosmetics.pet.pets;
 
 import fr.hyriode.cosmetics.common.Cosmetics;
-import fr.hyriode.cosmetics.pet.AbstractPetImpl;
+import fr.hyriode.cosmetics.pet.AbstractComplexPet;
 import fr.hyriode.cosmetics.user.CosmeticUser;
-import fr.hyriode.cosmetics.utils.Head;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -13,7 +12,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public class MiniMe extends AbstractPetImpl {
+public class MiniMe extends AbstractComplexPet {
 
     private ArmorStand minime;
 
@@ -52,17 +51,6 @@ public class MiniMe extends AbstractPetImpl {
     public void motionlessAnimationTick() {
         minime.teleport(this.setupLoc(getPlayer()));
     }
-
-//    private Location getLoc() {
-//        return new Location(
-//                getPlayer().getWorld(),
-//                getPlayer().getLocation().getX() + Math.sin((((getPlayer().getLocation().getPitch() + 90) * Math.PI) / 180) + 5 * Math.PI / 4),
-//                getPlayer().getLocation().getY() + 1,
-//                getPlayer().getLocation().getZ() + Math.cos((((getPlayer().getLocation().getPitch() + 90) * Math.PI) / 180) + 5 * Math.PI / 4),
-//                getPlayer().getLocation().getYaw(),
-//                getPlayer().getLocation().getPitch()
-//        );
-//    }
 
     private Vector getRightVector(Location paramLocation) {
         float f1 = (float)(paramLocation.getX() + -1.0D * Math.cos(Math.toRadians((paramLocation.getYaw() + 0.0F))));

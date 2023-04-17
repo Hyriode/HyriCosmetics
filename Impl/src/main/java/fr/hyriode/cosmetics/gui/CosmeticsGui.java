@@ -1,5 +1,6 @@
 package fr.hyriode.cosmetics.gui;
 
+import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
@@ -75,7 +76,7 @@ public class CosmeticsGui extends PaginatedInventory {
             new CosmeticsMainGui((Player) event.getWhoClicked()).open();
         });
 
-        this.setItem(51, new ItemBuilder(Material.RAILS).withName(name(owner, "gui.cosmetic.filter.item.name")).withLore(
+        this.setItem(51, new ItemBuilder(Material.HOPPER).withName(name(owner, "gui.cosmetic.filter.item.name")).withLore(
                 name(owner, "gui.cosmetic.filter.item.lore")
                         //.replace("")
                         .split("\n")
@@ -83,7 +84,7 @@ public class CosmeticsGui extends PaginatedInventory {
 
         this.setItem(
                 52,
-                new ItemBuilder(Material.HOPPER).withName(name(owner, "gui.cosmetic.click_to_unequip")).build(),
+                new ItemBuilder(Material.BARRIER).withName(name(owner, "gui.cosmetic.click_to_unequip")).build(),
                 event -> {
                     if (user.hasEquippedCosmetic(category)) {
                         user.unequipCosmetic(category, true);
@@ -124,7 +125,7 @@ public class CosmeticsGui extends PaginatedInventory {
                 .withName(ChatColor.AQUA + cosmetic.getTranslatedName().getValue(this.owner))
                 .withLore(StringUtil.splitIntoPhrases(cosmetic.getTranslatedDescription().getValue(this.owner), 35))
                 .appendLore("")
-                .appendLore( name(this.owner, "gui.cosmetic.rarity") + ": " + cosmetic.getRarity().getColor() +  cosmetic.getRarity().getName().toUpperCase());
+                .appendLore( name(this.owner, "gui.cosmetic.rarity") + ": " + cosmetic.getRarity().getColor() + HyriChatColor.BOLD + cosmetic.getRarity().getName().toUpperCase());
 
         if (user.hasEquippedCosmetic(category) && user.getEquippedCosmetic(category) == cosmetic) {
             footer = name(owner, "gui.cosmetic.click_to_edit");

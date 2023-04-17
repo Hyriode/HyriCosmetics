@@ -1,7 +1,7 @@
 package fr.hyriode.cosmetics.pet.pets;
 
 import fr.hyriode.cosmetics.common.Cosmetics;
-import fr.hyriode.cosmetics.pet.AbstractPetImpl;
+import fr.hyriode.cosmetics.pet.AbstractComplexPet;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
 import org.bukkit.Location;
@@ -10,12 +10,12 @@ import org.bukkit.entity.EntityType;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 
-public class SnowManPet extends AbstractPetImpl {
+public class SnowManComplexPet extends AbstractComplexPet {
 
     private ArmorStand head;
     private ArmorStand body;
 
-    public SnowManPet(CosmeticUser user) {
+    public SnowManComplexPet(CosmeticUser user) {
         super(user, Cosmetics.SNOWMAN);
     }
 
