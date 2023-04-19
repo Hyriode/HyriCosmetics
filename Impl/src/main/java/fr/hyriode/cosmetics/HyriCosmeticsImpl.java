@@ -3,8 +3,8 @@ package fr.hyriode.cosmetics;
 import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.server.ILobbyAPI;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.common.Filters.Owned;
 import fr.hyriode.cosmetics.common.Filters.Price;
 import fr.hyriode.cosmetics.common.Filters.Rarity;
@@ -40,13 +40,13 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     private final TaskProvider taskProvider;
     private final CosmeticUserProvider userProvider;
 
-    private final Map<Cosmetics, Class<? extends AbstractCosmetic>> cosmeticClasses;
+    private final Map<Cosmetic, Class<? extends AbstractCosmetic>> cosmeticClasses;
 
     public HyriCosmeticsImpl(JavaPlugin plugin) {
         this.plugin = plugin;
         this.hyrame = HyrameLoader.load(new HyriCosmeticsProvider(plugin));
 
-        this.lobbyServer = HyriAPI.get().getServer().getType().equals(ILobbyAPI.TYPE);
+        this.lobbyServer = HyriAPI.get().getServer().getType().equals(ILobbyAPI.TYPE) || HyriAPI.get().getConfig().isDevEnvironment();
 
         this.taskProvider = new TaskProviderImpl();
         this.userProvider = new CosmeticUserProviderImpl();
@@ -63,18 +63,18 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
     public void registerCosmetics() {
         // == Particles ==
-        this.registerCosmetic(Cosmetics.ENCHANTED, EnchantedParticle.class);
-        this.registerCosmetic(Cosmetics.FIRE_INVOCATION, FireInvocationParticle.class);
-        this.registerCosmetic(Cosmetics.STEP_IN_THE_AIR, StepInTheAirParticle.class);
-        this.registerCosmetic(Cosmetics.RAINBOW_TWINS, RainbowTwinsParticle.class);
+        this.registerCosmetic(Cosmetic.ENCHANTED, EnchantedParticle.class);
+        this.registerCosmetic(Cosmetic.FIRE_INVOCATION, FireInvocationParticle.class);
+        this.registerCosmetic(Cosmetic.STEP_IN_THE_AIR, StepInTheAirParticle.class);
+        this.registerCosmetic(Cosmetic.RAINBOW_TWINS, RainbowTwinsParticle.class);
 
         // == Pets ==
-        this.registerCosmetic(Cosmetics.SNOWMAN, SnowManComplexPet.class);
-        this.registerCosmetic(Cosmetics.MINI_ME, MiniMe.class);
+        this.registerCosmetic(Cosmetic.SNOWMAN, SnowManComplexPet.class);
+        this.registerCosmetic(Cosmetic.MINI_ME, MiniMe.class);
     }
 
     @Override @SuppressWarnings("all")
-    public <T extends AbstractCosmetic> T createCosmetic(Cosmetics cosmetic, CosmeticUser user) {
+    public <T extends AbstractCosmetic> T createCosmetic(Cosmetic cosmetic, CosmeticUser user) {
         try {
             return (T) this.getCosmeticClass(cosmetic).getConstructor(CosmeticUser.class).newInstance(user);
         } catch (Exception e) {
@@ -85,12 +85,12 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     @Override
-    public void registerCosmetic(Cosmetics cosmetic, Class<? extends AbstractCosmetic> cosmeticClass) {
+    public void registerCosmetic(Cosmetic cosmetic, Class<? extends AbstractCosmetic> cosmeticClass) {
         this.cosmeticClasses.put(cosmetic, cosmeticClass);
     }
 
     @Override
-    public Class<? extends AbstractCosmetic> getCosmeticClass(Cosmetics cosmetic) {
+    public Class<? extends AbstractCosmetic> getCosmeticClass(Cosmetic cosmetic) {
         return this.cosmeticClasses.get(cosmetic);
     }
 
@@ -106,7 +106,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
     @Override
     public List<CosmeticCategory> getCategories() {
-        return Cosmetics.getCategories();
+        return Cosmetic.getCategories();
     }
 
     @Override
@@ -121,17 +121,17 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     @Override
-    public Map<CosmeticCategory, List<Cosmetics>> getCosmetics() {
-        return Cosmetics.getCosmetics();
+    public Map<CosmeticCategory, List<Cosmetic>> getCosmetics() {
+        return Cosmetic.getCosmetics();
     }
 
     @Override
-    public List<Cosmetics> getFilteredCosmetics(CosmeticUser user, CosmeticCategory category) {
+    public List<Cosmetic> getFilteredCosmetics(CosmeticUser user, CosmeticCategory category) {
         final Owned owned = user.getData().getFilters().getOwned();
         final Rarity rarity = user.getData().getFilters().getRarity();
         final Price price = user.getData().getFilters().getPrice();
 
-        List<Cosmetics> cosmetics = new ArrayList<>(this.getCosmetics().get(category));
+        List<Cosmetic> cosmetics = new ArrayList<>(this.getCosmetics().get(category));
 
         if (owned != Owned.ALL) {
             if (owned == Owned.YES) {
@@ -142,7 +142,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         }
 
         if (rarity != Rarity.NO) {
-            Comparator<Cosmetics> rarityComparator = Comparator.comparing(Cosmetics::getRarity);
+            Comparator<Cosmetic> rarityComparator = Comparator.comparing(Cosmetic::getRarity);
             if (rarity == Rarity.ASCENDING) {
                 cosmetics.sort(rarityComparator);
             } else if (rarity == Rarity.DESCENDING) {
@@ -151,7 +151,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         }
 
         if (price != Price.NO) {
-            Comparator<Cosmetics> priceComparator = Comparator.comparing(Cosmetics::getHyrisPrice);
+            Comparator<Cosmetic> priceComparator = Comparator.comparing(Cosmetic::getHyrisPrice);
             if (price == Price.ASCENDING) {
                 cosmetics.sort(priceComparator);
             } else if (price == Price.DESCENDING) {
@@ -163,9 +163,9 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     @Override
-    public Cosmetics getCosmetic(final String name) {
+    public Cosmetic getCosmetic(final String name) {
         for (CosmeticCategory category : this.getCosmetics().keySet()) {
-            for (Cosmetics cosmetic : this.getCosmetics().get(category)) {
+            for (Cosmetic cosmetic : this.getCosmetics().get(category)) {
                 if (cosmetic.getId().equalsIgnoreCase(name)) {
                     return cosmetic;
                 }
@@ -175,8 +175,8 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     @Override
-    public Cosmetics getCosmetic(final String name, final CosmeticCategory category) {
-        for (Cosmetics cosmetic : this.getCosmetics().get(category)) {
+    public Cosmetic getCosmetic(final String name, final CosmeticCategory category) {
+        for (Cosmetic cosmetic : this.getCosmetics().get(category)) {
             if (cosmetic.getId().equalsIgnoreCase(name)) {
                 return cosmetic;
             }
@@ -185,7 +185,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     }
 
     @Override
-    public Map<Cosmetics, Class<? extends AbstractCosmetic>> getCosmeticClasses() {
+    public Map<Cosmetic, Class<? extends AbstractCosmetic>> getCosmeticClasses() {
         return cosmeticClasses;
     }
 

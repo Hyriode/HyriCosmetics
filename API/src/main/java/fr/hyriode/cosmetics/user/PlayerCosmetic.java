@@ -4,11 +4,13 @@ import fr.hyriode.cosmetics.common.AbstractCosmetic;
 
 public interface PlayerCosmetic<T extends AbstractCosmetic> {
 
-    T getCosmetic();
+    T getAbstractCosmetic();
 
     CosmeticUser getUser();
 
     void equip(boolean message);
 
     void unequip(boolean message);
+
+    boolean hasVariants();
 }

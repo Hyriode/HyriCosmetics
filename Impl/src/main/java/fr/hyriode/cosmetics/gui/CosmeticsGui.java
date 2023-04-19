@@ -3,9 +3,10 @@ package fr.hyriode.cosmetics.gui;
 import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.HyriCosmetics;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.user.CosmeticUser;
+import fr.hyriode.cosmetics.user.PlayerCosmetic;
 import fr.hyriode.cosmetics.utils.StringUtil;
 import fr.hyriode.hyrame.inventory.pagination.PaginatedInventory;
 import fr.hyriode.hyrame.inventory.pagination.PaginatedItem;
@@ -27,25 +28,20 @@ public class CosmeticsGui extends PaginatedInventory {
 
     private final CosmeticUser user;
     private final CosmeticCategory category;
+    private final List<Cosmetic> cosmetics;
+    private final List<Cosmetic> unlockedCosmetics;
 
     public CosmeticsGui(final Player owner, final CosmeticCategory category) {
         super(owner, name(owner, "gui.cosmetic.name"), 9 * 6);
         this.user = HyriCosmetics.get().getUserProvider().getUser(owner.getUniqueId());
         this.category = category;
+        this.cosmetics = new ArrayList<>(HyriCosmetics.get().getCosmetics().get(category));
+        this.unlockedCosmetics = new ArrayList<>(user.getUnlockedCosmetics(category));
 
-        this.paginationManager.setArea(new PaginationArea(21, 33));
+        this.paginationManager.setArea(new PaginationArea(20, 33));
         this.applyDesign(Design.BORDER);
 
-        this.update();
-    }
-
-    @Override
-    public void update() {
-        final List<Cosmetics> cosmetics = HyriCosmetics.get().getCosmetics().get(category);
-        final List<Cosmetics> unlockedCosmetics = user.getUnlockedCosmetics(category);
-
-        this.setItem(
-                4,
+        this.setItem(4,
                 new ItemBuilder(category.getIcon())
                         .withName("§b" + category.getTranslatedName().getValue(owner))
                         .withLore(StringUtil.splitIntoPhrases(category.getTranslatedDescription().getValue(owner), 40))
@@ -57,33 +53,18 @@ public class CosmeticsGui extends PaginatedInventory {
                         ).build()
         );
 
-        if (!user.hasEquippedCosmetic(category)) {
-            this.setItem(20,
-                    new ItemBuilder(Material.BARRIER)
-                            .withName(name(owner, "gui.cosmetic.equipped.none.name").replace("%type%", category.getTranslatedName().getValue(owner)))
-                            .build()
-            );
-        } else {
-            this.setItem(
-                    20,
-                    this.createCosmeticItem(user.getEquippedCosmetic(category)),
-                    this.clickEvent(user.getEquippedCosmetic(category))
-            );
-        }
-
-        this.setItem(49, new ItemBuilder(Material.ARROW).withName(name(owner, "go-back.display")).build(), event -> {
-            event.getWhoClicked().closeInventory();
-            new CosmeticsMainGui((Player) event.getWhoClicked()).open();
-        });
+        this.setItem(49,
+                new ItemBuilder(Material.ARROW).withName(name(owner, "go-back.display")).build(), event -> {
+                    event.getWhoClicked().closeInventory();
+                    new CosmeticsMainGui((Player) event.getWhoClicked()).open();
+                }
+        );
 
         this.setItem(51, new ItemBuilder(Material.HOPPER).withName(name(owner, "gui.cosmetic.filter.item.name")).withLore(
-                name(owner, "gui.cosmetic.filter.item.lore")
-                        //.replace("")
-                        .split("\n")
+                name(owner, "gui.cosmetic.filter.item.lore").split("\n")
         ).build(), event -> this.update());
 
-        this.setItem(
-                52,
+        this.setItem(52,
                 new ItemBuilder(Material.BARRIER).withName(name(owner, "gui.cosmetic.click_to_unequip")).build(),
                 event -> {
                     if (user.hasEquippedCosmetic(category)) {
@@ -108,18 +89,31 @@ public class CosmeticsGui extends PaginatedInventory {
         final Pagination<PaginatedItem> pagination = this.paginationManager.getPagination();
         pagination.clear();
 
-        List<Cosmetics> cosmetics = new ArrayList<>(HyriCosmetics.get().getFilteredCosmetics(user, category));
+        if (!user.hasEquippedCosmetic(category)) {
+            pagination.add(PaginatedItem.from(
+                    new ItemBuilder(Material.BARRIER)
+                    .withName(name(owner, "gui.cosmetic.equipped.none.name").replace("%type%", category.getTranslatedName().getValue(owner)))
+                    .build()
+            ));
+        } else {
+            pagination.add(PaginatedItem.from(
+                    this.createCosmeticItem(user.getEquippedCosmetic(category)),
+                    this.clickEvent(user.getEquippedCosmetic(category))
+            ));
+        }
+
+        List<Cosmetic> cosmetics = new ArrayList<>(HyriCosmetics.get().getFilteredCosmetics(user, category));
         if (user.hasEquippedCosmetic(category)) {
             cosmetics.remove(user.getEquippedCosmetic(category));
         }
-        for (Cosmetics cosmetic : cosmetics) {
+        for (Cosmetic cosmetic : cosmetics) {
             pagination.add(PaginatedItem.from(this.createCosmeticItem(cosmetic), this.clickEvent(cosmetic)));
         }
 
         this.paginationManager.updateGUI();
     }
 
-    private ItemStack createCosmeticItem(final Cosmetics cosmetic) {
+    private ItemStack createCosmeticItem(final Cosmetic cosmetic) {
         final String footer;
         final ItemBuilder builder = new ItemBuilder(cosmetic.getIcon())
                 .withName(ChatColor.AQUA + cosmetic.getTranslatedName().getValue(this.owner))
@@ -128,7 +122,11 @@ public class CosmeticsGui extends PaginatedInventory {
                 .appendLore( name(this.owner, "gui.cosmetic.rarity") + ": " + cosmetic.getRarity().getColor() + HyriChatColor.BOLD + cosmetic.getRarity().getName().toUpperCase());
 
         if (user.hasEquippedCosmetic(category) && user.getEquippedCosmetic(category) == cosmetic) {
-            footer = name(owner, "gui.cosmetic.click_to_edit");
+            if (!user.getEquippedCosmetics().get(category).getAbstractCosmetic().hasVariants()) {
+                footer = name(owner, "gui.cosmetic.already_equipped");
+            } else {
+                footer = name(owner, "gui.cosmetic.click_to_edit");
+            }
             builder.withGlow();
         } else {
             footer = name(owner, "gui.cosmetic.click_to_equip");
@@ -137,12 +135,21 @@ public class CosmeticsGui extends PaginatedInventory {
         return builder.appendLore("").appendLore(footer).build();
     }
 
-    private Consumer<InventoryClickEvent> clickEvent(Cosmetics cosmetic) {
+    private Consumer<InventoryClickEvent> clickEvent(Cosmetic cosmetic) {
         return event -> {
-            if (event.isLeftClick()) {
-                this.owner.playSound(this.owner.getLocation(), Sound.VILLAGER_IDLE, 0.5F, 1.0F);
+            if (event.isLeftClick() || event.isRightClick()) {
+                if (user.hasEquippedCosmetic(category) && user.getPlayerCosmetic(category).getAbstractCosmetic().getType() == cosmetic) {
+                    PlayerCosmetic<?> equippedCosmetic = user.getPlayerCosmetic(category);
+                    if (equippedCosmetic.getAbstractCosmetic().hasVariants()) {
+                        new CosmeticVariantsGui(this.owner, equippedCosmetic).open();
+                        return;
+                    }
+                    return;
+                }
                 this.user.equipCosmetic(cosmetic, true);
-                this.update();
+                this.owner.playSound(this.owner.getLocation(), Sound.VILLAGER_IDLE, 0.5F, 1.0F);
+                this.owner.getOpenInventory().close();
+
             }
         };
     }

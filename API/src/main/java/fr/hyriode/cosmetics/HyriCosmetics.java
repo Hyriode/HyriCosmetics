@@ -1,8 +1,8 @@
 package fr.hyriode.cosmetics;
 
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.Cosmetics;
 import fr.hyriode.cosmetics.task.TaskProvider;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.user.CosmeticUserProvider;
@@ -18,11 +18,11 @@ public abstract class HyriCosmetics {
         instance = this;
     }
 
-    public abstract <T extends AbstractCosmetic> T createCosmetic(Cosmetics cosmetic, CosmeticUser user);
+    public abstract <T extends AbstractCosmetic> T createCosmetic(Cosmetic cosmetic, CosmeticUser user);
 
-    public abstract void registerCosmetic(Cosmetics cosmetic, Class<? extends AbstractCosmetic> cosmeticClass);
+    public abstract void registerCosmetic(Cosmetic cosmetic, Class<? extends AbstractCosmetic> cosmeticClass);
 
-    public abstract Class<? extends AbstractCosmetic> getCosmeticClass(Cosmetics cosmetic);
+    public abstract Class<? extends AbstractCosmetic> getCosmeticClass(Cosmetic cosmetic);
 
     public abstract TaskProvider getTaskProvider();
 
@@ -36,15 +36,15 @@ public abstract class HyriCosmetics {
 
     public abstract CosmeticCategory getCategory(String name);
 
-    public abstract Map<CosmeticCategory, List<Cosmetics>> getCosmetics();
+    public abstract Map<CosmeticCategory, List<Cosmetic>> getCosmetics();
 
-    public abstract List<Cosmetics> getFilteredCosmetics(CosmeticUser user, CosmeticCategory category);
+    public abstract List<Cosmetic> getFilteredCosmetics(CosmeticUser user, CosmeticCategory category);
 
-    public abstract Cosmetics getCosmetic(String name);
+    public abstract Cosmetic getCosmetic(String name);
 
-    public abstract Cosmetics getCosmetic(String name, CosmeticCategory category);
+    public abstract Cosmetic getCosmetic(String name, CosmeticCategory category);
 
-    public abstract Map<Cosmetics, Class<? extends AbstractCosmetic>> getCosmeticClasses();
+    public abstract Map<Cosmetic, Class<? extends AbstractCosmetic>> getCosmeticClasses();
 
     public abstract boolean isLobbyServer();
 }

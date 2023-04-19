@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum Cosmetics {
+public enum Cosmetic {
 
     // == Particles ==
     ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.RARE, PlayerRank.PLAYER, 15000, 15000, new ItemBuilder(Material.BOOK_AND_QUILL).build()),
@@ -27,9 +27,9 @@ public enum Cosmetics {
     MINI_ME(Default.PET, "mini_me", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.SKULL_ITEM).withData((short) 3).build()),
     ;
 
-    private static final Map<CosmeticCategory, List<Cosmetics>> cosmetics = new HashMap<>();
+    private static final Map<CosmeticCategory, List<Cosmetic>> cosmetics = new HashMap<>();
     static {
-        for (Cosmetics cosmetic : Cosmetics.values()) {
+        for (Cosmetic cosmetic : Cosmetic.values()) {
             if (!cosmetics.containsKey(cosmetic.getCategory())) {
                 cosmetics.put(cosmetic.getCategory(), new ArrayList<>());
             }
@@ -45,7 +45,7 @@ public enum Cosmetics {
     private final int hyrisPrice;
     private final ItemStack icon;
 
-    Cosmetics(CosmeticCategory category, String id, CosmeticRarity rarity, IHyriRankType requireRank, int hyodesPrice, int hyrisPrice, ItemStack icon) {
+    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, IHyriRankType requireRank, int hyodesPrice, int hyrisPrice, ItemStack icon) {
         this.category = category;
         this.id = id;
         this.rarity = rarity;
@@ -87,7 +87,7 @@ public enum Cosmetics {
         return icon.clone();
     }
 
-    public static Map<CosmeticCategory, List<Cosmetics>> getCosmetics() {
+    public static Map<CosmeticCategory, List<Cosmetic>> getCosmetics() {
         return cosmetics;
     }
 

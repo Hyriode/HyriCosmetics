@@ -15,7 +15,7 @@ public class PlayerCosmeticImpl<T extends AbstractCosmetic> implements PlayerCos
     }
 
     @Override
-    public T getCosmetic() {
+    public T getAbstractCosmetic() {
         return this.cosmetic;
     }
 
@@ -36,6 +36,11 @@ public class PlayerCosmeticImpl<T extends AbstractCosmetic> implements PlayerCos
         final Player player = this.user.asBukkit();
         if (message) this.user.asBukkit().sendMessage(HyriLanguageMessage.get("cosmetics.unequip").getValue(player).replace("%cosmetic%", this.cosmetic.getTranslatedName().getValue(player)));
         this.cosmetic.onUnequip(this.user);
+    }
+
+    @Override
+    public boolean hasVariants() {
+        return this.cosmetic.hasVariants();
     }
 
 }

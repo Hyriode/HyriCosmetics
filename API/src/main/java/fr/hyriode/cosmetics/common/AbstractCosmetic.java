@@ -10,9 +10,9 @@ import org.bukkit.inventory.ItemStack;
 public abstract class AbstractCosmetic {
 
     private final CosmeticUser user;
-    private final Cosmetics cosmetic;
+    private final Cosmetic cosmetic;
 
-    public AbstractCosmetic(CosmeticUser user, Cosmetics cosmetic) {
+    public AbstractCosmetic(CosmeticUser user, Cosmetic cosmetic) {
         this.user = user;
         this.cosmetic = cosmetic;
     }
@@ -60,7 +60,7 @@ public abstract class AbstractCosmetic {
         return user;
     }
 
-    public Cosmetics getCosmetic() {
+    public Cosmetic getType() {
         return cosmetic;
     }
 
@@ -74,5 +74,9 @@ public abstract class AbstractCosmetic {
 
     public Player getPlayer() {
         return user.asBukkit();
+    }
+
+    public boolean hasVariants() {
+        return this instanceof CosmeticVariants<?>;
     }
 }

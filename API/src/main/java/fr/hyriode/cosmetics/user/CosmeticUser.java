@@ -1,8 +1,8 @@
 package fr.hyriode.cosmetics.user;
 
 import fr.hyriode.api.player.IHyriPlayer;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.Cosmetics;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -14,21 +14,23 @@ public interface CosmeticUser {
 
     IHyriPlayer asHyriPlayer();
 
-    void equipCosmetic(Cosmetics cosmetic, boolean message);
+    PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message);
+
+    void unequipCosmetics(boolean message);
 
     void unequipCosmetic(CosmeticCategory category, boolean message);
 
-    List<Cosmetics> getUnlockedCosmetics();
+    List<Cosmetic> getUnlockedCosmetics();
 
-    List<Cosmetics> getUnlockedCosmetics(CosmeticCategory category);
+    List<Cosmetic> getUnlockedCosmetics(CosmeticCategory category);
 
-    void addUnlockedCosmetic(Cosmetics cosmetic);
+    void addUnlockedCosmetic(Cosmetic cosmetic);
 
-    void removeUnlockedCosmetic(Cosmetics cosmetic);
+    void removeUnlockedCosmetic(Cosmetic cosmetic);
 
-    boolean hasUnlockedCosmetic(Cosmetics cosmetic);
+    boolean hasUnlockedCosmetic(Cosmetic cosmetic);
 
-    PlayerCosmetic<?> getCosmetic(CosmeticCategory category);
+    PlayerCosmetic<?> getPlayerCosmetic(CosmeticCategory category);
 
     Map<CosmeticCategory, PlayerCosmetic<?>> getEquippedCosmetics();
 
@@ -54,5 +56,5 @@ public interface CosmeticUser {
 
     boolean hasEquippedCosmetic(CosmeticCategory category);
 
-    Cosmetics getEquippedCosmetic(CosmeticCategory category);
+    Cosmetic getEquippedCosmetic(CosmeticCategory category);
 }

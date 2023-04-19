@@ -2,7 +2,7 @@ package fr.hyriode.cosmetics.gui;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.HyriCosmetics;
-import fr.hyriode.cosmetics.common.Cosmetics;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.StringUtil;
 import fr.hyriode.hyrame.inventory.HyriInventory;
@@ -28,7 +28,7 @@ public class CosmeticsMainGui extends HyriInventory {
         super.open();
         this.applyDesign(Design.BORDER);
         HyriCosmetics.get().getCosmetics().forEach((category, cosmetics) -> {
-            final List<Cosmetics> unlockedCosmetics = user.getUnlockedCosmetics(category);
+            final List<Cosmetic> unlockedCosmetics = user.getUnlockedCosmetics(category);
             this.setItem(
                     category.getGuiSlot(),
                     new ItemBuilder(category.getIcon())
@@ -48,6 +48,6 @@ public class CosmeticsMainGui extends HyriInventory {
 
         this.setItem(49, new ItemBuilder(Material.BARRIER)
                 .withName(ChatColor.RED + HyriLanguageMessage.get("gui.cosmetic.unequip.all").getValue(owner))
-                .build(), event -> user.getEquippedCosmetics().forEach((category, playerCosmetic) -> user.unequipCosmetic(category, true)));
+                .build(), event -> user.unequipCosmetics(false));
     }
 }

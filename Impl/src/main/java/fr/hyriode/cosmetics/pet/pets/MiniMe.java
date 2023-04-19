@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.pet.pets;
 
-import fr.hyriode.cosmetics.common.Cosmetics;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.pet.AbstractComplexPet;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
@@ -17,7 +17,7 @@ public class MiniMe extends AbstractComplexPet {
     private ArmorStand minime;
 
     public MiniMe(CosmeticUser user) {
-        super(user, Cosmetics.MINI_ME);
+        super(user, Cosmetic.MINI_ME);
     }
 
     @Override

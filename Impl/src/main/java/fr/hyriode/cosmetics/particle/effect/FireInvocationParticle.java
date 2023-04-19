@@ -1,14 +1,12 @@
 package fr.hyriode.cosmetics.particle.effect;
 
-import fr.hyriode.cosmetics.common.Cosmetics;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.texture.BlockTexture;
 
 public class FireInvocationParticle extends AbstractParticleImpl {
 
@@ -21,13 +19,14 @@ public class FireInvocationParticle extends AbstractParticleImpl {
     private int height = 70;
 
     public FireInvocationParticle(CosmeticUser user) {
-        super(user, Cosmetics.FIRE_INVOCATION);
+        super(user, Cosmetic.FIRE_INVOCATION, false);
+        this.updateVariant();
     }
 
     @Override
     public void tick(final CosmeticUser user) {
         if (isMoving()) {
-            new ParticleBuilder(ParticleEffect.FLAME, getLocation()).setSpeed(0.1F).display();
+            new ParticleBuilder(ParticleEffect.FLAME, this.getLocation()).setSpeed(0.1F).display();
             return;
         }
 
@@ -40,7 +39,6 @@ public class FireInvocationParticle extends AbstractParticleImpl {
             Vector vector = new Vector(Math.cos(tick * angle + Math.toRadians(d1)) * this.radius, this.height * 0.05D, Math.sin(tick * angle + Math.toRadians(d1)) * this.radius);
             rotateAroundAxisY(vector, d);
             new ParticleBuilder(ParticleEffect.FLAME, location.add(vector)).setSpeed(0.1F).display();
-            new ParticleBuilder(ParticleEffect.BLOCK_CRACK, location).setParticleData(new BlockTexture(Material.LAVA)).setOffset(0.1F, 0.1F, 0.1F).setSpeed(0F).display();
             location.subtract(vector);
         }
         if (this.height > max / 2) {
@@ -55,11 +53,11 @@ public class FireInvocationParticle extends AbstractParticleImpl {
         }
     }
 
-    private Vector rotateAroundAxisY(Vector paramVector, double paramDouble) {
+    private void rotateAroundAxisY(Vector paramVector, double paramDouble) {
         double d3 = Math.cos(paramDouble);
         double d4 = Math.sin(paramDouble);
         double d1 = paramVector.getX() * d3 + paramVector.getZ() * d4;
         double d2 = paramVector.getX() * -d4 + paramVector.getZ() * d3;
-        return paramVector.setX(d1).setZ(d2);
+        paramVector.setX(d1).setZ(d2);
     }
 }

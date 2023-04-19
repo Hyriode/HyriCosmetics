@@ -8,7 +8,8 @@ public enum CosmeticRarity {
     RARE("rare", HyriChatColor.BLUE),
     EPIC("epic", HyriChatColor.DARK_PURPLE),
     LEGENDARY("legendary", HyriChatColor.GOLD),
-    EXCLUSIVE("exclusive", HyriChatColor.LIGHT_PURPLE)
+    EXCLUSIVE("exclusive", HyriChatColor.LIGHT_PURPLE),
+    STAFF("staff", HyriChatColor.DARK_RED)
     ;
 
     private final String name;

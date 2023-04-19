@@ -5,7 +5,7 @@
 
   "cosmetic.type.gadget.name": "Gadgets",
   "cosmetic.type.gadget.description": "Animez le serveur en exposant vos nombreux gadgets venant du futur !",
-  "cosmetic.type.pet.name": "compagnon",
+  "cosmetic.type.pet.name": "Compagnons",
   "cosmetic.type.pet.description": "Astfaster fait les descriptions stp",
   "cosmetic.type.particle.name": "Particules",
   "cosmetic.type.particle.description": "Astfaster fait les descriptions stp",
@@ -50,7 +50,10 @@
   "gui.cosmetic.click_to_equip": "§3Cliquer pour équiper",
   "gui.cosmetic.click_to_unequip": "§cCliquer pour déséquiper",
   "gui.cosmetic.click_to_edit": "§3Cliquer pour modifier",
+  "gui.cosmetic.already_equipped": "§cCosmétique déjà équipé",
   "gui.cosmetic.equipped.none.name": "§3Pas de %type% équipé(e)",
-  "gui.cosmetic.unequip.all": "§cTout déséquiper"
+  "gui.cosmetic.unequip.all": "§cTout déséquiper",
+  "gui.cosmetic.variants" : "§7Variants du cosmétique",
+  "gui.cosmetic.variant.color.rainbow": "§cM§6u§el§at§3i§9c§5o§cl§6o§er§ae"
 
 }

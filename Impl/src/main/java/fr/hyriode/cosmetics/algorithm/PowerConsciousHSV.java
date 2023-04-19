@@ -5,12 +5,14 @@ import fr.hyriode.cosmetics.utils.RGBValue;
 import java.awt.*;
 
 public class PowerConsciousHSV {
-    private static final RGBValue r = new RGBValue(255);
-    private static final RGBValue g = new RGBValue(0);
-    private static final RGBValue b = new RGBValue(0);
+
     private static final int power = 5;
 
-    public static Color run() {
+    private final RGBValue r = new RGBValue(255);
+    private final RGBValue g = new RGBValue(0);
+    private final RGBValue b = new RGBValue(0);
+
+    public Color run() {
         if (b.value() <= 1) {
             r.decrease(power);
             g.increase(power);

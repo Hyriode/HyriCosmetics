@@ -26,7 +26,7 @@ public class UserData implements IHyriPlayerData {
     public void save(MongoDocument document) {
         final MongoDocument equippedDocument = new MongoDocument();
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.user.getEquippedCosmetics().entrySet()) {
-            equippedDocument.append(entry.getKey().getName(), entry.getValue().getCosmetic().getCosmetic().getId());
+            equippedDocument.append(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getType().getId());
         }
         final MongoDocument filtersDocument = new MongoDocument();
         filters.save(filtersDocument);
