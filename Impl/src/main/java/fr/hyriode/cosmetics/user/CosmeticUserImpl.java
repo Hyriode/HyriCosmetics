@@ -56,7 +56,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
             return;
 
-        Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.getPlugin(HyriCosmeticsPlugin.class), () -> {
+        Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.get(), () -> {
             if (!this.data.getEquippedCosmetics().isEmpty()) {
                 for (Map.Entry<String, Pair<String, String>> entry : this.data.getEquippedCosmetics().entrySet()) {
                     final Cosmetic cosmetic = HyriCosmetics.get().getCosmetic(entry.getValue().getKey());

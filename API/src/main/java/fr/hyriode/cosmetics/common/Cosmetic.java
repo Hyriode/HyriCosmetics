@@ -110,7 +110,7 @@ public enum Cosmetic {
         final CosmeticUser user = HyriCosmetics.get().getUserProvider().getUser(player);
         final CosmeticCategory category = this.getCategory();
 
-        final ItemBuilder builder = new ItemBuilder(icon)
+        final ItemBuilder builder = new ItemBuilder(icon.clone())
                 .withName(ChatColor.AQUA + getTranslatedName().getValue(player))
                 .withLore(StringUtil.splitIntoPhrases(getTranslatedDescription().getValue(player), 35))
                 .appendLore("")

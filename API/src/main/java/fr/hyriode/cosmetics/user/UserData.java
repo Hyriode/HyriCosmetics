@@ -4,7 +4,6 @@ import fr.hyriode.api.mongodb.MongoDocument;
 import fr.hyriode.api.mongodb.MongoSerializable;
 import fr.hyriode.api.player.model.IHyriPlayerData;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.CosmeticVariants;
 import fr.hyriode.cosmetics.common.Filters.Owned;
 import fr.hyriode.cosmetics.common.Filters.Price;
 import fr.hyriode.cosmetics.common.Filters.Rarity;

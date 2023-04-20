@@ -18,19 +18,19 @@
 
 
   "cosmetic.particle.fire_invocation.name": "Invocation of fire",
-  "cosmetic.particle.fire_invocation.description": "Invocation of the depths of the flames",
+  "cosmetic.particle.fire_invocation.description": "Invocation of the depths of the flames.",
 
   "cosmetic.particle.enchanted.name": "Enchanted",
-  "cosmetic.particle.enchanted.description": "A magical particle effect",
+  "cosmetic.particle.enchanted.description": "A magical particle effect.",
 
   "cosmetic.particle.step_in_the_air.name": "Step in the air",
   "cosmetic.particle.step_in_the_air.description": "Allows you to do a double jump!",
 
   "cosmetic.particle.rainbow_twins.name": "Rainbow twins",
-  "cosmetic.particle.rainbow_twins.description": "Two little rainbows that follow you",
+  "cosmetic.particle.rainbow_twins.description": "Two little rainbows that follow you.",
 
   "cosmetic.particle.black_vortex.name": "Black vortex",
-  "cosmetic.particle.black_vortex.description": "A black vortex taking you to the depths of hell",
+  "cosmetic.particle.black_vortex.description": "A black vortex taking you to the depths of hell.",
 
 
   "cosmetic.pet.snowman.name": "Snowman",
@@ -47,6 +47,7 @@
   "gui.cosmetic.price_two_option": "§7Price: %price1% §7or %price2%",
   "gui.cosmetic.price_one_option": "§7Price: %price1%",
 
+  "gui.cosmetic.cant_unlock": "§cYou can't unlock this cosmetic",
   "gui.cosmetic.click_to_buy": "§3Click to buy",
   "gui.cosmetic.click_to_equip": "§3Click to equip",
   "gui.cosmetic.click_to_unequip": "§cClick to unequip",

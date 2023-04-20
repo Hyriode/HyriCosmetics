@@ -16,4 +16,7 @@ public class HyriCosmeticsPlugin extends JavaPlugin {
         hyriCosmetics.getTaskProvider().shutdown();
     }
 
+    public static HyriCosmeticsPlugin get() {
+        return HyriCosmeticsPlugin.getPlugin(HyriCosmeticsPlugin.class);
+    }
 }

@@ -18,19 +18,19 @@
 
 
   "cosmetic.particle.fire_invocation.name": "Invocation de feu",
-  "cosmetic.particle.fire_invocation.description": "Invocation des profondeurs des flammes",
+  "cosmetic.particle.fire_invocation.description": "Invocation des profondeurs des flammes.",
 
   "cosmetic.particle.enchanted.name": "Enchanté",
-  "cosmetic.particle.enchanted.description": "Un aura enchanté qui vous suit",
+  "cosmetic.particle.enchanted.description": "Un aura enchanté qui vous suit.",
 
   "cosmetic.particle.step_in_the_air.name": "Pas dans les airs",
-  "cosmetic.particle.step_in_the_air.description": "Te permet de faire un double saut !",
+  "cosmetic.particle.step_in_the_air.description": "Te permet de faire un double saut!",
 
   "cosmetic.particle.rainbow_twins.name": "Jumeaux arc-en-ciel",
-  "cosmetic.particle.rainbow_twins.description": "Deux petits arc-en-ciel qui vous suivent",
+  "cosmetic.particle.rainbow_twins.description": "Deux petits arc-en-ciel qui vous suivent.",
 
   "cosmetic.particle.black_vortex.name": "Vortex noir",
-  "cosmetic.particle.black_vortex.description": "Un vortex noir vous emportant dans les tréfonfonds de l'enfer",
+  "cosmetic.particle.black_vortex.description": "Un vortex noir vous emportant dans les tréfonfonds de l'enfer.",
 
 
   "cosmetic.pet.snowman.name": "Bonhomme de neige",
@@ -49,6 +49,7 @@
   "gui.cosmetic.price_two_option": "§7Prix: %price1% §7ou %price2%",
   "gui.cosmetic.price_one_option": "§7Prix: %price1%",
 
+  "gui.cosmetic.cant_unlock": "§cVous ne pouvez pas débloquer ce cosmétique.",
   "gui.cosmetic.click_to_buy": "§3Cliquer pour acheter",
   "gui.cosmetic.click_to_equip": "§3Cliquer pour équiper",
   "gui.cosmetic.click_to_unequip": "§cCliquer pour déséquiper",

@@ -4,11 +4,9 @@ import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.color.RegularColor;
-import xyz.xenondevs.particle.data.texture.BlockTexture;
 
 import java.awt.*;
 

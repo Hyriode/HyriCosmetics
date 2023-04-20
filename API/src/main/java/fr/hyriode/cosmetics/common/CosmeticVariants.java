@@ -17,6 +17,8 @@ public interface CosmeticVariants<T> {
 
     void updateVariant();
 
+    void reloadVariants();
+
     Map<String, Pair<ItemStack, T>> initVariants();
 
     Map<String, ItemStack> getVariantsItem();

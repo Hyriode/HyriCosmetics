@@ -1,9 +1,6 @@
 package fr.hyriode.cosmetics.gui;
 
-import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
-import fr.hyriode.cosmetics.common.CosmeticVariants;
-import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.user.PlayerCosmetic;
 import fr.hyriode.hyrame.inventory.pagination.PaginatedInventory;
 import fr.hyriode.hyrame.inventory.pagination.PaginatedItem;

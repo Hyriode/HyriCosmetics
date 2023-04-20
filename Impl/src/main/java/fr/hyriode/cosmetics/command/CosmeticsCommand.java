@@ -1,7 +1,9 @@
 package fr.hyriode.cosmetics.command;
 
+import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import fr.hyriode.cosmetics.gui.CosmeticsMainGui;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.IHyrame;
 import fr.hyriode.hyrame.command.CommandContext;
 import fr.hyriode.hyrame.command.CommandInfo;
@@ -24,6 +26,12 @@ public class CosmeticsCommand extends HyriCommand<HyriCosmeticsPlugin> {
         final Player player = ctx.getSender();
 
         if (IHyrame.get().getGameManager().getCurrentGame() != null) {
+            player.sendMessage(HyrameMessage.PERMISSION_ERROR.asString(player));
+            return;
+        }
+
+        CosmeticUser cosmeticUser = HyriCosmetics.get().getUserProvider().getUser(player);
+        if (cosmeticUser.isUnequipping()) {
             player.sendMessage(HyrameMessage.PERMISSION_ERROR.asString(player));
             return;
         }

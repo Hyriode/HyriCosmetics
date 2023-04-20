@@ -48,7 +48,7 @@ public class TaskProviderImpl implements TaskProvider {
 
     @Override
     public void startTask(final Task task) {
-        final BukkitTask bukkitTask = bukkitScheduler.runTaskTimer(HyriCosmeticsPlugin.getPlugin(HyriCosmeticsPlugin.class), task, 0, 1L);
+        final BukkitTask bukkitTask = bukkitScheduler.runTaskTimer(HyriCosmeticsPlugin.get(), task, 0, 1L);
         task.setTaskId(bukkitTask.getTaskId());
     }
 
@@ -60,7 +60,7 @@ public class TaskProviderImpl implements TaskProvider {
 
     @Override
     public void shutdown() {
-        this.bukkitScheduler.cancelTasks(HyriCosmeticsPlugin.getPlugin(HyriCosmeticsPlugin.class));
+        this.bukkitScheduler.cancelTasks(HyriCosmeticsPlugin.get());
     }
 
     @Override

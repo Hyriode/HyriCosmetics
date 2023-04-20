@@ -19,7 +19,7 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
 
     protected String variant;
 
-    protected final Map<String, Pair<ItemStack, T>> variants;
+    protected Map<String, Pair<ItemStack, T>> variants;
     private final boolean hasVariants;
 
     public AbstractCosmetic(CosmeticUser user, Cosmetic cosmetic, boolean hasVariants) {
@@ -27,7 +27,7 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
         this.cosmetic = cosmetic;
 
         this.variant = getDefaultVariant();
-        this.variants = initVariants();
+        this.reloadVariants();
         this.hasVariants = hasVariants;
     }
 
@@ -118,6 +118,11 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
 
     @Override
     public void updateVariant() {}
+
+    @Override
+    public void reloadVariants() {
+        this.variants = this.initVariants();
+    }
 
     @Override
     public Map<String, Pair<ItemStack, T>> initVariants() {
