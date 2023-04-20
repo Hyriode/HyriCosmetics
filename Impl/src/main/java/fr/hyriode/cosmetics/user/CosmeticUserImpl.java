@@ -119,7 +119,8 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void temporarilyUnequipCosmetics() {
-        for (PlayerCosmetic<?> playerCosmetic : this.getEquippedCosmetics().values()) {
+        final List<PlayerCosmetic<?>> playerCosmetics = new ArrayList<>(this.getEquippedCosmetics().values());
+        for (PlayerCosmetic<?> playerCosmetic : playerCosmetics) {
             this.unequipCosmetic(playerCosmetic.getAbstractCosmetic().getCategory(), false);
             if (playerCosmetic.getAbstractCosmetic().hasVariants()) {
                 this.activeVariant.put(playerCosmetic.getAbstractCosmetic().getType(), ((CosmeticVariants<?>) playerCosmetic.getAbstractCosmetic()).getVariant());
