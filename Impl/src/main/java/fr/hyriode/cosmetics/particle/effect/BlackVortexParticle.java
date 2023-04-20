@@ -29,13 +29,15 @@ public class BlackVortexParticle extends AbstractParticleImpl {
     public void tick(final CosmeticUser user) {
         this.tick++;
 
-        Location location = getPlayer().getLocation().clone().subtract(0.0D, 0.3D, 0.0D);
-        double angle = this.tick * ANGLE_SPEED;
+        if (isMoving()) {
+            Location location = getPlayer().getLocation().clone().subtract(0.0D, 0.3D, 0.0D);
+            double angle = this.tick * ANGLE_SPEED;
 
-        tornado(MAX_HEIGHT, LINES, HEIGHT_INCREMENT, angle, location,
-                new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(Color.BLACK)),
-                new ParticleBuilder(ParticleEffect.PORTAL)
-        );
+            tornado(MAX_HEIGHT, LINES, HEIGHT_INCREMENT, angle, location,
+                    new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(Color.BLACK)),
+                    new ParticleBuilder(ParticleEffect.PORTAL)
+            );
+        }
     }
 
     public void tornado(double max_height, int lines, double height_increment, double angle, Location location, ParticleBuilder firstColor, ParticleBuilder secondColor) {

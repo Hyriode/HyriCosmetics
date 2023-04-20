@@ -9,7 +9,7 @@ public enum CosmeticRarity {
     EPIC("epic", HyriChatColor.DARK_PURPLE),
     LEGENDARY("legendary", HyriChatColor.GOLD),
     EXCLUSIVE("exclusive", HyriChatColor.LIGHT_PURPLE),
-    STAFF("staff", HyriChatColor.DARK_RED)
+    STAFF("staff", HyriChatColor.RED)
     ;
 
     private final String name;

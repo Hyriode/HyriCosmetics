@@ -66,6 +66,7 @@ public class CosmeticVariantsGui extends PaginatedInventory {
             cosmetic.setVariant(variant);
             this.owner.playSound(this.owner.getLocation(), Sound.VILLAGER_IDLE, 0.5F, 1.0F);
             this.owner.getOpenInventory().close();
+            new CosmeticsGui(owner, cosmetic.getCategory()).open();
         };
     }
 }
