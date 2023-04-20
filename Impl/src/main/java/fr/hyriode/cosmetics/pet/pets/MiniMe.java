@@ -54,7 +54,7 @@ public class MiniMe extends AbstractComplexPet {
 
     private Vector getRightVector(Location paramLocation) {
         float f1 = (float)(paramLocation.getX() + -1.0D * Math.cos(Math.toRadians((paramLocation.getYaw() + 0.0F))));
-        float f2 = (float)(paramLocation.getZ() + -0.2D * Math.sin(Math.toRadians(paramLocation.getYaw() + 1.8D)));
+        float f2 = (float)(paramLocation.getZ() + -1.0D * Math.sin(Math.toRadians(paramLocation.getYaw() + 1.8D)));
         return new Vector(f1 - paramLocation.getX(), 0.0D, f2 - paramLocation.getZ());
     }
 

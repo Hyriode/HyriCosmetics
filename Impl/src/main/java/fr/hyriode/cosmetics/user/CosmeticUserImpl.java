@@ -28,7 +28,7 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     private boolean doubleJumpEnabled = false;
 
-    private Collection<PlayerCosmetic<?>> activePlayerCosmetics = new ArrayList<>();
+    private Collection<Cosmetic> activeCosmetics = new ArrayList<>();
 
     private boolean initialized = false;
 
@@ -100,15 +100,10 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void unequipCosmetics(boolean message) {
-        this.unequipCosmetics(message, true);
-    }
-
-    public void unequipCosmetics(boolean message, boolean save) {
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.equippedCosmetics.entrySet()) {
             entry.getValue().unequip(message);
         }
-
-        if (save) this.equippedCosmetics.clear();
+        this.equippedCosmetics.clear();
     }
 
     @Override
@@ -123,16 +118,16 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void temporarilyUnequipCosmetics() {
-        activePlayerCosmetics = new ArrayList<>(this.getEquippedCosmetics().values());
-        for (PlayerCosmetic<?> playerCosmetic : activePlayerCosmetics) {
-            playerCosmetic.unequip(false);
+        activeCosmetics = this.getEquippedCosmetics().values().stream().map(playerCosmetic -> playerCosmetic.getAbstractCosmetic().getType()).collect(Collectors.toList());
+        for (Cosmetic cosmetic : activeCosmetics) {
+            this.unequipCosmetic(cosmetic.getCategory(), false);
         }
     }
 
     @Override
     public void reactivateCosmeticsTemporarilyUnequipped() {
-        for (PlayerCosmetic<?> playerCosmetic : activePlayerCosmetics) {
-            playerCosmetic.equip(false);
+        for (Cosmetic cosmetic : this.activeCosmetics) {
+            this.equipCosmetic(cosmetic, false);
         }
     }
 

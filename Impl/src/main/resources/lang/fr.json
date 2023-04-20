@@ -1,7 +1,7 @@
 {
 
-  "cosmetics.equip": "§3Cosmétique §f┃ Vous avez §aéquipé §fle cosmétique: §b%cosmetic%§f.",
-  "cosmetics.unequip": "§3Cosmétique §f┃ Vous avez §cdéséquipé §fle cosmétique: §b%cosmetic%§f.",
+  "cosmetics.equip": "§3Cosmétiques §f┃ Vous avez §aéquipé §fle cosmétique: §b%cosmetic%§f.",
+  "cosmetics.unequip": "§3Cosmétiques §f┃ Vous avez §cdéséquipé §fle cosmétique: §b%cosmetic%§f.",
 
   "cosmetic.type.gadget.name": "Gadgets",
   "cosmetic.type.gadget.description": "Animez le serveur en exposant vos nombreux gadgets venant du futur !",
