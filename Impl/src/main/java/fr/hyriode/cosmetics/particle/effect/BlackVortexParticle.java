@@ -29,7 +29,7 @@ public class BlackVortexParticle extends AbstractParticleImpl {
     public void tick(final CosmeticUser user) {
         this.tick++;
 
-        if (isMoving()) {
+        if (!isMoving()) {
             Location location = getPlayer().getLocation().clone().subtract(0.0D, 0.3D, 0.0D);
             double angle = this.tick * ANGLE_SPEED;
 
