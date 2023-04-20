@@ -38,9 +38,4 @@ public class PlayerCosmeticImpl<T extends AbstractCosmetic> implements PlayerCos
         this.cosmetic.onUnequip(this.user);
     }
 
-    @Override
-    public boolean hasVariants() {
-        return this.cosmetic.hasVariants();
-    }
-
 }

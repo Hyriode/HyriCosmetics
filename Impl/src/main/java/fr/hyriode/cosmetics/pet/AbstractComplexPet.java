@@ -7,6 +7,7 @@ import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.EntitySilverfish;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSilverfish;
 import org.bukkit.entity.EntityType;
@@ -41,6 +42,7 @@ public abstract class AbstractComplexPet extends AbstractPetImpl {
     @Override
     public void onUnequip(final CosmeticUser user) {
         HyriCosmetics.get().getTaskProvider().removeTaskNode(task.getUUID());
+        this.referenceEntity.remove();
         this.remove();
     }
 

@@ -8,6 +8,7 @@ import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.Filters.Owned;
 import fr.hyriode.cosmetics.common.Filters.Price;
 import fr.hyriode.cosmetics.common.Filters.Rarity;
+import fr.hyriode.cosmetics.listener.AccountListener;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.PlayerListener;
 import fr.hyriode.cosmetics.particle.effect.EnchantedParticle;
@@ -55,6 +56,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
         Bukkit.getScheduler().runTaskTimer(plugin, new MainTask(), 0, 1L);
 
+        HyriAPI.get().getEventBus().register(new AccountListener(this));
         Bukkit.getServer().getPluginManager().registerEvents(new ConnectionListener(), plugin);
         if (this.lobbyServer) Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), plugin);
 

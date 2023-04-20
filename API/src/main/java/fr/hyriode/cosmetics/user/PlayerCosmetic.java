@@ -11,6 +11,4 @@ public interface PlayerCosmetic<T extends AbstractCosmetic> {
     void equip(boolean message);
 
     void unequip(boolean message);
-
-    boolean hasVariants();
 }

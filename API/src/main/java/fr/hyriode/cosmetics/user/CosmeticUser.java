@@ -10,6 +10,8 @@ import java.util.Map;
 
 public interface CosmeticUser {
 
+    void init();
+
     Player asBukkit();
 
     IHyriPlayer asHyriPlayer();
@@ -19,6 +21,10 @@ public interface CosmeticUser {
     void unequipCosmetics(boolean message);
 
     void unequipCosmetic(CosmeticCategory category, boolean message);
+
+    void temporarilyUnequipCosmetics();
+
+    void reactivateCosmeticsTemporarilyUnequipped();
 
     List<Cosmetic> getUnlockedCosmetics();
 
@@ -57,4 +63,6 @@ public interface CosmeticUser {
     boolean hasEquippedCosmetic(CosmeticCategory category);
 
     Cosmetic getEquippedCosmetic(CosmeticCategory category);
+
+    boolean isInitialized();
 }

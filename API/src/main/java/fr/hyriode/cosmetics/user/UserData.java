@@ -4,9 +4,11 @@ import fr.hyriode.api.mongodb.MongoDocument;
 import fr.hyriode.api.mongodb.MongoSerializable;
 import fr.hyriode.api.player.model.IHyriPlayerData;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
+import fr.hyriode.cosmetics.common.CosmeticVariants;
 import fr.hyriode.cosmetics.common.Filters.Owned;
 import fr.hyriode.cosmetics.common.Filters.Price;
 import fr.hyriode.cosmetics.common.Filters.Rarity;
+import fr.hyriode.hyrame.utils.Pair;
 import org.bson.Document;
 
 import java.util.HashMap;
@@ -14,7 +16,7 @@ import java.util.Map;
 
 public class UserData implements IHyriPlayerData {
 
-    private final Map<String, String> equippedCosmetics = new HashMap<>();
+    private final Map<String, Pair<String, String >> equippedCosmetics = new HashMap<>();
     private FilterData filters = new FilterData();
 
     private CosmeticUser user;
@@ -26,7 +28,14 @@ public class UserData implements IHyriPlayerData {
     public void save(MongoDocument document) {
         final MongoDocument equippedDocument = new MongoDocument();
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.user.getEquippedCosmetics().entrySet()) {
-            equippedDocument.append(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getType().getId());
+            final PlayerCosmetic<?> cosmetic = entry.getValue();
+            if (cosmetic.getAbstractCosmetic().hasVariants()) {
+                MongoDocument cosmeticDocument = new MongoDocument();
+                cosmeticDocument.append(entry.getValue().getAbstractCosmetic().getType().getId(), ((CosmeticVariants<?>) cosmetic.getAbstractCosmetic()).getVariant());
+                equippedDocument.append(entry.getKey().getName(), cosmeticDocument);
+            } else {
+                equippedDocument.append(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getType().getId());
+            }
         }
         final MongoDocument filtersDocument = new MongoDocument();
         filters.save(filtersDocument);
@@ -38,7 +47,14 @@ public class UserData implements IHyriPlayerData {
     public void load(MongoDocument document) {
         if (document.containsKey("equipped")) {
             for (Map.Entry<String, Object> entry : MongoDocument.of((Document) document.get("equipped")).entrySet()) {
-                this.equippedCosmetics.put(entry.getKey(), (String) entry.getValue());
+                if (entry.getValue() instanceof Document) {
+                    final Document cosmeticDocument = (Document) entry.getValue();
+                    for (Map.Entry<String, Object> cosmeticEntry : cosmeticDocument.entrySet()) {
+                        this.equippedCosmetics.put(entry.getKey(), new Pair<>(cosmeticEntry.getKey(), (String) cosmeticEntry.getValue()));
+                    }
+                } else {
+                    this.equippedCosmetics.put(entry.getKey(), new Pair<>((String) entry.getValue(), ""));
+                }
             }
         }
         final FilterData filterData = new FilterData();
@@ -50,8 +66,16 @@ public class UserData implements IHyriPlayerData {
         this.filters = filterData;
     }
 
-    public Map<String, String> getEquippedCosmetics() {
+    public Map<String, Pair<String, String>> getEquippedCosmetics() {
         return equippedCosmetics;
+    }
+
+    public void putEquippedCosmetics(String key, String cosmeticId, String variant) {
+        this.equippedCosmetics.put(key, new Pair<>(cosmeticId, variant));
+    }
+
+    public void putEquippedCosmetics(String key, String cosmeticId) {
+        this.equippedCosmetics.put(key, new Pair<>(cosmeticId, ""));
     }
 
     public FilterData getFilters() {
