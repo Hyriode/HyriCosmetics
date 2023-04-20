@@ -88,15 +88,11 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message) {
-        return this.equipCosmetic(cosmetic, message, true);
-    }
-
-    public PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message, boolean save) {
         Objects.requireNonNull(cosmetic, "cosmetic must not be null");
 
         this.unequipCosmetic(cosmetic.getCategory(), false);
         final PlayerCosmetic<?> equippedCosmetic = new PlayerCosmeticImpl<>(HyriCosmetics.get().createCosmetic(cosmetic, this), this);
-        if (save) this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
+        this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
         equippedCosmetic.equip(message);
 
         return equippedCosmetic;
@@ -117,30 +113,26 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void unequipCosmetic(CosmeticCategory category, boolean message) {
-        this.unequipCosmetic(category, message, true);
-    }
-
-    public void unequipCosmetic(CosmeticCategory category, boolean message, boolean save) {
         Objects.requireNonNull(category, "category must not be null");
 
         if (this.equippedCosmetics.containsKey(category)) {
             this.equippedCosmetics.get(category).unequip(message);
-            if (save) this.equippedCosmetics.remove(category);
+            this.equippedCosmetics.remove(category);
         }
     }
 
     @Override
     public void temporarilyUnequipCosmetics() {
-        activePlayerCosmetics = this.getEquippedCosmetics().values();
+        activePlayerCosmetics = new ArrayList<>(this.getEquippedCosmetics().values());
         for (PlayerCosmetic<?> playerCosmetic : activePlayerCosmetics) {
-            unequipCosmetic(playerCosmetic.getAbstractCosmetic().getCategory(), false, false);
+            playerCosmetic.unequip(false);
         }
     }
 
     @Override
     public void reactivateCosmeticsTemporarilyUnequipped() {
         for (PlayerCosmetic<?> playerCosmetic : activePlayerCosmetics) {
-            equipCosmetic(playerCosmetic.getAbstractCosmetic().getType(), false, false);
+            playerCosmetic.equip(false);
         }
     }
 

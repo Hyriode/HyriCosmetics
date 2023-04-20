@@ -47,9 +47,7 @@ public class SnowManComplexPet extends AbstractComplexPet {
     @Override
     protected void remove() {
         this.head.remove();
-        this.head = null;
         this.body.remove();
-        this.body = null;
     }
 
     @Override
