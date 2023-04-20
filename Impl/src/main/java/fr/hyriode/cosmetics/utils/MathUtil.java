@@ -2,8 +2,12 @@ package fr.hyriode.cosmetics.utils;
 
 import org.bukkit.util.Vector;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class MathUtil {
 
+    private static final Random random = ThreadLocalRandom.current();
 
     private static final int SIN_BITS, SIN_MASK, SIN_COUNT;
     private static final double radFull, radToIndex;
@@ -58,5 +62,12 @@ public class MathUtil {
 
     public static double cos(double rad) {
         return cos[(int) (rad * radToIndex) & SIN_MASK];
+    }
+
+    public static Vector getRandomVector() {
+        double d1 = random.nextDouble() * 2.0D - 1.0D;
+        double d2 = random.nextDouble() * 2.0D - 1.0D;
+        double d3 = random.nextDouble() * 2.0D - 1.0D;
+        return (new Vector(d1, d2, d3)).normalize();
     }
 }

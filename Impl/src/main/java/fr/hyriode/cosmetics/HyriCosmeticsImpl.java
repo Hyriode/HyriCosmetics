@@ -11,10 +11,7 @@ import fr.hyriode.cosmetics.common.Filters.Rarity;
 import fr.hyriode.cosmetics.listener.AccountListener;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.PlayerListener;
-import fr.hyriode.cosmetics.particle.effect.EnchantedParticle;
-import fr.hyriode.cosmetics.particle.effect.FireInvocationParticle;
-import fr.hyriode.cosmetics.particle.effect.RainbowTwinsParticle;
-import fr.hyriode.cosmetics.particle.effect.StepInTheAirParticle;
+import fr.hyriode.cosmetics.particle.effect.*;
 import fr.hyriode.cosmetics.pet.pets.MiniMe;
 import fr.hyriode.cosmetics.pet.pets.SnowManComplexPet;
 import fr.hyriode.cosmetics.task.MainTask;
@@ -69,6 +66,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         this.registerCosmetic(Cosmetic.FIRE_INVOCATION, FireInvocationParticle.class);
         this.registerCosmetic(Cosmetic.STEP_IN_THE_AIR, StepInTheAirParticle.class);
         this.registerCosmetic(Cosmetic.RAINBOW_TWINS, RainbowTwinsParticle.class);
+        this.registerCosmetic(Cosmetic.BLACK_VORTEX, BlackVortexParticle.class);
 
         // == Pets ==
         this.registerCosmetic(Cosmetic.SNOWMAN, SnowManComplexPet.class);

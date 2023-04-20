@@ -27,6 +27,7 @@ public enum Cosmetic {
     FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.LEGENDARY, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.LAVA_BUCKET).build()),
     STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP, -1, -1, new ItemBuilder(Material.FEATHER).build()),
     RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.INK_SACK, 1, 2).build()),
+    BLACK_VORTEX(Default.PARTICLE, "black_vortex", CosmeticRarity.STAFF, PlayerRank.PLAYER, -1, -1, new ItemBuilder(Material.RECORD_11).build()),
 
     // == Pets ==
     SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 15000, 15000, Head.SNOWMAN_BODY.asItem()),

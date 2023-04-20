@@ -46,17 +46,13 @@ public class CosmeticUserImpl implements CosmeticUser {
         }
 
         this.data.setUser(this);
-
-        IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
-        if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
-            return;
-
         this.init();
     }
 
     @Override
     public void init() {
         initialized = true;
+        IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
 
         Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.getPlugin(HyriCosmeticsPlugin.class), () -> {
             if (!this.data.getEquippedCosmetics().isEmpty()) {

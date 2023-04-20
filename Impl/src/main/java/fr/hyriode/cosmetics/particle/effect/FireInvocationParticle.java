@@ -20,7 +20,6 @@ public class FireInvocationParticle extends AbstractParticleImpl {
 
     public FireInvocationParticle(CosmeticUser user) {
         super(user, Cosmetic.FIRE_INVOCATION, false);
-        this.updateVariant();
     }
 
     @Override

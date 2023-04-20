@@ -3,17 +3,14 @@ package fr.hyriode.cosmetics.particle.effect;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
+import fr.hyriode.cosmetics.utils.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 public class EnchantedParticle extends AbstractParticleImpl {
 
-    private static final Random random = ThreadLocalRandom.current();
     private static final double radius = 1.0D;
     private static final int points = 25;
 
@@ -22,13 +19,12 @@ public class EnchantedParticle extends AbstractParticleImpl {
 
     public EnchantedParticle(CosmeticUser user) {
         super(user, Cosmetic.ENCHANTED, false);
-        this.updateVariant();
     }
 
     @Override
     public void tick(final CosmeticUser user) {
         if (isMoving()) {
-            new ParticleBuilder(ParticleEffect.ENCHANTMENT_TABLE, getPlayer().getLocation().clone().add(getRandomVector()).add(0, 1, 0)).display();
+            new ParticleBuilder(ParticleEffect.ENCHANTMENT_TABLE, getPlayer().getLocation().clone().add(MathUtil.getRandomVector()).add(0, 1, 0)).display();
             return;
         }
 
@@ -44,10 +40,4 @@ public class EnchantedParticle extends AbstractParticleImpl {
         }
     }
 
-    private Vector getRandomVector() {
-        double d1 = random.nextDouble() * 2.0D - 1.0D;
-        double d2 = random.nextDouble() * 2.0D - 1.0D;
-        double d3 = random.nextDouble() * 2.0D - 1.0D;
-        return (new Vector(d1, d2, d3)).normalize();
-    }
 }
