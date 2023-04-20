@@ -40,7 +40,7 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
     }
 
     public IHyriRankType getRequireRank() {
-        return cosmetic.getRequireRank();
+        return cosmetic.getRank();
     }
 
     public int getHyodesPrice() {
