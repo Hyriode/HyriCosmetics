@@ -88,11 +88,15 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message) {
+        return this.equipCosmetic(cosmetic, message, true);
+    }
+
+    public PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message, boolean save) {
         Objects.requireNonNull(cosmetic, "cosmetic must not be null");
 
         this.unequipCosmetic(cosmetic.getCategory(), false);
         final PlayerCosmetic<?> equippedCosmetic = new PlayerCosmeticImpl<>(HyriCosmetics.get().createCosmetic(cosmetic, this), this);
-        this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
+        if (save) this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
         equippedCosmetic.equip(message);
 
         return equippedCosmetic;
@@ -100,20 +104,28 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void unequipCosmetics(boolean message) {
+        this.unequipCosmetics(message, true);
+    }
+
+    public void unequipCosmetics(boolean message, boolean save) {
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.equippedCosmetics.entrySet()) {
             entry.getValue().unequip(message);
         }
 
-        this.equippedCosmetics.clear();
+        if (save) this.equippedCosmetics.clear();
     }
 
     @Override
     public void unequipCosmetic(CosmeticCategory category, boolean message) {
+        this.unequipCosmetic(category, message, true);
+    }
+
+    public void unequipCosmetic(CosmeticCategory category, boolean message, boolean save) {
         Objects.requireNonNull(category, "category must not be null");
 
         if (this.equippedCosmetics.containsKey(category)) {
             this.equippedCosmetics.get(category).unequip(message);
-            this.equippedCosmetics.remove(category);
+            if (save) this.equippedCosmetics.remove(category);
         }
     }
 
@@ -121,14 +133,14 @@ public class CosmeticUserImpl implements CosmeticUser {
     public void temporarilyUnequipCosmetics() {
         activePlayerCosmetics = this.getEquippedCosmetics().values();
         for (PlayerCosmetic<?> playerCosmetic : activePlayerCosmetics) {
-            playerCosmetic.unequip(false);
+            unequipCosmetic(playerCosmetic.getAbstractCosmetic().getCategory(), false, false);
         }
     }
 
     @Override
     public void reactivateCosmeticsTemporarilyUnequipped() {
         for (PlayerCosmetic<?> playerCosmetic : activePlayerCosmetics) {
-            playerCosmetic.equip(false);
+            equipCosmetic(playerCosmetic.getAbstractCosmetic().getType(), false, false);
         }
     }
 
