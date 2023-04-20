@@ -5,6 +5,7 @@ import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -65,4 +66,10 @@ public interface CosmeticUser {
     Cosmetic getEquippedCosmetic(CosmeticCategory category);
 
     boolean isInitialized();
+
+    Collection<Cosmetic> getActiveCosmetics();
+
+    Map<Cosmetic, String> getActiveVariant();
+
+    boolean isUnequipping();
 }

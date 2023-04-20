@@ -8,7 +8,6 @@ import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import fr.hyriode.cosmetics.common.CosmeticVariants;
 import fr.hyriode.cosmetics.transaction.CosmeticTransaction;
 import fr.hyriode.hyrame.utils.Pair;
 import org.bukkit.Bukkit;
@@ -28,8 +27,9 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     private boolean doubleJumpEnabled = false;
 
+    private boolean isUnequipping = false;
     private Collection<Cosmetic> activeCosmetics = Collections.emptyList();
-    private Map<Cosmetic, String> activeVariant = new HashMap<>();
+    private final Map<Cosmetic, String> activeVariant = new HashMap<>();
 
     private boolean initialized = false;
 
@@ -47,7 +47,8 @@ public class CosmeticUserImpl implements CosmeticUser {
 
         this.data.setUser(this);
 
-        if (IHyriPlayerSession.get(player.getUniqueId()).isModerating() || !HyriCosmetics.get().isLobbyServer())
+        IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
+        if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
             return;
 
         this.init();
@@ -65,7 +66,7 @@ public class CosmeticUserImpl implements CosmeticUser {
                     if (cosmetic != null) {
                         PlayerCosmetic<?> playerCosmetic = this.equipCosmetic(cosmetic, false);
                         if (playerCosmetic.getAbstractCosmetic().hasVariants()) {
-                            ((CosmeticVariants<?>) playerCosmetic.getAbstractCosmetic()).setVariant(entry.getValue().getValue());
+                            playerCosmetic.getAbstractCosmetic().setVariant(entry.getValue().getValue());
                         }
                     }
                 }
@@ -119,25 +120,32 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void temporarilyUnequipCosmetics() {
-        final List<PlayerCosmetic<?>> playerCosmetics = new ArrayList<>(this.getEquippedCosmetics().values());
-        for (PlayerCosmetic<?> playerCosmetic : playerCosmetics) {
+        if (isUnequipping) return;
+
+        this.isUnequipping = true;
+        this.activeCosmetics = this.getEquippedCosmetics().values()
+                .stream().map(playerCosmetic -> playerCosmetic.getAbstractCosmetic().getType()).collect(Collectors.toList());
+        for (PlayerCosmetic<?> playerCosmetic : new ArrayList<>(this.getEquippedCosmetics().values())) {
             this.unequipCosmetic(playerCosmetic.getAbstractCosmetic().getCategory(), false);
             if (playerCosmetic.getAbstractCosmetic().hasVariants()) {
-                this.activeVariant.put(playerCosmetic.getAbstractCosmetic().getType(), ((CosmeticVariants<?>) playerCosmetic.getAbstractCosmetic()).getVariant());
+                this.activeVariant.put(playerCosmetic.getAbstractCosmetic().getType(), playerCosmetic.getAbstractCosmetic().getVariant());
             }
         }
-        activeCosmetics = this.getEquippedCosmetics().values()
-                .stream().map(playerCosmetic -> playerCosmetic.getAbstractCosmetic().getType()).collect(Collectors.toList());
     }
 
     @Override
     public void reactivateCosmeticsTemporarilyUnequipped() {
+        if (!isUnequipping) return;
+
+        this.isUnequipping = false;
         for (Cosmetic cosmetic : this.activeCosmetics) {
             PlayerCosmetic<?> playerCosmetic = this.equipCosmetic(cosmetic, false);
             if (activeVariant.containsKey(cosmetic) && playerCosmetic.getAbstractCosmetic().hasVariants()) {
-                ((CosmeticVariants<?>) playerCosmetic).setVariant(activeVariant.get(cosmetic));
+                playerCosmetic.getAbstractCosmetic().setVariant(activeVariant.get(cosmetic));
             }
         }
+        this.activeCosmetics = Collections.emptyList();
+        this.activeVariant.clear();
     }
 
     @Override
@@ -222,7 +230,7 @@ public class CosmeticUserImpl implements CosmeticUser {
                 this.data.putEquippedCosmetics(
                         entry.getKey().getName(),
                         entry.getValue().getAbstractCosmetic().getId(),
-                        ((CosmeticVariants<?>) playerCosmetic.getAbstractCosmetic()).getVariant()
+                        playerCosmetic.getAbstractCosmetic().getVariant()
                 );
             }
             this.data.putEquippedCosmetics(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getId());
@@ -294,5 +302,20 @@ public class CosmeticUserImpl implements CosmeticUser {
     @Override
     public boolean isInitialized() {
         return initialized;
+    }
+
+    @Override
+    public Collection<Cosmetic> getActiveCosmetics() {
+        return activeCosmetics;
+    }
+
+    @Override
+    public Map<Cosmetic, String> getActiveVariant() {
+        return activeVariant;
+    }
+
+    @Override
+    public boolean isUnequipping() {
+        return isUnequipping;
     }
 }

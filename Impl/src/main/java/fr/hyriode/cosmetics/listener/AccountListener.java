@@ -20,9 +20,9 @@ public class AccountListener {
         if (!event.isModerating()) {
             if (!user.isInitialized()) {
                 user.init();
-            } else {
-                user.reactivateCosmeticsTemporarilyUnequipped();
             }
+
+            user.reactivateCosmeticsTemporarilyUnequipped();
         } else {
             user.temporarilyUnequipCosmetics();
         }
@@ -32,6 +32,9 @@ public class AccountListener {
     public void onVanish(VanishUpdatedEvent event) {
         final CosmeticUser user = this.instance.getUserProvider().getUser(event.getPlayerId());
         if (!event.isVanished()) {
+            if (!user.isInitialized()) {
+                user.init();
+            }
             user.reactivateCosmeticsTemporarilyUnequipped();
         } else {
             user.temporarilyUnequipCosmetics();

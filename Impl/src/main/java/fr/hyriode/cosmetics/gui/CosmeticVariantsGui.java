@@ -53,7 +53,7 @@ public class CosmeticVariantsGui extends PaginatedInventory {
 
         AbstractCosmetic<?> abstractCosmetic = this.playerCosmetic.getAbstractCosmetic();
         if (abstractCosmetic.hasVariants()) {
-            for (Map.Entry<String, ItemStack> entry : ((CosmeticVariants<?>) abstractCosmetic).getVariantsItem().entrySet()) {
+            for (Map.Entry<String, ItemStack> entry : abstractCosmetic.getVariantsItem().entrySet()) {
                 pagination.add(PaginatedItem.from(entry.getValue(), clickEvent(entry.getKey(), abstractCosmetic)));
             }
         }
@@ -63,7 +63,7 @@ public class CosmeticVariantsGui extends PaginatedInventory {
 
     private Consumer<InventoryClickEvent> clickEvent(String variant, AbstractCosmetic<?> cosmetic) {
         return event -> {
-            ((CosmeticVariants<?>) cosmetic).setVariant(variant);
+            cosmetic.setVariant(variant);
             this.owner.playSound(this.owner.getLocation(), Sound.VILLAGER_IDLE, 0.5F, 1.0F);
             this.owner.getOpenInventory().close();
         };
