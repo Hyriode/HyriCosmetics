@@ -1,45 +1,34 @@
 package fr.hyriode.cosmetics.pet.pets;
 
 import fr.hyriode.cosmetics.common.Cosmetic;
-import fr.hyriode.cosmetics.pet.AbstractComplexPet;
+import fr.hyriode.cosmetics.pet.AbstractMinionPet;
 import fr.hyriode.cosmetics.user.CosmeticUser;
+import fr.hyriode.hyrame.game.team.HyriGameTeamColor;
 import fr.hyriode.hyrame.item.ItemBuilder;
+import fr.hyriode.hyrame.utils.Pair;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
+import org.bukkit.inventory.ItemStack;
 
-public class MiniMe extends AbstractComplexPet {
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-    private ArmorStand minime;
+public class MiniMe extends AbstractMinionPet<Color> {
+
+    private Color color;
 
     public MiniMe(CosmeticUser user) {
-        super(user, Cosmetic.MINI_ME);
+        super(user, Cosmetic.MINI_ME, true);
     }
 
     @Override
     protected void spawn() {
-        minime = (ArmorStand) getPlayer().getWorld().spawnEntity(this.setupLoc(getPlayer()), EntityType.ARMOR_STAND);
-
-        minime.setMarker(true);
-        minime.setFireTicks(Integer.MAX_VALUE);
-        minime.setSmall(true);
-        minime.setGravity(false);
-        minime.setBasePlate(false);
-        minime.setArms(true);
-
-        minime.setHelmet(ItemBuilder.asHead().withPlayerHead(getPlayer().getUniqueId()).build());
-        minime.setChestplate(new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(Color.RED).build());
-        minime.setLeggings(new ItemBuilder(Material.LEATHER_LEGGINGS).withLeatherArmorColor(Color.RED).build());
-        minime.setBoots(new ItemBuilder(Material.LEATHER_BOOTS).withLeatherArmorColor(Color.RED).build());
+        minion.setHelmet(ItemBuilder.asHead().withPlayerHead(getPlayer().getUniqueId()).build());
+        this.updateVariant();
     }
 
     @Override
     protected void remove() {
-        this.minime.remove();
     }
 
     @Override
@@ -49,22 +38,38 @@ public class MiniMe extends AbstractComplexPet {
 
     @Override
     public void motionlessAnimationTick() {
-        minime.teleport(this.setupLoc(getPlayer()));
+        minion.teleport(this.getReferenceLocation());
     }
 
-    private Vector getRightVector(Location paramLocation) {
-        float f1 = (float)(paramLocation.getX() + -1.0D * Math.cos(Math.toRadians((paramLocation.getYaw() + 0.0F))));
-        float f2 = (float)(paramLocation.getZ() + -1.0D * Math.sin(Math.toRadians(paramLocation.getYaw() + 1.8D)));
-        return new Vector(f1 - paramLocation.getX(), 0.0D, f2 - paramLocation.getZ());
+    @Override
+    public String getDefaultVariant() {
+        return "red";
     }
 
-    private Location setupLoc(Player paramPlayer) {
-        Location location = paramPlayer.getLocation();
-        location.setPitch(0.0F);
-        location.setYaw(location.getYaw() + 50.0F);
-        location.add(getRightVector(location).normalize().multiply(1)).add(0.0D, 1.0D, 0.0D);
-        location.setYaw(paramPlayer.getLocation().getYaw());
-        location.setPitch(paramPlayer.getLocation().getPitch());
-        return location;
+    @Override
+    public void updateVariant() {
+        color = getVariants().get(variant);
+        minion.setChestplate(new ItemBuilder(Material.LEATHER_CHESTPLATE).withLeatherArmorColor(color).build());
+        minion.setLeggings(new ItemBuilder(Material.LEATHER_LEGGINGS).withLeatherArmorColor(color).build());
+        minion.setBoots(new ItemBuilder(Material.LEATHER_BOOTS).withLeatherArmorColor(color).build());
+    }
+
+    @Override
+    public Map<String, Pair<ItemStack, Color>> initVariants() {
+        final Map<String, Pair<ItemStack, Color>> resultMap = new LinkedHashMap<>();
+        for (HyriGameTeamColor color : HyriGameTeamColor.values()) {
+            this.addVariantColor(resultMap, color);
+        }
+        return resultMap;
+    }
+
+    @SuppressWarnings("deprecation")
+    private void addVariantColor(Map<String, Pair<ItemStack, Color>> variantsMap, HyriGameTeamColor color) {
+        variantsMap.put(color.name().toLowerCase(),
+                new Pair<>(
+                        new ItemBuilder(Material.INK_SACK).withName(color.getChatColor() + color.getDisplay().getValue(getPlayer())).withData(color.getDyeColor().getDyeData()).build(),
+                        color.getDyeColor().getColor()
+                )
+        );
     }
 }

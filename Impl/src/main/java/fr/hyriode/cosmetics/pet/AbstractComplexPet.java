@@ -1,13 +1,10 @@
 package fr.hyriode.cosmetics.pet;
 
-import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import fr.hyriode.cosmetics.common.Cosmetic;
-import fr.hyriode.cosmetics.task.TaskNode;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.EntitySilverfish;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSilverfish;
 import org.bukkit.entity.EntityType;
@@ -15,12 +12,12 @@ import org.bukkit.entity.Silverfish;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 
-public abstract class AbstractComplexPet extends AbstractPetImpl {
+public abstract class AbstractComplexPet<T> extends AbstractPetImpl<T> {
 
     protected Silverfish referenceEntity;
 
-    public AbstractComplexPet(CosmeticUser user, Cosmetic cosmetic) {
-        super(user, cosmetic);
+    public AbstractComplexPet(CosmeticUser user, Cosmetic cosmetic, boolean hasVariants) {
+        super(user, cosmetic, hasVariants);
         this.referenceEntity = (Silverfish) user.asBukkit().getWorld().spawnEntity(user.asBukkit().getLocation(), EntityType.SILVERFISH);
         this.setEntitySilent();
 
@@ -35,13 +32,13 @@ public abstract class AbstractComplexPet extends AbstractPetImpl {
 
     @Override
     public void onEquip(final CosmeticUser user) {
-        task = HyriCosmetics.get().getTaskProvider().initTaskNode(new TaskNode(() -> tick(user)));
+        super.onEquip(user);
         this.spawn();
     }
 
     @Override
     public void onUnequip(final CosmeticUser user) {
-        HyriCosmetics.get().getTaskProvider().removeTaskNode(task.getUUID());
+        super.onUnequip(user);
         this.referenceEntity.remove();
         this.remove();
     }

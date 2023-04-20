@@ -28,7 +28,8 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     private boolean doubleJumpEnabled = false;
 
-    private Collection<Cosmetic> activeCosmetics = new ArrayList<>();
+    private Collection<Cosmetic> activeCosmetics = Collections.emptyList();
+    private Map<Cosmetic, String> activeVariant = new HashMap<>();
 
     private boolean initialized = false;
 
@@ -118,16 +119,23 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void temporarilyUnequipCosmetics() {
-        activeCosmetics = this.getEquippedCosmetics().values().stream().map(playerCosmetic -> playerCosmetic.getAbstractCosmetic().getType()).collect(Collectors.toList());
-        for (Cosmetic cosmetic : activeCosmetics) {
-            this.unequipCosmetic(cosmetic.getCategory(), false);
+        for (PlayerCosmetic<?> playerCosmetic : this.getEquippedCosmetics().values()) {
+            this.unequipCosmetic(playerCosmetic.getAbstractCosmetic().getCategory(), false);
+            if (playerCosmetic.getAbstractCosmetic().hasVariants()) {
+                this.activeVariant.put(playerCosmetic.getAbstractCosmetic().getType(), ((CosmeticVariants<?>) playerCosmetic.getAbstractCosmetic()).getVariant());
+            }
         }
+        activeCosmetics = this.getEquippedCosmetics().values()
+                .stream().map(playerCosmetic -> playerCosmetic.getAbstractCosmetic().getType()).collect(Collectors.toList());
     }
 
     @Override
     public void reactivateCosmeticsTemporarilyUnequipped() {
         for (Cosmetic cosmetic : this.activeCosmetics) {
-            this.equipCosmetic(cosmetic, false);
+            PlayerCosmetic<?> playerCosmetic = this.equipCosmetic(cosmetic, false);
+            if (activeVariant.containsKey(cosmetic) && playerCosmetic.getAbstractCosmetic().hasVariants()) {
+                ((CosmeticVariants<?>) playerCosmetic).setVariant(activeVariant.get(cosmetic));
+            }
         }
     }
 
@@ -165,6 +173,7 @@ public class CosmeticUserImpl implements CosmeticUser {
                 .filter(cosmetic -> cosmetic.getCategory() == category)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public void addUnlockedCosmetic(Cosmetic cosmetic) {

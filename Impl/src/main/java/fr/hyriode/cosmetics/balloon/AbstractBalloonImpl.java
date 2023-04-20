@@ -5,8 +5,8 @@ import fr.hyriode.cosmetics.user.CosmeticUser;
 
 public abstract class AbstractBalloonImpl extends AbstractBalloon {
 
-    public AbstractBalloonImpl(CosmeticUser user, Cosmetic cosmetic) {
-        super(user, cosmetic);
+    public AbstractBalloonImpl(CosmeticUser user, Cosmetic cosmetic, boolean hasVariants) {
+        super(user, cosmetic, hasVariants);
     }
 
     @Override

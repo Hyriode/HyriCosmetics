@@ -104,7 +104,7 @@ public class RainbowTwinsParticle extends AbstractParticleImpl<RegularColor> {
 
     @Override
     public void updateVariant() {
-        color = getVariants().get(variant);
+        color = (RegularColor) getVariants().get(variant);
     }
 
     @Override

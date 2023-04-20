@@ -22,17 +22,16 @@ import java.util.function.Consumer;
 
 public class CosmeticVariantsGui extends PaginatedInventory {
 
-    private final CosmeticUser user;
     private final PlayerCosmetic<?> playerCosmetic;
 
     public CosmeticVariantsGui(final Player owner, final PlayerCosmetic<?> playerCosmetic) {
         super(owner, name(owner, "gui.cosmetic.variants"), 9 * 6);
-        this.user = HyriCosmetics.get().getUserProvider().getUser(owner.getUniqueId());
         this.playerCosmetic = playerCosmetic;
 
         this.paginationManager.setArea(new PaginationArea(20, 33));
         this.applyDesign(Design.BORDER);
 
+        this.setItem(4, playerCosmetic.getAbstractCosmetic().getType().toItemStack(owner, false));
         this.setItem(49,
                 new ItemBuilder(Material.ARROW).withName(name(owner, "go-back.display")).build(), event -> {
                     event.getWhoClicked().closeInventory();
@@ -52,7 +51,7 @@ public class CosmeticVariantsGui extends PaginatedInventory {
         final Pagination<PaginatedItem> pagination = this.paginationManager.getPagination();
         pagination.clear();
 
-        AbstractCosmetic abstractCosmetic = this.playerCosmetic.getAbstractCosmetic();
+        AbstractCosmetic<?> abstractCosmetic = this.playerCosmetic.getAbstractCosmetic();
         if (abstractCosmetic.hasVariants()) {
             for (Map.Entry<String, ItemStack> entry : ((CosmeticVariants<?>) abstractCosmetic).getVariantsItem().entrySet()) {
                 pagination.add(PaginatedItem.from(entry.getValue(), clickEvent(entry.getKey(), abstractCosmetic)));
@@ -62,7 +61,7 @@ public class CosmeticVariantsGui extends PaginatedInventory {
         this.paginationManager.updateGUI();
     }
 
-    private Consumer<InventoryClickEvent> clickEvent(String variant, AbstractCosmetic cosmetic) {
+    private Consumer<InventoryClickEvent> clickEvent(String variant, AbstractCosmetic<?> cosmetic) {
         return event -> {
             ((CosmeticVariants<?>) cosmetic).setVariant(variant);
             this.owner.playSound(this.owner.getLocation(), Sound.VILLAGER_IDLE, 0.5F, 1.0F);

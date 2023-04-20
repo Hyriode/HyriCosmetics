@@ -8,7 +8,7 @@ import org.bukkit.entity.Entity;
 public class Balloon extends AbstractBalloonImpl {
 
     public Balloon(CosmeticUser user, Cosmetic cosmetic) {
-        super(user, cosmetic);
+        super(user, cosmetic, false);
     }
 
     @Override

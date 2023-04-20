@@ -16,7 +16,7 @@ public class SnowManComplexPet extends AbstractComplexPet {
     private ArmorStand body;
 
     public SnowManComplexPet(CosmeticUser user) {
-        super(user, Cosmetic.SNOWMAN);
+        super(user, Cosmetic.SNOWMAN, false);
     }
 
     @Override

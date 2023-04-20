@@ -1,6 +1,5 @@
 package fr.hyriode.cosmetics.gui;
 
-import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.Cosmetic;
@@ -13,12 +12,10 @@ import fr.hyriode.hyrame.inventory.pagination.PaginatedItem;
 import fr.hyriode.hyrame.inventory.pagination.PaginationArea;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import fr.hyriode.hyrame.utils.Pagination;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +94,7 @@ public class CosmeticsGui extends PaginatedInventory {
             ));
         } else {
             pagination.add(PaginatedItem.from(
-                    this.createCosmeticItem(user.getEquippedCosmetic(category)),
+                    user.getEquippedCosmetic(category).toItemStack(owner, true),
                     this.clickEvent(user.getEquippedCosmetic(category))
             ));
         }
@@ -107,32 +104,10 @@ public class CosmeticsGui extends PaginatedInventory {
             cosmetics.remove(user.getEquippedCosmetic(category));
         }
         for (Cosmetic cosmetic : cosmetics) {
-            pagination.add(PaginatedItem.from(this.createCosmeticItem(cosmetic), this.clickEvent(cosmetic)));
+            pagination.add(PaginatedItem.from(cosmetic.toItemStack(owner, true), this.clickEvent(cosmetic)));
         }
 
         this.paginationManager.updateGUI();
-    }
-
-    private ItemStack createCosmeticItem(final Cosmetic cosmetic) {
-        final String footer;
-        final ItemBuilder builder = new ItemBuilder(cosmetic.getIcon())
-                .withName(ChatColor.AQUA + cosmetic.getTranslatedName().getValue(this.owner))
-                .withLore(StringUtil.splitIntoPhrases(cosmetic.getTranslatedDescription().getValue(this.owner), 35))
-                .appendLore("")
-                .appendLore( name(this.owner, "gui.cosmetic.rarity") + ": " + cosmetic.getRarity().getColor() + HyriChatColor.BOLD + cosmetic.getRarity().getName().toUpperCase());
-
-        if (user.hasEquippedCosmetic(category) && user.getEquippedCosmetic(category) == cosmetic) {
-            if (!user.getEquippedCosmetics().get(category).getAbstractCosmetic().hasVariants()) {
-                footer = name(owner, "gui.cosmetic.already_equipped");
-            } else {
-                footer = name(owner, "gui.cosmetic.click_to_edit");
-            }
-            builder.withGlow();
-        } else {
-            footer = name(owner, "gui.cosmetic.click_to_equip");
-        }
-
-        return builder.appendLore("").appendLore(footer).build();
     }
 
     private Consumer<InventoryClickEvent> clickEvent(Cosmetic cosmetic) {

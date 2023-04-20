@@ -7,6 +7,8 @@ import java.util.Map;
 
 public interface CosmeticVariants<T> {
 
+    boolean hasVariants();
+
     String getDefaultVariant();
 
     void setVariant(String variant);

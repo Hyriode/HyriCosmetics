@@ -1,12 +1,18 @@
 package fr.hyriode.cosmetics.common;
 
+import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.api.rank.PlayerRank;
+import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory.Default;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
+import fr.hyriode.cosmetics.utils.StringUtil;
 import fr.hyriode.hyrame.item.ItemBuilder;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -97,5 +103,37 @@ public enum Cosmetic {
 
     public HyriLanguageMessage getTranslatedDescription() {
         return HyriLanguageMessage.get("cosmetic." + category.getName() + "." + getId() + ".description");
+    }
+
+    public ItemStack toItemStack(final Player player, boolean withFooter) {
+        final CosmeticUser user = HyriCosmetics.get().getUserProvider().getUser(player);
+        final CosmeticCategory category = this.getCategory();
+
+        final ItemBuilder builder = new ItemBuilder(icon)
+                .withName(ChatColor.AQUA + getTranslatedName().getValue(player))
+                .withLore(StringUtil.splitIntoPhrases(getTranslatedDescription().getValue(player), 35))
+                .appendLore("")
+                .appendLore( name(player, "gui.cosmetic.rarity") + ": " + getRarity().getColor() + HyriChatColor.BOLD + getRarity().getName().toUpperCase());
+
+        if (withFooter) {
+            final String footer;
+            if (user.hasEquippedCosmetic(category) && user.getEquippedCosmetic(category) == this) {
+                if (!user.getEquippedCosmetics().get(category).getAbstractCosmetic().hasVariants()) {
+                    footer = name(player, "gui.cosmetic.already_equipped");
+                } else {
+                    footer = name(player, "gui.cosmetic.click_to_edit");
+                }
+                builder.withGlow();
+            } else {
+                footer = name(player, "gui.cosmetic.click_to_equip");
+            }
+            builder.appendLore("").appendLore(footer);
+        }
+
+        return builder.build();
+    }
+
+    private String name(Player player, String key) {
+        return HyriLanguageMessage.get(key).getValue(player);
     }
 }

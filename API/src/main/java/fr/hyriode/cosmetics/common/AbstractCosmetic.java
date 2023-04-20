@@ -3,18 +3,32 @@ package fr.hyriode.cosmetics.common;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.user.CosmeticUser;
+import fr.hyriode.hyrame.utils.Pair;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class AbstractCosmetic {
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
 
     private final CosmeticUser user;
     private final Cosmetic cosmetic;
 
-    public AbstractCosmetic(CosmeticUser user, Cosmetic cosmetic) {
+    protected String variant;
+
+    protected final Map<String, Pair<ItemStack, T>> variants;
+    private final boolean hasVariants;
+
+    public AbstractCosmetic(CosmeticUser user, Cosmetic cosmetic, boolean hasVariants) {
         this.user = user;
         this.cosmetic = cosmetic;
+
+        this.variant = getDefaultVariant();
+        this.variants = initVariants();
+        this.hasVariants = hasVariants;
     }
 
     public String getId() {
@@ -48,6 +62,7 @@ public abstract class AbstractCosmetic {
     public CosmeticCategory getCategory() {
         return cosmetic.getCategory();
     }
+
     public HyriLanguageMessage getTranslatedName() {
         return cosmetic.getTranslatedName();
     }
@@ -76,7 +91,47 @@ public abstract class AbstractCosmetic {
         return user.asBukkit();
     }
 
+    @Override
+    public Map<String, ItemStack> getVariantsItem() {
+        return variants.entrySet().stream().collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue().getKey()), Map::putAll);
+    }
+
+    @Override
+    public Map<String, T> getVariants() {
+        return variants.entrySet().stream().collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue().getValue()), Map::putAll);
+    }
+
+    @Override
+    public T getVariant(String variant) {
+        return variants.get(variant).getValue();
+    }
+
+    @Override
     public boolean hasVariants() {
-        return this instanceof CosmeticVariants<?>;
+        return hasVariants;
+    }
+
+    @Override
+    public String getDefaultVariant() {
+        return null;
+    }
+
+    @Override
+    public void updateVariant() {}
+
+    @Override
+    public Map<String, Pair<ItemStack, T>> initVariants() {
+        return Collections.emptyMap();
+    }
+
+    @Override
+    public void setVariant(String variant) {
+        this.variant = variant;
+        this.updateVariant();
+    }
+
+    @Override
+    public String getVariant() {
+        return this.variant;
     }
 }
