@@ -5,7 +5,7 @@ import fr.hyriode.api.player.model.IHyriTransactionContent;
 
 public class CosmeticTransaction implements IHyriTransactionContent {
 
-    public static final String TYPE = "cosmetic";
+    public static final String TYPE = "cosmetics";
 
     private String cosmeticId;
 
