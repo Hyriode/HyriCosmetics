@@ -141,7 +141,7 @@ public enum Cosmetic {
         return requireRank;
     }
 
-    public boolean hasRequiredRank(final Player player) {
+    private boolean hasRequiredRank(final Player player) {
         final IHyriRank playerRank = HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank();
         if (playerRank.isStaff() && rank instanceof StaffRank) {
             return playerRank.isSuperior((StaffRank) rank);
@@ -150,6 +150,15 @@ public enum Cosmetic {
         }
 
         return false;
+    }
+
+    public boolean canBuyIt(final Player player) {
+        if (!this.requireRank) return true;
+        return this.hasRequiredRank(player);
+    }
+    
+    public boolean isAccessible(final Player player) {
+        return this.hasRequiredRank(player);
     }
 
     private String name(Player player, String key) {
@@ -197,9 +206,9 @@ public enum Cosmetic {
 
     private String getUnlockInfo(final Player player, final IHyriPlayer hyriPlayer, ItemBuilder builder) {
         String footer = "";
-        if (!hasRequiredRank(player)) {
+        if (!canBuyIt(player)) {
             footer = name(player, "gui.cosmetic.cant_unlock");
-        } else if (isBuyable()){
+        } else if (isBuyable()) {
             final String priceInfo = getPriceInfo(player, hyriPlayer, builder);
             builder.appendLore(priceInfo);
             footer = name(player, "gui.cosmetic.click_to_buy");
