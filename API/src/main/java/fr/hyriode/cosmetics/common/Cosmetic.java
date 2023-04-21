@@ -85,7 +85,7 @@ public enum Cosmetic {
         this.hyodesPrice = hyodesPrice;
         this.hyrisPrice = hyrisPrice;
         this.icon = icon;
-        this.requireRank = true;
+        this.requireRank = requireRank;
     }
 
     public CosmeticCategory getCategory() {
@@ -144,7 +144,7 @@ public enum Cosmetic {
         if (!requireRank) {
             return true;
         }
-        return rank != null && HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank().getPriority() <= rank.getPriority();
+        return rank != null && HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank().getPriority() > rank.getPriority();
     }
 
     private String name(Player player, String key) {
