@@ -22,19 +22,24 @@ public class AccountListener {
     @HyriEventHandler
     public void onModeration(ModerationUpdatedEvent event) {
         final CosmeticUser user = this.instance.getUserProvider().getUser(event.getPlayerId());
-        if (!event.isModerating()) {
-            if (!user.isInitialized()) {
-                user.equipCosmetics();
+        Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.get(), () -> {
+            if (!event.isModerating()) {
+                if (!user.isInitialized()) {
+                    user.equipCosmetics();
+                }
+                user.reactivateCosmeticsTemporarilyUnequipped();
+            } else {
+                user.temporarilyUnequipCosmetics();
             }
-            user.reactivateCosmeticsTemporarilyUnequipped();
-        } else {
-            user.temporarilyUnequipCosmetics();
-        }
+        }, 5L);
     }
 
     @HyriEventHandler
     public void onVanish(VanishUpdatedEvent event) {
-        if (event.getSession().isModerating()) return;
+        if (event.getSession().isModerating()) {
+            Bukkit.broadcastMessage("ok");
+            return;
+        }
         final CosmeticUser user = this.instance.getUserProvider().getUser(event.getPlayerId());
         if (!event.isVanished()) {
             if (!user.isInitialized()) {
