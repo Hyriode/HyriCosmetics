@@ -4,6 +4,7 @@ import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.gadget.AbstractGadget;
 import fr.hyriode.cosmetics.particle.AbstractParticle;
 import fr.hyriode.cosmetics.pet.AbstractPet;
+import fr.hyriode.cosmetics.utils.Head;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -28,10 +29,10 @@ public interface CosmeticCategory {
 
     enum Default implements CosmeticCategory {
 
-        GADGET("gadget", AbstractGadget.class, new ItemBuilder(Material.CARROT_STICK).build(), 20),
-        PET("pet", AbstractPet.class, new ItemBuilder(Material.BONE).build(), 21),
-        PARTICLE("particle", AbstractParticle.class, new ItemBuilder(Material.BLAZE_POWDER).build(), 23),
-        BALLOON("balloon", AbstractParticle.class, new ItemBuilder(Material.HOPPER).build(), 24),
+        PARTICLE("particle", AbstractParticle.class, new ItemBuilder(Material.BLAZE_POWDER).build(), 21),
+        PET("pet", AbstractPet.class, new ItemBuilder(Material.BONE).build(), 22),
+        BALLOON("balloon", AbstractParticle.class, Head.BALLOON_COLOR_RED.asItem(), 23),
+        GADGET("gadget", AbstractGadget.class, new ItemBuilder(Material.CARROT_STICK).build(), 24),
         ;
 
         private final String name;

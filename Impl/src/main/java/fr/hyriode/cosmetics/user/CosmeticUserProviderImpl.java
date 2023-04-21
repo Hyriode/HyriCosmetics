@@ -1,5 +1,7 @@
 package fr.hyriode.cosmetics.user;
 
+import fr.hyriode.api.player.IHyriPlayer;
+import fr.hyriode.api.player.model.modules.IHyriTransactionsModule;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import org.bukkit.entity.Player;
@@ -30,6 +32,7 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
     @Override
     public void deleteUser(Player player) {
         final CosmeticUser cosmeticUser = this.users.get(player.getUniqueId());
+
         if (cosmeticUser.isUnequipping()) {
             cosmeticUser.reactivateCosmeticsTemporarilyUnequipped();
         }

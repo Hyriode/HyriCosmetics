@@ -21,6 +21,7 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     private final Player player;
     private final Map<CosmeticCategory, PlayerCosmetic<?>> equippedCosmetics;
+    private final List<Cosmetic> unlockedCosmetics = new ArrayList<>();
     private final UserData data;
 
     private double lastX, lastY, lastZ;
@@ -47,6 +48,24 @@ public class CosmeticUserImpl implements CosmeticUser {
         }
 
         this.data.setUser(this);
+
+        for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
+            final List<Cosmetic> cosmetics = entry.getValue();
+
+            for (Cosmetic cosmetic : cosmetics) {
+                if (cosmetic.isAccessible(player)) {
+                    unlockedCosmetics.add(cosmetic);
+                }
+            }
+        }
+
+        if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
+            for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
+                CosmeticTransaction cosmeticTransaction = transaction.loadContent(new CosmeticTransaction());
+                unlockedCosmetics.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
+            }
+        }
+
         this.init();
     }
 
@@ -149,34 +168,12 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public List<Cosmetic> getUnlockedCosmetics() {
-        final List<Cosmetic> result = new ArrayList<>();
-
-        for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
-            final List<Cosmetic> cosmetics = entry.getValue();
-
-            for (Cosmetic cosmetic : cosmetics) {
-                if (cosmetic.isAccessible(player)) {
-                    result.add(cosmetic);
-                }
-            }
-        }
-
-        if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
-            for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
-                CosmeticTransaction cosmeticTransaction = transaction.loadContent(new CosmeticTransaction());
-                result.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
-            }
-        }
-
-        return result;
+        return this.unlockedCosmetics;
     }
 
     @Override
     public List<Cosmetic> getUnlockedCosmetics(CosmeticCategory category) {
-        return this.getUnlockedCosmetics()
-                .stream()
-                .filter(cosmetic -> cosmetic.getCategory() == category)
-                .collect(Collectors.toList());
+        return this.unlockedCosmetics.stream().filter(cosmetic -> cosmetic.getCategory() == category).collect(Collectors.toList());
     }
 
 
@@ -185,6 +182,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         final IHyriPlayer account = this.asHyriPlayer();
         account.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
         account.update();
+        this.unlockedCosmetics.add(cosmetic);
     }
 
     @Override
@@ -192,11 +190,12 @@ public class CosmeticUserImpl implements CosmeticUser {
         final IHyriPlayer account = this.asHyriPlayer();
         account.getTransactions().remove(CosmeticTransaction.TYPE, cosmetic.getId());
         account.update();
+        this.unlockedCosmetics.remove(cosmetic);
     }
 
     @Override
     public boolean hasUnlockedCosmetic(Cosmetic cosmetic) {
-        return this.getUnlockedCosmetics().contains(cosmetic);
+        return this.unlockedCosmetics.contains(cosmetic);
     }
 
     @Override
