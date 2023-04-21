@@ -3,6 +3,7 @@ package fr.hyriode.cosmetics.user;
 import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.player.IHyriPlayer;
 import fr.hyriode.api.player.IHyriPlayerSession;
+import fr.hyriode.api.player.model.IHyriTransaction;
 import fr.hyriode.api.rank.PlayerRank;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
@@ -161,12 +162,12 @@ public class CosmeticUserImpl implements CosmeticUser {
         }
 
         if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
-            result.addAll(this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)
-                    .stream()
-                    .map(o -> (CosmeticTransaction) o)
-                    .map(CosmeticTransaction::getCosmeticId)
-                    .map(HyriCosmetics.get()::getCosmetic)
-                    .collect(Collectors.toList()));
+            for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
+                CosmeticTransaction cosmeticTransaction = (CosmeticTransaction) transaction;
+                result.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
+                Bukkit.broadcastMessage(cosmeticTransaction.getCosmeticId());
+                Bukkit.broadcastMessage(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()).getTranslatedName().getValue(player));
+            }
         }
 
         return result;
