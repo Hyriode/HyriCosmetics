@@ -165,8 +165,6 @@ public class CosmeticUserImpl implements CosmeticUser {
             for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
                 CosmeticTransaction cosmeticTransaction = transaction.loadContent(new CosmeticTransaction());
                 result.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
-                Bukkit.broadcastMessage(cosmeticTransaction.getCosmeticId());
-                Bukkit.broadcastMessage(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()).getTranslatedName().getValue(player));
             }
         }
 
