@@ -3,6 +3,9 @@ package fr.hyriode.cosmetics.balloon;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
+import fr.hyriode.hyrame.packet.PacketUtil;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.PacketPlayOutAttachEntity;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -36,6 +39,8 @@ public class BalloonImpl extends AbstractBalloon {
         world.addEntity(balloon, CreatureSpawnEvent.SpawnReason.CUSTOM);
         this.reference = balloon.getSlime();
         this.armorStand = balloon.getContents();
+
+        PacketUtil.sendPacket(new PacketPlayOutAttachEntity(0, (Entity) reference, (Entity) getPlayer()));
     }
 
     @Override

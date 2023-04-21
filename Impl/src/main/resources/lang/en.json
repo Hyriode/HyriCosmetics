@@ -37,5 +37,12 @@
   "cosmetic.pet.snowman.description": "No matter the season, he is always there (not that he likes the sun...)",
 
   "cosmetic.pet.mini_me.name": "Mini me",
-  "cosmetic.pet.mini_me.description": "It looks strangely like you... strange..."
+  "cosmetic.pet.mini_me.description": "It looks strangely like you... strange...",
+
+  "cosmetics.rarity.common": "Common",
+  "cosmetics.rarity.rare": "Rare",
+  "cosmetics.rarity.epic": "Epic",
+  "cosmetics.rarity.legendary": "Legendary",
+  "cosmetics.rarity.exclusive": "Exclusive",
+  "cosmetics.rarity.staff": "Staff"
 }

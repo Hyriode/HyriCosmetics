@@ -276,7 +276,7 @@ public enum Cosmetic {
 
     private String getRarityInfo(final Player player) {
         final String rarityColor = getRarity().getColor().toString();
-        final String rarityName = HyriChatColor.BOLD + getRarity().getName().toUpperCase();
+        final String rarityName = HyriChatColor.BOLD + getRarity().getTranslatedName(player);
         final String rarityLabel = name(player, "gui.cosmetic.rarity") + ": ";
         return rarityLabel + rarityColor + rarityName;
     }

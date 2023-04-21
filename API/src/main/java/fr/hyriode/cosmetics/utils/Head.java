@@ -65,8 +65,6 @@ public enum Head {
 
     ;
 
-    private ItemStack cachedItem;
-
     private final String texture;
 
     Head(String texture) {
@@ -91,6 +89,6 @@ public enum Head {
     }
 
     public ItemBuilder asItemBuilder() {
-        return this.cachedItem == null ? new ItemBuilder(this.cachedItem = ItemBuilder.asHead().withHeadTexture(this.texture).build().clone()) : new ItemBuilder(this.cachedItem.clone());
+        return ItemBuilder.asHead().withHeadTexture(this.texture);
     }
 }

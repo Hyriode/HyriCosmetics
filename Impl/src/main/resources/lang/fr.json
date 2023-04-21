@@ -37,6 +37,13 @@
   "cosmetic.pet.snowman.description": "Peu import la saison, il est toujours là ! (pas dit qu'il aime le soleil...)",
 
   "cosmetic.pet.mini_me.name": "Mini moi",
-  "cosmetic.pet.mini_me.description": "Il vous ressemble étrangement... bizarre..."
+  "cosmetic.pet.mini_me.description": "Il vous ressemble étrangement... bizarre...",
+
+  "cosmetics.rarity.common": "Commun",
+  "cosmetics.rarity.rare": "Rare",
+  "cosmetics.rarity.epic": "Épique",
+  "cosmetics.rarity.legendary": "Légendaire",
+  "cosmetics.rarity.exclusive": "Exclusif",
+  "cosmetics.rarity.staff": "Staff",
 
 }

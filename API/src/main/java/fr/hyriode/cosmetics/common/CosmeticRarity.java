@@ -1,6 +1,9 @@
 package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.color.HyriChatColor;
+import fr.hyriode.api.language.HyriLanguageMessage;
+import fr.hyriode.api.language.IHyriLanguageManager;
+import org.bukkit.entity.Player;
 
 public enum CosmeticRarity {
 
@@ -26,6 +29,10 @@ public enum CosmeticRarity {
 
     public String getName() {
         return name;
+    }
+
+    public String getTranslatedName(final Player player) {
+        return HyriLanguageMessage.get("cosmetics.rarity." + this.name).getValue(player);
     }
 
 }
