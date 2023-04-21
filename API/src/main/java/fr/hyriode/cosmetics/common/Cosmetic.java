@@ -22,19 +22,75 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public enum Cosmetic {
 
     // == Particles ==
-    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.COMMON, -1, 5000, new ItemBuilder(Material.BOOK_AND_QUILL).build()),
-    FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.RARE, 2000, 15000, new ItemBuilder(Material.LAVA_BUCKET).build()),
-    STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 1000, -1, new ItemBuilder(Material.FEATHER).build()),
-    RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.LEGENDARY, PlayerRank.EPIC, 3000, 50000, new ItemBuilder(Material.INK_SACK, 1, 2).build()),
-    BLACK_VORTEX(Default.PARTICLE, "black_vortex", CosmeticRarity.STAFF, StaffRank.ADMINISTRATOR, -1, -1, new ItemBuilder(Material.RECORD_11).withAllItemFlags().build(), true),
+    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.COMMON, -1, 5000, c -> new ItemBuilder(Material.BOOK_AND_QUILL).build()),
+    FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.RARE, 2000, 15000, c -> new ItemBuilder(Material.LAVA_BUCKET).build()),
+    STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 1000, -1, c -> new ItemBuilder(Material.FEATHER).build()),
+    RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.LEGENDARY, PlayerRank.EPIC, 3000, 50000, c -> new ItemBuilder(Material.INK_SACK, 1, 2).build()),
+    BLACK_VORTEX(Default.PARTICLE, "black_vortex", CosmeticRarity.STAFF, StaffRank.ADMINISTRATOR, -1, -1, c -> new ItemBuilder(Material.RECORD_11).withAllItemFlags().build(), true),
 
     // == Pets ==
-    SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 15000, 15000, Head.SNOWMAN_BODY.asItem()),
-    MINI_ME(Default.PET, "mini_me", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, new ItemBuilder(Material.SKULL_ITEM).withData((short) 3).build()),
+    SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 15000, 15000, c -> Head.SNOWMAN_BODY.asItem()),
+    MINI_ME(Default.PET, "mini_me", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, c -> new ItemBuilder(Material.SKULL_ITEM).withData((short) 3).build()),
+
+    // == Balloons ==
+    HYRIODE_BALLOON(Default.BALLOON, "hyriode", CosmeticRarity.EXCLUSIVE, -1, -1, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.HYRIODE),
+
+    TWITCH_BALLOON(Default.BALLOON, "twitch", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.TWITCH),
+    YOUTUBE_BALLOON(Default.BALLOON, "youtube", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.YOUTUBE),
+    TIKTOK_BALLOON(Default.BALLOON, "tiktok", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.TIKTOK),
+
+    YELLOW_BALLOON(Default.BALLOON, "yellow", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_YELLOW),
+    RED_BALLOON(Default.BALLOON, "red", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_RED),
+    BLUE_BALLOON(Default.BALLOON, "blue", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_BLUE),
+    GREEN_BALLOON(Default.BALLOON, "green", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_GREEN),
+    PURPLE_BALLOON(Default.BALLOON, "purple", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_PURPLE),
+    ORANGE_BALLOON(Default.BALLOON, "orange", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_ORANGE),
+    PINK_BALLOON(Default.BALLOON, "pink", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_PINK),
+    LIGHT_BLUE_BALLOON(Default.BALLOON, "white", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_LIGHT_BLUE),
+    LIME_BALLOON(Default.BALLOON, "black", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_LIME),
+    GRAY_BALLOON(Default.BALLOON, "gray", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_GRAY),
+    DARK_BLUE_BALLOON(Default.BALLOON, "brown", CosmeticRarity.COMMON, -1, 500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BALLOON_COLOR_DARK_BLUE),
+
+    BEACH_BALLOON(Default.BALLOON, "beach", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.BEACH),
+
+    JACK_O_LANTERN_YELLOW_BALLOON(Default.BALLOON, "jack_o_lantern_yellow", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_YELLOW),
+    JACK_O_LANTERN_LIGHT_BLUE_BALLOON(Default.BALLOON, "jack_o_lantern_light_blue", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_LIGHT_BLUE),
+    JACK_O_LANTERN_BLUE_BALLOON(Default.BALLOON, "jack_o_lantern_blue", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_BLUE),
+    JACK_O_LANTERN_LIME_BALLOON(Default.BALLOON, "jack_o_lantern_lime", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_LIME),
+    JACK_O_LANTERN_GREEN_BALLOON(Default.BALLOON, "jack_o_lantern_green", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_GREEN),
+    JACK_O_LANTERN_ORANGE_BALLOON(Default.BALLOON, "jack_o_lantern_orange", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_ORANGE),
+    JACK_O_LANTERN_PINK_BALLOON(Default.BALLOON, "jack_o_lantern_pink", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_PINK),
+    JACK_O_LANTERN_PURPLE_BALLOON(Default.BALLOON, "jack_o_lantern_purple", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_PURPLE),
+    JACK_O_LANTERN_RED_BALLOON(Default.BALLOON, "jack_o_lantern_red", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_RED),
+    JACK_O_LANTERN_GRAY_BALLOON(Default.BALLOON, "jack_o_lantern_gray", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_GRAY),
+    JACK_O_LANTERN_CYAN_BALLOON(Default.BALLOON, "jack_o_lantern_cyan", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_CYAN),
+    JACK_O_LANTERN_MAGENTA_BALLOON(Default.BALLOON, "jack_o_lantern_magenta", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_MAGENTA),
+    JACK_O_LANTERN_BLACK_BALLOON(Default.BALLOON, "jack_o_lantern_black", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_BLACK),
+    JACK_O_LANTERN_WHITE_BALLOON(Default.BALLOON, "jack_o_lantern_white", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_WHITE),
+    JACK_O_LANTERN_BROWN_BALLOON(Default.BALLOON, "jack_o_lantern_brown", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.JACK_O_LANTERN_BROWN),
+
+    AMONG_US_BALLOON(Default.BALLOON, "among_us", CosmeticRarity.LEGENDARY, -1, 5000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.AMONG_US),
+
+    MOON_FULL_BALLOON(Default.BALLOON, "moon_full", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.MOON_FULL),
+    MOON_HALF_BALLOON(Default.BALLOON, "moon_half", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.MOON_HALF),
+    MOON_NEW_BALLOON(Default.BALLOON, "moon_new", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.MOON_NEW),
+
+    SUN_BALLOON(Default.BALLOON, "sun", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.SUN),
+
+    PRESENT_WHITE_BALLOON(Default.BALLOON, "present_white", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.PRESENT_WHITE),
+    PRESENT_GREEN_BALLOON(Default.BALLOON, "present_green", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.PRESENT_GREEN),
+    PRESENT_BLUE_BALLOON(Default.BALLOON, "present_blue", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.PRESENT_BLUE),
+    PRESENT_PURPLE_BALLOON(Default.BALLOON, "present_purple", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.PRESENT_PURPLE),
+    PRESENT_YELLOW_BALLOON(Default.BALLOON, "present_yellow", CosmeticRarity.RARE, -1, 2000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.PRESENT_YELLOW),
+
+    RUBIKS_CUBE_BALLOON(Default.BALLOON, "rubiks_cube", CosmeticRarity.EPIC, -1, 2500, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.RUBIKS_CUBE),
+    TOTEM_BALLOON(Default.BALLOON, "totem", CosmeticRarity.LEGENDARY, -1, 5000, c -> ItemBuilder.asHead().withHeadTexture(c.getTexture().getTexture()).build(), Head.TOTEM),
     ;
 
     private static final Map<CosmeticCategory, List<Cosmetic>> cosmetics = new HashMap<>();
@@ -53,10 +109,11 @@ public enum Cosmetic {
     private final IHyriRankType rank;
     private final int hyodesPrice;
     private final int hyrisPrice;
-    private final ItemStack icon;
+    private final Function<Cosmetic, ItemStack> icon;
     private final boolean requireRank;
+    private final Head headTexture;
 
-    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, IHyriRankType rank, int hyodesPrice, int hyrisPrice, ItemStack icon) {
+    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, IHyriRankType rank, int hyodesPrice, int hyrisPrice, Function<Cosmetic, ItemStack> icon) {
         this.category = category;
         this.id = id;
         this.rarity = rarity;
@@ -65,9 +122,10 @@ public enum Cosmetic {
         this.hyrisPrice = hyrisPrice;
         this.icon = icon;
         this.requireRank = false;
+        this.headTexture = Head.SNOWMAN_BODY;
     }
 
-    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, int hyodesPrice, int hyrisPrice, ItemStack icon) {
+    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, int hyodesPrice, int hyrisPrice, Function<Cosmetic, ItemStack> icon) {
         this.category = category;
         this.id = id;
         this.rarity = rarity;
@@ -76,9 +134,22 @@ public enum Cosmetic {
         this.hyrisPrice = hyrisPrice;
         this.icon = icon;
         this.requireRank = false;
+        this.headTexture = Head.SNOWMAN_BODY;
     }
 
-    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, IHyriRankType rank, int hyodesPrice, int hyrisPrice, ItemStack icon, boolean requireRank) {
+    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, int hyodesPrice, int hyrisPrice, Function<Cosmetic, ItemStack> icon, Head head) {
+        this.category = category;
+        this.id = id;
+        this.rarity = rarity;
+        this.rank = null;
+        this.hyodesPrice = hyodesPrice;
+        this.hyrisPrice = hyrisPrice;
+        this.icon = icon;
+        this.requireRank = false;
+        this.headTexture = head;
+    }
+
+    Cosmetic(CosmeticCategory category, String id, CosmeticRarity rarity, IHyriRankType rank, int hyodesPrice, int hyrisPrice, Function<Cosmetic, ItemStack> icon, boolean requireRank) {
         this.category = category;
         this.id = id;
         this.rarity = rarity;
@@ -87,6 +158,7 @@ public enum Cosmetic {
         this.hyrisPrice = hyrisPrice;
         this.icon = icon;
         this.requireRank = requireRank;
+        this.headTexture = Head.SNOWMAN_BODY;
     }
 
     public CosmeticCategory getCategory() {
@@ -118,7 +190,7 @@ public enum Cosmetic {
     }
 
     public ItemStack getIcon() {
-        return icon.clone();
+        return icon.apply(this).clone();
     }
 
     public static Map<CosmeticCategory, List<Cosmetic>> getCosmetics() {
@@ -135,6 +207,11 @@ public enum Cosmetic {
 
     public boolean isBuyable() {
         return hyodesPrice != -1 || hyrisPrice != -1;
+    }
+
+
+    public Head getTexture() {
+        return headTexture;
     }
 
     public boolean isRequireRank() {
@@ -170,7 +247,7 @@ public enum Cosmetic {
         final IHyriPlayer hyriPlayer = user.asHyriPlayer();
         final CosmeticCategory category = this.getCategory();
 
-        final ItemBuilder builder = new ItemBuilder(icon.clone())
+        final ItemBuilder builder = new ItemBuilder(getIcon())
                 .withName(getTranslatedName(player))
                 .withLore(StringUtil.splitIntoPhrases(getTranslatedDescription(player), 35))
                 .appendLore("")

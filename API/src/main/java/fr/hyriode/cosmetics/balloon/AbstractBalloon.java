@@ -11,5 +11,4 @@ public abstract class AbstractBalloon extends AbstractCosmetic {
     }
 
     protected abstract void tick(final CosmeticUser user);
-
 }

@@ -2,6 +2,8 @@ package fr.hyriode.cosmetics;
 
 import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.server.ILobbyAPI;
+import fr.hyriode.cosmetics.balloon.AbstractBalloon;
+import fr.hyriode.cosmetics.balloon.BalloonImpl;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
@@ -76,6 +78,9 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     @Override @SuppressWarnings("all")
     public <T extends AbstractCosmetic> T createCosmetic(Cosmetic cosmetic, CosmeticUser user) {
         try {
+            if (cosmetic.getCategory() == CosmeticCategory.Default.BALLOON) {
+                return (T) new BalloonImpl(user, cosmetic, cosmetic.getTexture().getTexture());
+            }
             return (T) this.getCosmeticClass(cosmetic).getConstructor(CosmeticUser.class).newInstance(user);
         } catch (Exception e) {
             e.printStackTrace();
