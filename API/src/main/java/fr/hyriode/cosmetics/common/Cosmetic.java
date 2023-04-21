@@ -3,6 +3,7 @@ package fr.hyriode.cosmetics.common;
 import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.player.IHyriPlayer;
+import fr.hyriode.api.rank.IHyriRank;
 import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.api.rank.PlayerRank;
 import fr.hyriode.api.rank.StaffRank;
@@ -141,10 +142,17 @@ public enum Cosmetic {
     }
 
     public boolean hasRequiredRank(final Player player) {
-        if (!requireRank) {
+        if (!requireRank || rank == null) {
             return true;
         }
-        return rank != null && HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank().getPriority() > rank.getPriority();
+        final IHyriRank playerRank = HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank();
+        if (playerRank.isStaff() && rank instanceof StaffRank) {
+            return playerRank.isSuperior((StaffRank) rank);
+        } else if (playerRank.isDefault() && rank instanceof PlayerRank) {
+            return playerRank.isSuperior((PlayerRank) rank);
+        }
+
+        return false;
     }
 
     private String name(Player player, String key) {
