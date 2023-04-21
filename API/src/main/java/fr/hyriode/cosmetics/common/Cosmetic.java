@@ -27,8 +27,8 @@ public enum Cosmetic {
     // == Particles ==
     ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.COMMON, -1, 5000, new ItemBuilder(Material.BOOK_AND_QUILL).build()),
     FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.RARE, 2000, 15000, new ItemBuilder(Material.LAVA_BUCKET).build()),
-    STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP, 1000, -1, new ItemBuilder(Material.FEATHER).build()),
-    RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.LEGENDARY, PlayerRank.VIP_PLUS, 3000, 50000, new ItemBuilder(Material.INK_SACK, 1, 2).build()),
+    STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 1000, -1, new ItemBuilder(Material.FEATHER).build()),
+    RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.LEGENDARY, PlayerRank.EPIC, 3000, 50000, new ItemBuilder(Material.INK_SACK, 1, 2).build()),
     BLACK_VORTEX(Default.PARTICLE, "black_vortex", CosmeticRarity.STAFF, StaffRank.ADMINISTRATOR, -1, -1, new ItemBuilder(Material.RECORD_11).withAllItemFlags().build(), true),
 
     // == Pets ==
@@ -217,6 +217,9 @@ public enum Cosmetic {
                 priceInfo = name(player, "gui.cosmetic.price_one_option")
                         .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " ✦");
             }
+        }
+        if (!isRequireRank() && rank != null && rank != PlayerRank.PLAYER) {
+            builder.appendLore(name(player, "gui.cosmetic.offered_with_rank").replace("%rank%", rank.getDefaultPrefix()));
         }
         return priceInfo;
     }
