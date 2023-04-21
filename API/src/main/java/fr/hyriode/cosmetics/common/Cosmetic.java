@@ -142,9 +142,6 @@ public enum Cosmetic {
     }
 
     public boolean hasRequiredRank(final Player player) {
-        if (!requireRank || rank == null) {
-            return true;
-        }
         final IHyriRank playerRank = HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank();
         if (playerRank.isStaff() && rank instanceof StaffRank) {
             return playerRank.isSuperior((StaffRank) rank);
@@ -173,7 +170,7 @@ public enum Cosmetic {
         if (withAction) {
             String footer;
             if (!user.hasUnlockedCosmetic(this)) {
-                footer = getUnlockInfo(player, user, hyriPlayer, builder);
+                footer = getUnlockInfo(player, hyriPlayer, builder);
             } else {
                 footer = getEquipInfo(player, user, category, builder);
             }
@@ -198,7 +195,7 @@ public enum Cosmetic {
         return rarityLabel + rarityColor + rarityName;
     }
 
-    private String getUnlockInfo(final Player player, final CosmeticUser user, final IHyriPlayer hyriPlayer, ItemBuilder builder) {
+    private String getUnlockInfo(final Player player, final IHyriPlayer hyriPlayer, ItemBuilder builder) {
         String footer = "";
         if (!hasRequiredRank(player)) {
             footer = name(player, "gui.cosmetic.cant_unlock");
