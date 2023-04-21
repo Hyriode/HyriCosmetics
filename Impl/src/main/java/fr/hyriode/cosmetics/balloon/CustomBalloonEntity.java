@@ -37,17 +37,19 @@ public class CustomBalloonEntity extends EntitySlime {
         this.contents.setCustomNameVisible(false);
         this.contents.setGravity(false);
         this.contents.setHelmet(item);
+        this.contents.setMarker(false);
     }
 
+    @Override
     public boolean isInvulnerable(DamageSource damagesource) {
         return true;
     }
 
+    @Override
     public void t_() {
         updatePosition();
         setLocation(this.currentLoc.getX(), this.currentLoc.getY(), this.currentLoc.getZ(), this.currentLoc.getYaw(), this.currentLoc.getPitch());
         this.contents.teleport(getBukkitEntity().getLocation().clone().subtract(0.0D, 1.0D, 0.0D));
-        ((Slime)getBukkitEntity()).setLeashHolder(this.player);
     }
 
     private void updatePosition() {

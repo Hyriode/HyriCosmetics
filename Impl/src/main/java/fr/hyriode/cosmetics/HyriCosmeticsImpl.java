@@ -24,6 +24,7 @@ import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
 import fr.hyriode.hyrame.HyrameLoader;
 import fr.hyriode.hyrame.IHyrame;
+import net.minecraft.server.v1_8_R3.EntityTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -3,14 +3,12 @@ package fr.hyriode.cosmetics.balloon;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.item.ItemBuilder;
-import fr.hyriode.hyrame.packet.PacketUtil;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.PacketPlayOutAttachEntity;
+import net.minecraft.server.v1_8_R3.EntityTypes;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import xyz.xenondevs.particle.ParticleBuilder;
@@ -30,7 +28,7 @@ public class BalloonImpl extends AbstractBalloon {
 
     @Override
     protected void tick(CosmeticUser user) {
-
+        reference.setLeashHolder(this.getPlayer());
     }
 
     @Override
@@ -39,10 +37,7 @@ public class BalloonImpl extends AbstractBalloon {
         CustomBalloonEntity balloon = new CustomBalloonEntity(world, this.getPlayer(), ItemBuilder.asHead().withHeadTexture(texture).build());
         world.addEntity(balloon, CreatureSpawnEvent.SpawnReason.CUSTOM);
         this.reference = balloon.getSlime();
-        balloon.a((EntityHuman) getPlayer());
         this.armorStand = balloon.getContents();
-
-//        PacketUtil.sendPacket(new PacketPlayOutAttachEntity(0, (Entity) reference, (Entity) getPlayer()));
     }
 
     @Override
