@@ -155,7 +155,7 @@ public class CosmeticUserImpl implements CosmeticUser {
             final List<Cosmetic> cosmetics = entry.getValue();
 
             for (Cosmetic cosmetic : cosmetics) {
-                if (cosmetic.hasRequiredRank(player)) {
+                if (cosmetic.getRank() != null && cosmetic.hasRequiredRank(player)) {
                     result.add(cosmetic);
                 }
             }
