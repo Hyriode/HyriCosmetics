@@ -155,7 +155,7 @@ public class CosmeticUserImpl implements CosmeticUser {
             final List<Cosmetic> cosmetics = entry.getValue();
 
             for (Cosmetic cosmetic : cosmetics) {
-                if (cosmetic.isRequireRank() && cosmetic.hasRequiredRank(player)) {
+                if (cosmetic.hasRequiredRank(player)) {
                     result.add(cosmetic);
                 }
             }
@@ -182,9 +182,9 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void addUnlockedCosmetic(Cosmetic cosmetic) {
-        final IHyriPlayer hyriPlayer = this.asHyriPlayer();
-        hyriPlayer.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
-        hyriPlayer.update();
+        final IHyriPlayer account = this.asHyriPlayer();
+        account.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
+        account.update();
     }
 
     @Override
