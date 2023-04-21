@@ -16,8 +16,8 @@ public class ConnectionListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         HyriCosmetics.get().getUserProvider().createUser(event.getPlayer());
         final IHyriPlayer hyriPlayer = HyriAPI.get().getPlayerManager().getPlayer(event.getPlayer().getUniqueId());
-        hyriPlayer.getHyodes().add(10000).exec();
-        hyriPlayer.getHyris().add(10000).exec();
+        hyriPlayer.getHyodes().add(50000).exec();
+        hyriPlayer.getHyris().add(50000).exec();
         hyriPlayer.update();
     }
 
