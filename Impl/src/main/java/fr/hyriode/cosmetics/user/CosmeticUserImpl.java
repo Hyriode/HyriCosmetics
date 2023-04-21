@@ -189,9 +189,9 @@ public class CosmeticUserImpl implements CosmeticUser {
 
     @Override
     public void removeUnlockedCosmetic(Cosmetic cosmetic) {
-        final IHyriPlayer hyriPlayer = this.asHyriPlayer();
-        hyriPlayer.getTransactions().remove(CosmeticTransaction.TYPE, cosmetic.getId());
-        hyriPlayer.update();
+        final IHyriPlayer account = this.asHyriPlayer();
+        account.getTransactions().remove(CosmeticTransaction.TYPE, cosmetic.getId());
+        account.update();
     }
 
     @Override
