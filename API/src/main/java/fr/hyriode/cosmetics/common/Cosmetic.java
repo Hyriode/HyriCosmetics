@@ -283,9 +283,9 @@ public enum Cosmetic {
 
     private String getUnlockInfo(final Player player, final IHyriPlayer hyriPlayer, ItemBuilder builder) {
         String footer = "";
-        if (!isAccessible(player) || !canBuyIt(player)) {
+        if (isBuyable() && canBuyIt(player)) {
             footer = name(player, "gui.cosmetic.cant_unlock");
-        } else if (isBuyable()) {
+        } else {
             final String priceInfo = getPriceInfo(player, hyriPlayer, builder);
             builder.appendLore(priceInfo);
             footer = name(player, "gui.cosmetic.click_to_buy");
