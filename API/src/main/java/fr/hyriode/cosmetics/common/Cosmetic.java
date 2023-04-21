@@ -247,7 +247,7 @@ public enum Cosmetic {
         final IHyriPlayer hyriPlayer = user.asHyriPlayer();
         final CosmeticCategory category = this.getCategory();
 
-        final ItemBuilder builder = new ItemBuilder(getIcon())
+        final ItemBuilder builder = new ItemBuilder(user.hasUnlockedCosmetic(this) ? getIcon() : new ItemStack(Material.INK_SACK, 1, (short) 8))
                 .withName(getTranslatedName(player))
                 .withLore(StringUtil.splitIntoPhrases(getTranslatedDescription(player), 35))
                 .appendLore("")
