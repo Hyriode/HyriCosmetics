@@ -195,25 +195,28 @@ public enum Cosmetic {
         if (!hasRequiredRank(player)) {
             footer = name(player, "gui.cosmetic.cant_unlock");
         } else if (isBuyable()){
-            final String priceInfo = getPriceInfo(player, hyriPlayer);
+            final String priceInfo = getPriceInfo(player, hyriPlayer, builder);
             builder.appendLore(priceInfo);
             footer = name(player, "gui.cosmetic.click_to_buy");
         }
         return footer;
     }
 
-    private String getPriceInfo(final Player player, final IHyriPlayer hyriPlayer) {
+    private String getPriceInfo(final Player player, final IHyriPlayer hyriPlayer, ItemBuilder builder) {
         String priceInfo = "";
-        if (hyodesPrice > 0 && hyrisPrice > 0) {
-            priceInfo = name(player, "gui.cosmetic.price_two_option")
-                    .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " " + hyriPlayer.getHyodes().getName())
-                    .replace("%price2%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " " + hyriPlayer.getHyris().getName());
-        } else if (hyrisPrice > 0) {
-            priceInfo = name(player, "gui.cosmetic.price_one_option")
-                    .replace("%price1%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " " + hyriPlayer.getHyris().getName());
-        } else if (hyodesPrice > 0) {
-            priceInfo = name(player, "gui.cosmetic.price_one_option")
-                    .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " " + hyriPlayer.getHyodes().getName());
+        if (isBuyable()) {
+            builder.appendLore("");
+            if (hyodesPrice > 0 && hyrisPrice > 0) {
+                priceInfo = name(player, "gui.cosmetic.price_two_option")
+                        .replace("%price1%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " ⛃")
+                        .replace("%price2%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " ✦");
+            } else if (hyrisPrice > 0) {
+                priceInfo = name(player, "gui.cosmetic.price_one_option")
+                        .replace("%price1%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " ⛃");
+            } else if (hyodesPrice > 0) {
+                priceInfo = name(player, "gui.cosmetic.price_one_option")
+                        .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " ✦");
+            }
         }
         return priceInfo;
     }
