@@ -48,7 +48,10 @@ public class CosmeticUserImpl implements CosmeticUser {
         }
 
         this.data.setUser(this);
+    }
 
+    @Override
+    public CosmeticUser init() {
         for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
             final List<Cosmetic> cosmetics = entry.getValue();
 
@@ -66,16 +69,21 @@ public class CosmeticUserImpl implements CosmeticUser {
             }
         }
 
-        this.init();
+        this.lastX = player.getLocation().getX();
+        this.lastY = player.getLocation().getY();
+        this.lastZ = player.getLocation().getZ();
+
+        IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
+        if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
+            return this;
+
+        this.equipCosmetics();
+        return this;
     }
 
     @Override
-    public void init() {
+    public void equipCosmetics() {
         initialized = true;
-        IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
-        if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
-            return;
-
         Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.get(), () -> {
             if (!this.data.getEquippedCosmetics().isEmpty()) {
                 for (Map.Entry<String, Pair<String, String>> entry : this.data.getEquippedCosmetics().entrySet()) {
@@ -89,10 +97,6 @@ public class CosmeticUserImpl implements CosmeticUser {
                     }
                 }
             }
-
-            this.lastX = player.getLocation().getX();
-            this.lastY = player.getLocation().getY();
-            this.lastZ = player.getLocation().getZ();
         }, 5L);
     }
 

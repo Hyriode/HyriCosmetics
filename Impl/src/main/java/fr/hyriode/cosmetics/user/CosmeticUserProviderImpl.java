@@ -27,6 +27,7 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
     @Override
     public void createUser(Player player) {
         this.users.put(player.getUniqueId(), new CosmeticUserImpl(player));
+        this.users.get(player.getUniqueId()).init();
     }
 
     @Override

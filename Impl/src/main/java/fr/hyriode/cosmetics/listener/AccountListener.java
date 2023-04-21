@@ -25,7 +25,7 @@ public class AccountListener {
         System.out.println("onModeration: " + event.isModerating());
         if (!event.isModerating()) {
             if (!user.isInitialized()) {
-                user.init();
+                user.equipCosmetics();
             }
 
             user.reactivateCosmeticsTemporarilyUnequipped();
@@ -39,7 +39,7 @@ public class AccountListener {
         final CosmeticUser user = this.instance.getUserProvider().getUser(event.getPlayerId());
         if (!event.isVanished()) {
             if (!user.isInitialized()) {
-                user.init();
+                user.equipCosmetics();
             }
             user.reactivateCosmeticsTemporarilyUnequipped();
         } else {

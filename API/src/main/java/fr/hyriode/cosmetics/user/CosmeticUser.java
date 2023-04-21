@@ -11,7 +11,9 @@ import java.util.Map;
 
 public interface CosmeticUser {
 
-    void init();
+    CosmeticUser init();
+
+    void equipCosmetics();
 
     Player asBukkit();
 
