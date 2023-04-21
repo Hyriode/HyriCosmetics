@@ -147,51 +147,27 @@ public enum Cosmetic {
         return rank == null && HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank().getPriority() <= rank.getPriority();
     }
 
+    private String name(Player player, String key) {
+        return HyriLanguageMessage.get(key).getValue(player);
+    }
+
     public ItemStack toItemStack(final Player player, boolean withAction) {
         final CosmeticUser user = HyriCosmetics.get().getUserProvider().getUser(player);
         final IHyriPlayer hyriPlayer = user.asHyriPlayer();
         final CosmeticCategory category = this.getCategory();
 
         final ItemBuilder builder = new ItemBuilder(icon.clone())
-                .withName(ChatColor.AQUA + getTranslatedName().getValue(player))
-                .withLore(StringUtil.splitIntoPhrases(getTranslatedDescription().getValue(player), 35))
+                .withName(getTranslatedName(player))
+                .withLore(StringUtil.splitIntoPhrases(getTranslatedDescription(player), 35))
                 .appendLore("")
-                .appendLore( name(player, "gui.cosmetic.rarity") + ": " + getRarity().getColor() + HyriChatColor.BOLD + getRarity().getName().toUpperCase());
+                .appendLore(getRarityInfo(player));
 
         if (withAction) {
-            String footer = "";
+            String footer;
             if (!user.hasUnlockedCosmetic(this)) {
-                if (!hasRequiredRank(player)) {
-                    footer = name(player, "gui.cosmetic.cant_unlock");
-                } else if (isBuyable()){
-                    builder.appendLore("");
-                    if (hyodesPrice > 0 && hyrisPrice > 0) {
-                        builder.appendLore(name(player, "gui.cosmetic.price_two_option")
-                                .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " " + hyriPlayer.getHyodes().getName())
-                                .replace("%price2%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " " + hyriPlayer.getHyris().getName())
-                        );
-                    } else if (hyrisPrice > 0) {
-                        builder.appendLore(name(player, "gui.cosmetic.price_one_option")
-                                .replace("%price1%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " " + hyriPlayer.getHyris().getName())
-                        );
-                    } else if (hyodesPrice > 0) {
-                        builder.appendLore(name(player, "gui.cosmetic.price_one_option")
-                                .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " " + hyriPlayer.getHyodes().getName())
-                        );
-                    }
-                    footer = name(player, "gui.cosmetic.click_to_buy");
-                }
+                footer = getUnlockInfo(player, user, hyriPlayer, builder);
             } else {
-                if (user.hasEquippedCosmetic(category) && user.getEquippedCosmetic(category) == this) {
-                    if (!user.getEquippedCosmetics().get(category).getAbstractCosmetic().hasVariants()) {
-                        footer = name(player, "gui.cosmetic.already_equipped");
-                    } else {
-                        footer = name(player, "gui.cosmetic.click_to_edit");
-                    }
-                    builder.withGlow();
-                } else {
-                    footer = name(player, "gui.cosmetic.click_to_equip");
-                }
+                footer = getEquipInfo(player, user, category, builder);
             }
             builder.appendLore("").appendLore(footer);
         }
@@ -199,7 +175,62 @@ public enum Cosmetic {
         return builder.build();
     }
 
-    private String name(Player player, String key) {
-        return HyriLanguageMessage.get(key).getValue(player);
+    private String getTranslatedName(final Player player) {
+        return ChatColor.AQUA + getTranslatedName().getValue(player);
     }
+
+    private String getTranslatedDescription(final Player player) {
+        return getTranslatedDescription().getValue(player);
+    }
+
+    private String getRarityInfo(final Player player) {
+        final String rarityColor = getRarity().getColor().toString();
+        final String rarityName = HyriChatColor.BOLD + getRarity().getName().toUpperCase();
+        final String rarityLabel = name(player, "gui.cosmetic.rarity") + ": ";
+        return rarityLabel + rarityColor + rarityName;
+    }
+
+    private String getUnlockInfo(final Player player, final CosmeticUser user, final IHyriPlayer hyriPlayer, ItemBuilder builder) {
+        String footer = "";
+        if (!hasRequiredRank(player)) {
+            footer = name(player, "gui.cosmetic.cant_unlock");
+        } else if (isBuyable()){
+            final String priceInfo = getPriceInfo(player, hyriPlayer);
+            builder.appendLore(priceInfo);
+            footer = name(player, "gui.cosmetic.click_to_buy");
+        }
+        return footer;
+    }
+
+    private String getPriceInfo(final Player player, final IHyriPlayer hyriPlayer) {
+        String priceInfo = "";
+        if (hyodesPrice > 0 && hyrisPrice > 0) {
+            priceInfo = name(player, "gui.cosmetic.price_two_option")
+                    .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " " + hyriPlayer.getHyodes().getName())
+                    .replace("%price2%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " " + hyriPlayer.getHyris().getName());
+        } else if (hyrisPrice > 0) {
+            priceInfo = name(player, "gui.cosmetic.price_one_option")
+                    .replace("%price1%", hyriPlayer.getHyris().getColor().toString() + hyrisPrice + " " + hyriPlayer.getHyris().getName());
+        } else if (hyodesPrice > 0) {
+            priceInfo = name(player, "gui.cosmetic.price_one_option")
+                    .replace("%price1%", hyriPlayer.getHyodes().getColor().toString() + hyodesPrice + " " + hyriPlayer.getHyodes().getName());
+        }
+        return priceInfo;
+    }
+
+    private String getEquipInfo(final Player player, final CosmeticUser user, final CosmeticCategory category, ItemBuilder builder) {
+        String footer;
+        if (user.hasEquippedCosmetic(category) && user.getEquippedCosmetic(category) == this) {
+            if (!user.getEquippedCosmetics().get(category).getAbstractCosmetic().hasVariants()) {
+                footer = name(player, "gui.cosmetic.already_equipped");
+            } else {
+                footer = name(player, "gui.cosmetic.click_to_edit");
+            }
+            builder.withGlow();
+        } else {
+            footer = name(player, "gui.cosmetic.click_to_equip");
+        }
+        return footer;
+    }
+
 }

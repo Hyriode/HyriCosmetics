@@ -51,7 +51,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
         this.cosmeticClasses = new HashMap<>();
 
-        Bukkit.getScheduler().runTaskTimer(plugin, new MainTask(), 0, 10L);
+        Bukkit.getScheduler().runTaskTimer(plugin, new MainTask(), 0, 5L);
 
         HyriAPI.get().getEventBus().register(new AccountListener(this));
         Bukkit.getServer().getPluginManager().registerEvents(new ConnectionListener(), plugin);
