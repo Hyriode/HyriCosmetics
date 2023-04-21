@@ -151,13 +151,12 @@ public class CosmeticUserImpl implements CosmeticUser {
         final List<Cosmetic> result = new ArrayList<>();
 
         for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
-            final CosmeticCategory category = entry.getKey();
             final List<Cosmetic> cosmetics = entry.getValue();
 
             for (Cosmetic cosmetic : cosmetics) {
-//                if (this.asHyriPlayer().getRank().isSuperior(cosmetic.getRequireRank())) {
-//
-//                }
+                if (cosmetic.isRequireRank() && cosmetic.hasRequiredRank(player)) {
+                    result.add(cosmetic);
+                }
             }
         }
 
