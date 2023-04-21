@@ -45,17 +45,17 @@ public enum Cosmetic {
     YOUTUBE_BALLOON(Default.BALLOON, "youtube", CosmeticRarity.RARE, -1, 2000, c -> c.headTexture.asItem(), Head.YOUTUBE),
     TIKTOK_BALLOON(Default.BALLOON, "tiktok", CosmeticRarity.RARE, -1, 2000, c -> c.headTexture.asItem(), Head.TIKTOK),
 
-    YELLOW_BALLOON(Default.BALLOON, "yellow", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_YELLOW),
-    RED_BALLOON(Default.BALLOON, "red", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_RED),
-    BLUE_BALLOON(Default.BALLOON, "blue", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_BLUE),
-    GREEN_BALLOON(Default.BALLOON, "green", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_GREEN),
-    PURPLE_BALLOON(Default.BALLOON, "purple", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_PURPLE),
-    ORANGE_BALLOON(Default.BALLOON, "orange", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_ORANGE),
-    PINK_BALLOON(Default.BALLOON, "pink", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_PINK),
-    LIGHT_BLUE_BALLOON(Default.BALLOON, "white", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_LIGHT_BLUE),
-    LIME_BALLOON(Default.BALLOON, "black", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_LIME),
-    GRAY_BALLOON(Default.BALLOON, "gray", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_GRAY),
-    DARK_BLUE_BALLOON(Default.BALLOON, "brown", CosmeticRarity.COMMON, -1, 500, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_DARK_BLUE),
+    YELLOW_BALLOON(Default.BALLOON, "yellow", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_YELLOW),
+    RED_BALLOON(Default.BALLOON, "red", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_RED),
+    BLUE_BALLOON(Default.BALLOON, "blue", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_BLUE),
+    GREEN_BALLOON(Default.BALLOON, "green", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_GREEN),
+    PURPLE_BALLOON(Default.BALLOON, "purple", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_PURPLE),
+    ORANGE_BALLOON(Default.BALLOON, "orange", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_ORANGE),
+    PINK_BALLOON(Default.BALLOON, "pink", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_PINK),
+    LIGHT_BLUE_BALLOON(Default.BALLOON, "white", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_LIGHT_BLUE),
+    LIME_BALLOON(Default.BALLOON, "black", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_LIME),
+    GRAY_BALLOON(Default.BALLOON, "gray", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_GRAY),
+    DARK_BLUE_BALLOON(Default.BALLOON, "brown", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_DARK_BLUE),
 
     BEACH_BALLOON(Default.BALLOON, "beach", CosmeticRarity.RARE, -1, 2000, c -> c.headTexture.asItem(), Head.BEACH),
 
@@ -276,7 +276,7 @@ public enum Cosmetic {
 
     private String getRarityInfo(final Player player) {
         final String rarityColor = getRarity().getColor().toString();
-        final String rarityName = HyriChatColor.BOLD + getRarity().getTranslatedName(player);
+        final String rarityName = HyriChatColor.BOLD + getRarity().getTranslatedName(player).toUpperCase();
         final String rarityLabel = name(player, "gui.cosmetic.rarity") + ": ";
         return rarityLabel + rarityColor + rarityName;
     }

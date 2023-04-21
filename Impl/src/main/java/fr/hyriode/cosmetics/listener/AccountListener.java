@@ -20,21 +20,6 @@ public class AccountListener {
     }
 
     @HyriEventHandler
-    public void onModeration(ModerationUpdatedEvent event) {
-        final CosmeticUser user = this.instance.getUserProvider().getUser(event.getPlayerId());
-        System.out.println("onModeration: " + event.isModerating());
-        if (!event.isModerating()) {
-            if (!user.isInitialized()) {
-                user.equipCosmetics();
-            }
-
-            user.reactivateCosmeticsTemporarilyUnequipped();
-        } else {
-            user.temporarilyUnequipCosmetics();
-        }
-    }
-
-    @HyriEventHandler
     public void onVanish(VanishUpdatedEvent event) {
         final CosmeticUser user = this.instance.getUserProvider().getUser(event.getPlayerId());
         if (!event.isVanished()) {

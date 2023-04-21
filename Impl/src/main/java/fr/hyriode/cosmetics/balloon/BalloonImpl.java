@@ -40,7 +40,7 @@ public class BalloonImpl extends AbstractBalloon {
         this.reference = balloon.getSlime();
         this.armorStand = balloon.getContents();
 
-        PacketUtil.sendPacket(new PacketPlayOutAttachEntity(0, (Entity) reference, (Entity) getPlayer()));
+//        PacketUtil.sendPacket(new PacketPlayOutAttachEntity(0, (Entity) reference, (Entity) getPlayer()));
     }
 
     @Override
