@@ -28,7 +28,7 @@ public class CosmeticGiveCommand extends HyriCommand<HyriCosmeticsPlugin> {
     public void handle(CommandContext ctx) {
         final Player player = ctx.getSender();
 
-        if (!IHyriPlayer.get(player.getUniqueId()).getRank().isSuperior(StaffRank.DEVELOPER)) {
+        if (!IHyriPlayer.get(player.getUniqueId()).getRank().isSuperior(StaffRank.ADMINISTRATOR)) {
             player.sendMessage(HyrameMessage.PERMISSION_ERROR.asString(player));
             return;
         }
