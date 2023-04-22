@@ -64,6 +64,12 @@ public class CosmeticUserImpl implements CosmeticUser {
                     this.unlockedCosmetics.add(cosmetic);
                 }
             }
+            if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
+                for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
+                    CosmeticTransaction cosmeticTransaction = transaction.loadContent(new CosmeticTransaction());
+                    unlockedCosmetics.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
+                }
+            }
         } else {
             this.addUnlockedCosmetic();
         }
