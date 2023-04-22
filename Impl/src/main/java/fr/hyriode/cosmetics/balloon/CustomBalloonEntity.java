@@ -53,7 +53,7 @@ public class CustomBalloonEntity extends EntitySlime {
     public void t_() {
         updatePosition();
         setLocation(this.currentLoc.getX(), this.currentLoc.getY(), this.currentLoc.getZ(), this.currentLoc.getYaw(), this.currentLoc.getPitch());
-        this.contents.teleport(getBukkitEntity().getLocation().clone().subtract(0.0D, 1.0D, 0.0D));
+        this.contents.teleport(getBukkitEntity().getLocation().clone().subtract(0.0D, 0.1D, 0.0D));
 
         this.setLeashHolder(((CraftPlayer) this.player).getHandle(), true);
     }
@@ -73,9 +73,7 @@ public class CustomBalloonEntity extends EntitySlime {
         }
         this.currentLoc.setYaw(this.i);
         this.currentLoc.add(this.currentLoc
-                .getDirection().multiply(-1.3D).getX(), 2.3D + (this.status ? 0.1D : 0.0D), this.currentLoc
-
-                .getDirection().multiply(-1.8D).getZ());
+                .getDirection().multiply(-1.3D).getX(), 0.3D + (this.status ? 0.1D : 0.0D), this.currentLoc.getDirection().multiply(-1.8D).getZ());
         this.status = !this.status;
     }
 
