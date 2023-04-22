@@ -1,9 +1,11 @@
 package fr.hyriode.cosmetics.balloon;
 
 import net.minecraft.server.v1_8_R3.DamageSource;
+import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntitySlime;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -50,6 +52,8 @@ public class CustomBalloonEntity extends EntitySlime {
         updatePosition();
         setLocation(this.currentLoc.getX(), this.currentLoc.getY(), this.currentLoc.getZ(), this.currentLoc.getYaw(), this.currentLoc.getPitch());
         this.contents.teleport(getBukkitEntity().getLocation().clone().subtract(0.0D, 1.0D, 0.0D));
+
+        this.setLeashHolder(((CraftPlayer) this.player).getHandle(), true);
     }
 
     private void updatePosition() {

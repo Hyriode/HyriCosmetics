@@ -26,7 +26,6 @@ public class BalloonImpl extends AbstractBalloon {
 
     @Override
     protected void tick(CosmeticUser user) {
-        reference.setLeashHolder(this.getPlayer());
     }
 
     @Override

@@ -3,6 +3,7 @@ package fr.hyriode.cosmetics;
 import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.server.ILobbyAPI;
 import fr.hyriode.cosmetics.balloon.BalloonImpl;
+import fr.hyriode.cosmetics.balloon.CustomBalloonEntity;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
@@ -25,9 +26,15 @@ import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
 import fr.hyriode.hyrame.HyrameLoader;
 import fr.hyriode.hyrame.IHyrame;
+import net.minecraft.server.v1_8_R3.EntityTypes;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,6 +61,8 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
         this.cosmeticClasses = new HashMap<>();
 
+        this.registerCustomEntities();
+
         Bukkit.getScheduler().runTaskTimer(plugin, new MainTask(), 0, 5L);
 
         HyriAPI.get().getEventBus().register(new AccountListener(this));
@@ -61,6 +70,33 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
         if (this.lobbyServer) Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), plugin);
 
         this.registerCosmetics();
+    }
+
+    private void registerCustomEntities() {
+        try {
+            ArrayList array = new ArrayList();
+            Field[] field;
+            int j = (field = EntityTypes.class.getDeclaredFields()).length;
+
+            for(int i = 0; i < j; i++) {
+                Field f = field[i];
+                if(f.getType().getSimpleName().equals(Map.class.getSimpleName())) {
+                    f.setAccessible(true);
+                    array.add(f.get(null));
+                }
+            }
+
+            if(((Map)array.get(2)).containsKey((int) EntityType.SLIME.getTypeId())) {
+                ((Map)array.get(0)).remove("HyriCosmetics");
+                ((Map)array.get(2)).remove((int) EntityType.SLIME.getTypeId());
+            }
+
+            Method m = EntityTypes.class.getDeclaredMethod("a", Class.class, String.class, Integer.TYPE);
+            m.setAccessible(true);
+            m.invoke(null, CustomBalloonEntity.class, "HyriCosmetics", (int) EntityType.SLIME.getTypeId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void registerCosmetics() {
