@@ -172,9 +172,14 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
     @Override
     public List<Cosmetic> getFilteredCosmetics(CosmeticUser user, CosmeticCategory category) {
-        List<Cosmetic> cosmetics = new ArrayList<>(this.getCosmetics().get(category));
-        CosmeticRarity.sortCosmeticsByRarity(cosmetics);
-        return cosmetics;
+        List<Cosmetic> ownedCosmetics = this.getCosmetics().get(category).stream().filter(user::hasUnlockedCosmetic).collect(Collectors.toList());
+        List<Cosmetic> noOwnedCosmetics = this.getCosmetics().get(category).stream().filter(cosmetic -> !user.hasUnlockedCosmetic(cosmetic)).collect(Collectors.toList());
+        CosmeticRarity.sortCosmeticsByRarity(ownedCosmetics);
+        CosmeticRarity.sortCosmeticsByRarity(noOwnedCosmetics);
+        List<Cosmetic> result = new ArrayList<>(ownedCosmetics.size() + noOwnedCosmetics.size());
+        result.addAll(ownedCosmetics);
+        result.addAll(noOwnedCosmetics);
+        return result;
 //        final Owned owned = user.getData().getFilters().getOwned();
 //        final Rarity rarity = user.getData().getFilters().getRarity();
 //        final Price price = user.getData().getFilters().getPrice();
