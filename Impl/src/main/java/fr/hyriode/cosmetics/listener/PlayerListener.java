@@ -3,14 +3,14 @@ package fr.hyriode.cosmetics.listener;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import xyz.xenondevs.particle.ParticleBuilder;
@@ -71,6 +71,18 @@ public class PlayerListener implements Listener {
     public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked().hasMetadata("COSMETICS-BALLOON")) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteractAtEntity(EntitySpawnEvent event) {
+        if (event.getEntity().getType() == EntityType.DROPPED_ITEM) {
+            if (event.getEntity() instanceof Item) {
+                Item item = (Item) event.getEntity();
+                if (item.getItemStack().getType() == Material.LEASH) {
+                    event.setCancelled(true);
+                }
+            }
         }
     }
 

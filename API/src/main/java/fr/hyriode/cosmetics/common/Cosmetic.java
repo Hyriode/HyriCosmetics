@@ -58,7 +58,7 @@ public enum Cosmetic {
     LIGHT_BLUE_BALLOON(Default.BALLOON, "white", CosmeticRarity.COMMON, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_LIGHT_BLUE),
     LIME_BALLOON(Default.BALLOON, "black", CosmeticRarity.COMMON, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_LIME),
     GRAY_BALLOON(Default.BALLOON, "gray", CosmeticRarity.COMMON, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_GRAY),
-    DARK_BLUE_BALLOON(Default.BALLOON, "brown", CosmeticRarity.COMMON, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_DARK_BLUE),
+    DARK_BLUE_BALLOON(Default.BALLOON, "dark_blue", CosmeticRarity.COMMON, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_DARK_BLUE),
 
     BEACH_BALLOON(Default.BALLOON, "beach", CosmeticRarity.RARE, -1, 2000, c -> c.headTexture.asItem(), Head.BEACH),
 
