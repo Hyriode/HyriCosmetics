@@ -1,7 +1,12 @@
 package fr.hyriode.cosmetics.user;
 
+import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.HyriCosmetics;
+import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
+import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -25,7 +30,18 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
     @Override
     public void createUser(Player player) {
         this.users.put(player.getUniqueId(), new CosmeticUserImpl(player));
-        this.users.get(player.getUniqueId()).init();
+        CosmeticUser cosmeticUser = this.users.get(player.getUniqueId());
+        cosmeticUser.init();
+
+        //TODO: delete the suite only for the opening
+        if (!cosmeticUser.hasUnlockedCosmetic(Cosmetic.HYRIODE_BALLOON)) {
+            cosmeticUser.addUnlockedCosmetic(Cosmetic.HYRIODE_BALLOON);
+
+            Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.get(), () -> {
+                player.sendMessage(HyriLanguageMessage.get("join.gift").getValue(player));
+                player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
+            }, 5L);
+        }
     }
 
     @Override

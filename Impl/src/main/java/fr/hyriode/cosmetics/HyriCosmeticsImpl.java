@@ -7,6 +7,7 @@ import fr.hyriode.cosmetics.balloon.CustomBalloonEntity;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
+import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.common.Filters.Owned;
 import fr.hyriode.cosmetics.common.Filters.Price;
 import fr.hyriode.cosmetics.common.Filters.Rarity;
@@ -171,39 +172,39 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
 
     @Override
     public List<Cosmetic> getFilteredCosmetics(CosmeticUser user, CosmeticCategory category) {
-        final Owned owned = user.getData().getFilters().getOwned();
-        final Rarity rarity = user.getData().getFilters().getRarity();
-        final Price price = user.getData().getFilters().getPrice();
-
         List<Cosmetic> cosmetics = new ArrayList<>(this.getCosmetics().get(category));
-
-        if (owned != Owned.ALL) {
-            if (owned == Owned.YES) {
-                cosmetics = cosmetics.stream().filter(cosmetic -> user.hasUnlockedCosmetic(cosmetic)).collect(Collectors.toList());
-            } else if (owned == Owned.NO) {
-                cosmetics = cosmetics.stream().filter(cosmetic -> !user.hasUnlockedCosmetic(cosmetic)).collect(Collectors.toList());
-            }
-        }
-
-        if (rarity != Rarity.NO) {
-            Comparator<Cosmetic> rarityComparator = Comparator.comparing(Cosmetic::getRarity);
-            if (rarity == Rarity.ASCENDING) {
-                cosmetics.sort(rarityComparator);
-            } else if (rarity == Rarity.DESCENDING) {
-                cosmetics.sort(rarityComparator.reversed());
-            }
-        }
-
-        if (price != Price.NO) {
-            Comparator<Cosmetic> priceComparator = Comparator.comparing(Cosmetic::getHyrisPrice);
-            if (price == Price.ASCENDING) {
-                cosmetics.sort(priceComparator);
-            } else if (price == Price.DESCENDING) {
-                cosmetics.sort(priceComparator.reversed());
-            }
-        }
-
+        CosmeticRarity.sortCosmeticsByRarity(cosmetics);
         return cosmetics;
+//        final Owned owned = user.getData().getFilters().getOwned();
+//        final Rarity rarity = user.getData().getFilters().getRarity();
+//        final Price price = user.getData().getFilters().getPrice();
+
+
+//        if (owned != Owned.ALL) {
+//            if (owned == Owned.YES) {
+//                cosmetics = cosmetics.stream().filter(cosmetic -> user.hasUnlockedCosmetic(cosmetic)).collect(Collectors.toList());
+//            } else if (owned == Owned.NO) {
+//                cosmetics = cosmetics.stream().filter(cosmetic -> !user.hasUnlockedCosmetic(cosmetic)).collect(Collectors.toList());
+//            }
+//        }
+//
+//        if (rarity != Rarity.NO) {
+//            Comparator<Cosmetic> rarityComparator = Comparator.comparing(Cosmetic::getRarity);
+//            if (rarity == Rarity.ASCENDING) {
+//                cosmetics.sort(rarityComparator);
+//            } else if (rarity == Rarity.DESCENDING) {
+//                cosmetics.sort(rarityComparator.reversed());
+//            }
+//        }
+//
+//        if (price != Price.NO) {
+//            Comparator<Cosmetic> priceComparator = Comparator.comparing(Cosmetic::getHyrisPrice);
+//            if (price == Price.ASCENDING) {
+//                cosmetics.sort(priceComparator);
+//            } else if (price == Price.DESCENDING) {
+//                cosmetics.sort(priceComparator.reversed());
+//            }
+//        }
     }
 
     @Override

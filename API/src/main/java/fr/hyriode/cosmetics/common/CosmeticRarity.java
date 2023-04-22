@@ -4,6 +4,9 @@ import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
 import org.bukkit.entity.Player;
 
+import java.util.Comparator;
+import java.util.List;
+
 public enum CosmeticRarity {
 
     COMMON("common",  HyriChatColor.WHITE),
@@ -34,4 +37,7 @@ public enum CosmeticRarity {
         return HyriLanguageMessage.get("cosmetics.rarity." + this.name).getValue(player);
     }
 
+    public static void sortCosmeticsByRarity(List<Cosmetic> cosmetics) {
+        cosmetics.sort(Comparator.comparing(Cosmetic::getRarity));
+    }
 }
