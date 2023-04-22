@@ -55,24 +55,7 @@ public class CosmeticUserImpl implements CosmeticUser {
     @Override
     public void init() {
         final IHyriRank playerRank = IHyriPlayer.get(player.getUniqueId()).getRank();
-        if (playerRank.isStaff() && playerRank.isSuperior(StaffRank.MODERATOR_PLUS)) {
-            for (CosmeticCategory category : HyriCosmetics.get().getCosmetics().keySet()) {
-                for (Cosmetic cosmetic : HyriCosmetics.get().getCosmetics().get(category)) {
-                    if (cosmetic.isRequireRank() && !cosmetic.isAccessible(player)) {
-                        continue;
-                    }
-                    this.unlockedCosmetics.add(cosmetic);
-                }
-            }
-            if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
-                for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
-                    CosmeticTransaction cosmeticTransaction = transaction.loadContent(new CosmeticTransaction());
-                    unlockedCosmetics.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
-                }
-            }
-        } else {
-            this.addUnlockedCosmetic();
-        }
+        this.addUnlockedCosmetic(playerRank.isStaff() && playerRank.isSuperior(StaffRank.MODERATOR_PLUS));
 
         this.lastX = player.getLocation().getX();
         this.lastY = player.getLocation().getY();
@@ -85,21 +68,32 @@ public class CosmeticUserImpl implements CosmeticUser {
         this.equipCosmetics();
     }
 
-    private void addUnlockedCosmetic() {
-        for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
-            final List<Cosmetic> cosmetics = entry.getValue();
-
-            for (Cosmetic cosmetic : cosmetics) {
-                if (cosmetic.isAccessible(player)) {
-                    unlockedCosmetics.add(cosmetic);
+    private void addUnlockedCosmetic(final boolean isStaff) {
+        if (isStaff) {
+            for (CosmeticCategory category : HyriCosmetics.get().getCosmetics().keySet()) {
+                for (Cosmetic cosmetic : HyriCosmetics.get().getCosmetics().get(category)) {
+                    if (cosmetic.isRequireRank() && !cosmetic.isAccessible(player)) {
+                        continue;
+                    }
+                    this.unlockedCosmetics.add(cosmetic);
+                }
+            }
+        } else {
+            for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
+                final List<Cosmetic> cosmetics = entry.getValue();
+                for (Cosmetic cosmetic : cosmetics) {
+                    if (cosmetic.isAccessible(player)) {
+                        unlockedCosmetics.add(cosmetic);
+                    }
                 }
             }
         }
-
         if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
             for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
-                CosmeticTransaction cosmeticTransaction = transaction.loadContent(new CosmeticTransaction());
-                unlockedCosmetics.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
+                Cosmetic cosmetic = HyriCosmetics.get().getCosmetic(transaction.loadContent(new CosmeticTransaction()).getCosmeticId());
+                if (unlockedCosmetics.contains(cosmetic))
+                    continue;
+                unlockedCosmetics.add(cosmetic);
             }
         }
     }
