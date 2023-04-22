@@ -64,13 +64,13 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
 
     public static class GemInvocationParticle extends InvocationParticle {
         public GemInvocationParticle(CosmeticUser user) {
-            super(user, ParticleEffect.FLAME);
+            super(user, ParticleEffect.VILLAGER_HAPPY);
         }
     }
 
     public static class PortalInvocationParticle extends InvocationParticle {
         public PortalInvocationParticle(CosmeticUser user) {
-            super(user, ParticleEffect.FLAME);
+            super(user, ParticleEffect.PORTAL);
         }
     }
 }
