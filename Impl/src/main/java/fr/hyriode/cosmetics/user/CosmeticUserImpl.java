@@ -4,7 +4,9 @@ import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.player.IHyriPlayer;
 import fr.hyriode.api.player.IHyriPlayerSession;
 import fr.hyriode.api.player.model.IHyriTransaction;
+import fr.hyriode.api.rank.IHyriRank;
 import fr.hyriode.api.rank.PlayerRank;
+import fr.hyriode.api.rank.StaffRank;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import fr.hyriode.cosmetics.common.Cosmetic;
@@ -51,7 +53,28 @@ public class CosmeticUserImpl implements CosmeticUser {
     }
 
     @Override
-    public CosmeticUser init() {
+    public void init() {
+        final IHyriRank playerRank = IHyriPlayer.get(player.getUniqueId()).getRank();
+        if (playerRank.isStaff() && playerRank.isSuperior(StaffRank.MODERATOR_PLUS)) {
+            for (CosmeticCategory category : HyriCosmetics.get().getCosmetics().keySet()) {
+                unlockedCosmetics.addAll(HyriCosmetics.get().getCosmetics().get(category));
+            }
+        } else {
+            this.addUnlockedCosmetic();
+        }
+
+        this.lastX = player.getLocation().getX();
+        this.lastY = player.getLocation().getY();
+        this.lastZ = player.getLocation().getZ();
+
+        IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
+        if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
+            return;
+
+        this.equipCosmetics();
+    }
+
+    private void addUnlockedCosmetic() {
         for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
             final List<Cosmetic> cosmetics = entry.getValue();
 
@@ -68,17 +91,6 @@ public class CosmeticUserImpl implements CosmeticUser {
                 unlockedCosmetics.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
             }
         }
-
-        this.lastX = player.getLocation().getX();
-        this.lastY = player.getLocation().getY();
-        this.lastZ = player.getLocation().getZ();
-
-        IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
-        if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
-            return this;
-
-        this.equipCosmetics();
-        return this;
     }
 
     @Override

@@ -6,7 +6,6 @@ import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import org.checkerframework.checker.units.qual.C;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.color.RegularColor;

@@ -1,7 +1,6 @@
 package fr.hyriode.cosmetics.balloon;
 
 import net.minecraft.server.v1_8_R3.DamageSource;
-import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntitySlime;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Location;
