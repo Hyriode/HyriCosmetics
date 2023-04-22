@@ -1,6 +1,8 @@
 package fr.hyriode.cosmetics.command;
 
+import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.player.IHyriPlayer;
+import fr.hyriode.api.player.model.IHyriTransaction;
 import fr.hyriode.api.rank.StaffRank;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
@@ -41,14 +43,19 @@ public class CosmeticGiveCommand extends HyriCommand<HyriCosmeticsPlugin> {
                 return;
             }
 
-            if (target.getTransactions().has(CosmeticTransaction.TYPE, cosmetic.getId())) {
-                player.sendMessage("§cThis player already has this cosmetic");
-                return;
+            if (target.getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
+                for (final IHyriTransaction transaction : target.getTransactions().getAll(CosmeticTransaction.TYPE)) {
+                    if (transaction.loadContent(new CosmeticTransaction()).getCosmeticId().equals(cosmetic.getId())) {
+                        player.sendMessage("§cThis player already has this cosmetic");
+                        return;
+                    }
+                }
             }
 
-            final IHyriPlayer account = IHyriPlayer.get(target.getUniqueId());
+            final IHyriPlayer account = HyriAPI.get().getPlayerManager().getPlayer(target.getUniqueId());
             account.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
             account.update();
+            player.sendMessage("§aCosmetic given to " + target.getName() + " : " + cosmetic);
         });
 
         super.handle(ctx);
