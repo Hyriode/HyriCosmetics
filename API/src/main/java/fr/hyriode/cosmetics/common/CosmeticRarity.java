@@ -2,7 +2,6 @@ package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
-import fr.hyriode.api.language.IHyriLanguageManager;
 import org.bukkit.entity.Player;
 
 public enum CosmeticRarity {

@@ -6,7 +6,6 @@ import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import java.awt.Color;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.color.RegularColor;
@@ -72,7 +71,7 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
 
     public static class PortalInvocationParticle extends InvocationParticle {
         public PortalInvocationParticle(CosmeticUser user) {
-            super(user, new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(Co)));
+            super(user, new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(84, 31, 122)));
         }
     }
 }

@@ -1,7 +1,5 @@
 package fr.hyriode.cosmetics.user;
 
-import fr.hyriode.api.player.IHyriPlayer;
-import fr.hyriode.api.player.model.modules.IHyriTransactionsModule;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import org.bukkit.entity.Player;

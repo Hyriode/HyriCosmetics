@@ -7,7 +7,6 @@ import fr.hyriode.cosmetics.utils.Head;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class GhostPet extends AbstractMinionPet<Color> {
 
