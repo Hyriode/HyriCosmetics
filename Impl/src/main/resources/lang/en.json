@@ -20,6 +20,12 @@
   "cosmetic.particle.fire_invocation.name": "Invocation of fire",
   "cosmetic.particle.fire_invocation.description": "Invocation of the depths of the flames.",
 
+  "cosmetic.particle.gem_invocation.name": "Invocation of gems",
+  "cosmetic.particle.gem_invocation.description": "Invocation of the strength of gems.",
+
+  "cosmetic.particle.portal_invocation.name": "Interdimensional invocation",
+  "cosmetic.particle.portal_invocation.description": "Invocation of an interdimensional portal.",
+
   "cosmetic.particle.enchanted.name": "Enchanted",
   "cosmetic.particle.enchanted.description": "A magical particle effect.",
 
@@ -38,6 +44,12 @@
 
   "cosmetic.pet.mini_me.name": "Mini me",
   "cosmetic.pet.mini_me.description": "It looks strangely like you... strange...",
+
+  "cosmetic.pet.reaper.name": "Reaper",
+  "cosmetic.pet.reaper.description": "Do you really want to hang out with death? As you wish...",
+
+  "cosmetic.pet.ghost.name": "Ghost",
+  "cosmetic.pet.ghost.description": "He is nice, all migon, but.. BOUH!",
 
   "cosmetics.rarity.common": "Common",
   "cosmetics.rarity.rare": "Rare",

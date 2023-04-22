@@ -20,6 +20,12 @@
   "cosmetic.particle.fire_invocation.name": "Invocation de feu",
   "cosmetic.particle.fire_invocation.description": "Invocation des profondeurs des flammes.",
 
+  "cosmetic.particle.gem_invocation.name": "Invocation des gemmes",
+  "cosmetic.particle.gem_invocation.description": "Invocation de la force des gemmes.",
+
+  "cosmetic.particle.portal_invocation.name": "Invocation interdimensionnelle",
+  "cosmetic.particle.portal_invocation.description": "Invocation d'un portail interdimensionnel.",
+
   "cosmetic.particle.enchanted.name": "Enchanté",
   "cosmetic.particle.enchanted.description": "Un aura enchanté qui vous suit.",
 
@@ -38,6 +44,12 @@
 
   "cosmetic.pet.mini_me.name": "Mini moi",
   "cosmetic.pet.mini_me.description": "Il vous ressemble étrangement... bizarre...",
+
+  "cosmetic.pet.reaper.name": "Faucheuse",
+  "cosmetic.pet.reaper.description": "Vous avez vraiment envie de trainer avec la mort? Comme vous voulez...",
+
+  "cosmetic.pet.ghost.name": "Fantôme",
+  "cosmetic.pet.ghost.description": "Il est gentil, tout migon, mais.. BOUH!",
 
   "cosmetics.rarity.common": "Commun",
   "cosmetics.rarity.rare": "Rare",

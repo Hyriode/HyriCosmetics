@@ -28,15 +28,19 @@ import java.util.function.Function;
 public enum Cosmetic {
 
     // == Particles ==
-    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.COMMON, -1, 5000, c -> new ItemBuilder(Material.BOOK_AND_QUILL).build()),
-    FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.RARE, 2000, 15000, c -> new ItemBuilder(Material.LAVA_BUCKET).build()),
+    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.COMMON, -1, 500, c -> new ItemBuilder(Material.BOOK_AND_QUILL).build()),
+    FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.RARE, 200, 15000, c -> new ItemBuilder(Material.LAVA_BUCKET).build()),
+    GEM_INVOCATION(Default.PARTICLE, "gem_invocation", CosmeticRarity.RARE, 200, 15000, c -> new ItemBuilder(Material.EMERALD).build()),
+    PORTAL_INVOCATION(Default.PARTICLE, "portal_invocation", CosmeticRarity.RARE, 200, 15000, c -> new ItemBuilder(Material.ENCHANTMENT_TABLE).build()),
     STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 1000, -1, c -> new ItemBuilder(Material.FEATHER).build()),
     RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.LEGENDARY, PlayerRank.EPIC, 3000, 50000, c -> new ItemBuilder(Material.INK_SACK, 1, 2).build()),
     BLACK_VORTEX(Default.PARTICLE, "black_vortex", CosmeticRarity.STAFF, StaffRank.ADMINISTRATOR, -1, -1, c -> new ItemBuilder(Material.RECORD_11).withAllItemFlags().build(), true),
 
     // == Pets ==
-    SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 15000, 15000, c -> Head.SNOWMAN_BODY.asItem()),
+    SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 150, 15000, c -> Head.SNOWMAN_BODY.asItem()),
     MINI_ME(Default.PET, "mini_me", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, c -> new ItemBuilder(Material.SKULL_ITEM).withData((short) 3).build()),
+    REAPER(Default.PET, "reaper", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 500, 15000, c -> Head.REAPER.asItem()),
+    GHOST(Default.PET, "ghost", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 500, 15000, c -> Head.GHOST.asItem()),
 
     // == Balloons ==
     HYRIODE_BALLOON(Default.BALLOON, "hyriode", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.HYRIODE),
@@ -282,13 +286,13 @@ public enum Cosmetic {
     }
 
     private String getUnlockInfo(final Player player, final IHyriPlayer hyriPlayer, ItemBuilder builder) {
-        String footer = "";
+        String footer;
         if (isBuyable() && canBuyIt(player)) {
-            footer = name(player, "gui.cosmetic.cant_unlock");
-        } else {
             final String priceInfo = getPriceInfo(player, hyriPlayer, builder);
             builder.appendLore(priceInfo);
             footer = name(player, "gui.cosmetic.click_to_buy");
+        } else {
+            footer = name(player, "gui.cosmetic.cant_unlock");
         }
         return footer;
     }

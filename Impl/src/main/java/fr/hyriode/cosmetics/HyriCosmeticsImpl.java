@@ -2,7 +2,6 @@ package fr.hyriode.cosmetics;
 
 import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.server.ILobbyAPI;
-import fr.hyriode.cosmetics.balloon.AbstractBalloon;
 import fr.hyriode.cosmetics.balloon.BalloonImpl;
 import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.Cosmetic;
@@ -14,7 +13,9 @@ import fr.hyriode.cosmetics.listener.AccountListener;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.PlayerListener;
 import fr.hyriode.cosmetics.particle.effect.*;
-import fr.hyriode.cosmetics.pet.pets.MiniMe;
+import fr.hyriode.cosmetics.pet.pets.GhostPet;
+import fr.hyriode.cosmetics.pet.pets.MiniMePet;
+import fr.hyriode.cosmetics.pet.pets.ReaperPet;
 import fr.hyriode.cosmetics.pet.pets.SnowManComplexPet;
 import fr.hyriode.cosmetics.task.MainTask;
 import fr.hyriode.cosmetics.task.TaskProvider;
@@ -24,7 +25,6 @@ import fr.hyriode.cosmetics.user.CosmeticUserProvider;
 import fr.hyriode.cosmetics.user.CosmeticUserProviderImpl;
 import fr.hyriode.hyrame.HyrameLoader;
 import fr.hyriode.hyrame.IHyrame;
-import net.minecraft.server.v1_8_R3.EntityTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -66,14 +66,18 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     public void registerCosmetics() {
         // == Particles ==
         this.registerCosmetic(Cosmetic.ENCHANTED, EnchantedParticle.class);
-        this.registerCosmetic(Cosmetic.FIRE_INVOCATION, FireInvocationParticle.class);
+        this.registerCosmetic(Cosmetic.FIRE_INVOCATION, InvocationParticle.FireInvocationParticle.class);
+        this.registerCosmetic(Cosmetic.GEM_INVOCATION, InvocationParticle.GemInvocationParticle.class);
+        this.registerCosmetic(Cosmetic.PORTAL_INVOCATION, InvocationParticle.PortalInvocationParticle.class);
         this.registerCosmetic(Cosmetic.STEP_IN_THE_AIR, StepInTheAirParticle.class);
         this.registerCosmetic(Cosmetic.RAINBOW_TWINS, RainbowTwinsParticle.class);
         this.registerCosmetic(Cosmetic.BLACK_VORTEX, BlackVortexParticle.class);
 
         // == Pets ==
         this.registerCosmetic(Cosmetic.SNOWMAN, SnowManComplexPet.class);
-        this.registerCosmetic(Cosmetic.MINI_ME, MiniMe.class);
+        this.registerCosmetic(Cosmetic.MINI_ME, MiniMePet.class);
+        this.registerCosmetic(Cosmetic.REAPER, ReaperPet.class);
+        this.registerCosmetic(Cosmetic.GHOST, GhostPet.class);
     }
 
     @Override @SuppressWarnings("all")

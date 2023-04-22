@@ -1,5 +1,6 @@
 package fr.hyriode.cosmetics.utils;
 
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
@@ -69,5 +70,21 @@ public class MathUtil {
         double d2 = random.nextDouble() * 2.0D - 1.0D;
         double d3 = random.nextDouble() * 2.0D - 1.0D;
         return (new Vector(d1, d2, d3)).normalize();
+    }
+
+    public static Vector calculateVectorBetweenTwoPoints(Location from, Location to) {
+        double dX = from.getX() - to.getX();
+        double dY = from.getY() - to.getY();
+        double dZ = from.getZ() - to.getZ();
+
+        double yaw = Math.atan2(dZ, dX);
+
+        double pitch = Math.atan2(Math.sqrt(dZ * dZ + dX * dX), dY) + Math.PI;
+
+        double x = Math.sin(pitch) * Math.cos(yaw);
+        double y = Math.sin(pitch) * Math.sin(yaw);
+        double z = Math.cos(pitch);
+
+        return new Vector(x, z, y);
     }
 }

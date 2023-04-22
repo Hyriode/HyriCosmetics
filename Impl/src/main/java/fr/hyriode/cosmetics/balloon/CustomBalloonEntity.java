@@ -37,7 +37,7 @@ public class CustomBalloonEntity extends EntitySlime {
         this.contents.setCustomNameVisible(false);
         this.contents.setGravity(false);
         this.contents.setHelmet(item);
-        this.contents.setMarker(false);
+        this.contents.setMarker(true);
     }
 
     @Override

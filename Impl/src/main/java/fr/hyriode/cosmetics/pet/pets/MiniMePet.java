@@ -13,11 +13,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class MiniMe extends AbstractMinionPet<Color> {
+public class MiniMePet extends AbstractMinionPet<Color> {
 
     private Color color;
 
-    public MiniMe(CosmeticUser user) {
+    public MiniMePet(CosmeticUser user) {
         super(user, Cosmetic.MINI_ME, true);
     }
 
