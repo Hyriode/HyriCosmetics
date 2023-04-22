@@ -155,5 +155,8 @@
   "cosmetic.balloon.rubiks_cube.description": "Si vous êtes casse tête, vous pourriez l'apprécier!",
 
   "cosmetic.balloon.totem.name": "Totem",
-  "cosmetic.balloon.totem.description": "Un totem pour vous protéger des mauvais esprits ! (donc vous protège des modos, enfin normalement...)"
+  "cosmetic.balloon.totem.description": "Un totem pour vous protéger des mauvais esprits ! (donc vous protège des modos, enfin normalement...)",
+
+  "cosmetic.balloon.poop.name": "Caca",
+  "cosmetic.balloon.poop.description": "C'est du caca"
 }

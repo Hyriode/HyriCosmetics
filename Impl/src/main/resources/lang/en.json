@@ -155,5 +155,8 @@
   "cosmetic.balloon.rubiks_cube.description": "If you are a headache, you might enjoy it!",
 
   "cosmetic.balloon.totem.name": "Totem",
-  "cosmetic.balloon.totem.description": "A totem to protect you from evil spirits! (so it protects you from modos, well normally...)"
+  "cosmetic.balloon.totem.description": "A totem to protect you from evil spirits! (so it protects you from modos, well normally...)",
+
+  "cosmetic.balloon.poop.name": "Poop",
+  "cosmetic.balloon.poop.description": "It's poop"
 }

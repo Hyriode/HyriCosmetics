@@ -27,19 +27,19 @@ import java.util.function.Function;
 public enum Cosmetic {
 
     // == Particles ==
-    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.COMMON, -1, 500, c -> new ItemBuilder(Material.BOOK_AND_QUILL).build()),
-    FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.RARE, 200, 15000, c -> new ItemBuilder(Material.LAVA_BUCKET).build()),
-    GEM_INVOCATION(Default.PARTICLE, "gem_invocation", CosmeticRarity.RARE, 200, 15000, c -> new ItemBuilder(Material.EMERALD).build()),
-    PORTAL_INVOCATION(Default.PARTICLE, "portal_invocation", CosmeticRarity.RARE, 200, 15000, c -> new ItemBuilder(Material.ENCHANTMENT_TABLE).build()),
-    STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 1000, -1, c -> new ItemBuilder(Material.FEATHER).build()),
-    RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.LEGENDARY, PlayerRank.EPIC, 3000, 50000, c -> new ItemBuilder(Material.INK_SACK, 1, 2).build()),
+    ENCHANTED(Default.PARTICLE, "enchanted", CosmeticRarity.COMMON, 350, 5000, c -> new ItemBuilder(Material.BOOK_AND_QUILL).build()),
+    FIRE_INVOCATION(Default.PARTICLE, "fire_invocation", CosmeticRarity.RARE, 550, 10000, c -> new ItemBuilder(Material.LAVA_BUCKET).build()),
+    GEM_INVOCATION(Default.PARTICLE, "gem_invocation", CosmeticRarity.RARE, 550, 10000, c -> new ItemBuilder(Material.EMERALD).build()),
+    PORTAL_INVOCATION(Default.PARTICLE, "portal_invocation", CosmeticRarity.RARE, 550, 10000, c -> new ItemBuilder(Material.ENCHANTMENT_TABLE).build()),
+    STEP_IN_THE_AIR(Default.PARTICLE, "step_in_the_air", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 750, 25000, c -> new ItemBuilder(Material.FEATHER).build()),
+    RAINBOW_TWINS(Default.PARTICLE, "rainbow_twins", CosmeticRarity.LEGENDARY, PlayerRank.EPIC, 1500, 50000, c -> new ItemBuilder(Material.INK_SACK, 1, 2).build()),
     BLACK_VORTEX(Default.PARTICLE, "black_vortex", CosmeticRarity.STAFF, StaffRank.ADMINISTRATOR, -1, -1, c -> new ItemBuilder(Material.RECORD_11).withAllItemFlags().build(), true),
 
     // == Pets ==
-    SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 150, 15000, c -> Head.SNOWMAN_BODY.asItem()),
-    MINI_ME(Default.PET, "mini_me", CosmeticRarity.COMMON, PlayerRank.PLAYER, 150, 15000, c -> new ItemBuilder(Material.SKULL_ITEM).withData((short) 3).build()),
-    REAPER(Default.PET, "reaper", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 500, 15000, c -> Head.REAPER.asItem()),
-    GHOST(Default.PET, "ghost", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 500, 15000, c -> Head.GHOST.asItem()),
+    MINI_ME(Default.PET, "mini_me", CosmeticRarity.COMMON, PlayerRank.PLAYER, 450, 7500, c -> new ItemBuilder(Material.SKULL_ITEM).withData((short) 3).build()),
+    SNOWMAN(Default.PET, "snowman", CosmeticRarity.RARE, PlayerRank.VIP_PLUS, 750, 15000, c -> Head.SNOWMAN_BODY.asItem()),
+    REAPER(Default.PET, "reaper", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 750, 25000, c -> Head.REAPER.asItem()),
+    GHOST(Default.PET, "ghost", CosmeticRarity.EPIC, PlayerRank.VIP_PLUS, 750, 25000, c -> Head.GHOST.asItem()),
 
     // == Balloons ==
     HYRIODE_BALLOON(Default.BALLOON, "hyriode", CosmeticRarity.EXCLUSIVE, -1, -1, c -> c.headTexture.asItem(), Head.HYRIODE),
@@ -94,6 +94,7 @@ public enum Cosmetic {
 
     RUBIKS_CUBE_BALLOON(Default.BALLOON, "rubiks_cube", CosmeticRarity.EPIC, -1, -1, c -> c.headTexture.asItem(), Head.RUBIKS_CUBE),
     TOTEM_BALLOON(Default.BALLOON, "totem", CosmeticRarity.LEGENDARY, -1, -1, c -> c.headTexture.asItem(), Head.TOTEM),
+    POOP_BALLOON(Default.BALLOON, "poop", CosmeticRarity.LEGENDARY, -1, -1, c -> c.headTexture.asItem(), Head.POOP),
     ;
 
     private static final Map<CosmeticCategory, List<Cosmetic>> cosmetics = new HashMap<>();
