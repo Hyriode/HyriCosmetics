@@ -6,8 +6,10 @@ import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+import java.awt.Color;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
+import xyz.xenondevs.particle.data.color.RegularColor;
 
 public abstract class InvocationParticle extends AbstractParticleImpl {
 
@@ -19,17 +21,17 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
     private double radius = 0.0D;
     private int height = 70;
 
-    private final ParticleEffect particleEffect;
+    private final ParticleBuilder particleBuilder;
 
-    public InvocationParticle(CosmeticUser user, ParticleEffect particleEffect) {
+    public InvocationParticle(CosmeticUser user, ParticleBuilder particleBuilder) {
         super(user, Cosmetic.FIRE_INVOCATION, false);
-        this.particleEffect = particleEffect;
+        this.particleBuilder = particleBuilder;
     }
 
     @Override
     public void tick(final CosmeticUser user) {
         if (isMoving()) {
-            new ParticleBuilder(particleEffect, this.getLocation()).setSpeed(0.1F).display();
+            particleBuilder.setLocation(this.getLocation()).setSpeed(0.1F).display();
             return;
         }
 
@@ -41,7 +43,7 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
             double d1 = (120 * b);
             Vector vector = new Vector(Math.cos(tick * angle + Math.toRadians(d1)) * this.radius, this.height * 0.05D, Math.sin(tick * angle + Math.toRadians(d1)) * this.radius);
             MathUtil.rotateAroundAxisY(vector, d);
-            new ParticleBuilder(particleEffect, location.add(vector)).setSpeed(0.1F).display();
+            particleBuilder.setLocation(location.add(vector)).setSpeed(0.1F).display();
             location.subtract(vector);
         }
         if (this.height > max / 2) {
@@ -58,19 +60,19 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
 
     public static class FireInvocationParticle extends InvocationParticle {
         public FireInvocationParticle(CosmeticUser user) {
-            super(user, ParticleEffect.FLAME);
+            super(user, new ParticleBuilder(ParticleEffect.FLAME));
         }
     }
 
     public static class GemInvocationParticle extends InvocationParticle {
         public GemInvocationParticle(CosmeticUser user) {
-            super(user, ParticleEffect.VILLAGER_HAPPY);
+            super(user, new ParticleBuilder(ParticleEffect.VILLAGER_HAPPY));
         }
     }
 
     public static class PortalInvocationParticle extends InvocationParticle {
         public PortalInvocationParticle(CosmeticUser user) {
-            super(user, ParticleEffect.PORTAL);
+            super(user, new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(Co)));
         }
     }
 }
