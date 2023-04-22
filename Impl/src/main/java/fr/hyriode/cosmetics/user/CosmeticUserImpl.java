@@ -57,7 +57,12 @@ public class CosmeticUserImpl implements CosmeticUser {
         final IHyriRank playerRank = IHyriPlayer.get(player.getUniqueId()).getRank();
         if (playerRank.isStaff() && playerRank.isSuperior(StaffRank.MODERATOR_PLUS)) {
             for (CosmeticCategory category : HyriCosmetics.get().getCosmetics().keySet()) {
-                unlockedCosmetics.addAll(HyriCosmetics.get().getCosmetics().get(category));
+                for (Cosmetic cosmetic : HyriCosmetics.get().getCosmetics().get(category)) {
+                    if (cosmetic.isRequireRank() && !cosmetic.isAccessible(player)) {
+                        continue;
+                    }
+                    this.unlockedCosmetics.add(cosmetic);
+                }
             }
         } else {
             this.addUnlockedCosmetic();

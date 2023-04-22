@@ -1,5 +1,6 @@
 package fr.hyriode.cosmetics.balloon;
 
+import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import net.minecraft.server.v1_8_R3.DamageSource;
 import net.minecraft.server.v1_8_R3.EntitySlime;
 import net.minecraft.server.v1_8_R3.World;
@@ -10,6 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -39,6 +41,7 @@ public class CustomBalloonEntity extends EntitySlime {
         this.contents.setGravity(false);
         this.contents.setHelmet(item);
         this.contents.setMarker(true);
+        this.getBukkitEntity().setMetadata("COSMETICS-BALLOON", new FixedMetadataValue(HyriCosmeticsPlugin.get(), player.getName()));
     }
 
     @Override
