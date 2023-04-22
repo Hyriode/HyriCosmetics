@@ -6,6 +6,7 @@ import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+import org.checkerframework.checker.units.qual.C;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.color.RegularColor;
@@ -22,8 +23,8 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
 
     private final ParticleBuilder particleBuilder;
 
-    public InvocationParticle(CosmeticUser user, ParticleBuilder particleBuilder) {
-        super(user, Cosmetic.FIRE_INVOCATION, false);
+    public InvocationParticle(CosmeticUser user, Cosmetic cosmetic, ParticleBuilder particleBuilder) {
+        super(user, cosmetic, false);
         this.particleBuilder = particleBuilder;
     }
 
@@ -59,19 +60,19 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
 
     public static class FireInvocationParticle extends InvocationParticle {
         public FireInvocationParticle(CosmeticUser user) {
-            super(user, new ParticleBuilder(ParticleEffect.FLAME));
+            super(user, Cosmetic.FIRE_INVOCATION, new ParticleBuilder(ParticleEffect.FLAME));
         }
     }
 
     public static class GemInvocationParticle extends InvocationParticle {
         public GemInvocationParticle(CosmeticUser user) {
-            super(user, new ParticleBuilder(ParticleEffect.VILLAGER_HAPPY));
+            super(user, Cosmetic.GEM_INVOCATION, new ParticleBuilder(ParticleEffect.VILLAGER_HAPPY));
         }
     }
 
     public static class PortalInvocationParticle extends InvocationParticle {
         public PortalInvocationParticle(CosmeticUser user) {
-            super(user, new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(84, 31, 122)));
+            super(user, Cosmetic.PORTAL_INVOCATION, new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(84, 31, 122)));
         }
     }
 }
