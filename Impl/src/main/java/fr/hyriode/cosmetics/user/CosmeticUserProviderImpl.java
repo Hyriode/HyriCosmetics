@@ -40,7 +40,7 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
             Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.get(), () -> {
                 player.sendMessage(HyriLanguageMessage.get("join.gift").getValue(player));
                 player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
-            }, 5L);
+            }, 40L);
         }
     }
 
