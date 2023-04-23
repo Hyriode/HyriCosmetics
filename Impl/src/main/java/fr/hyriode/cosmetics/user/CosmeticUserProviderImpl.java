@@ -55,6 +55,7 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
         for (CosmeticCategory category : HyriCosmetics.get().getCategories()) {
             cosmeticUser.unequipCosmetic(category, false);
         }
+
         this.users.remove(player.getUniqueId());
     }
 
