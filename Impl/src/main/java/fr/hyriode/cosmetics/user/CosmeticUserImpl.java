@@ -145,6 +145,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.equippedCosmetics.entrySet()) {
             entry.getValue().unequip(message);
         }
+        this.updateData();
         this.equippedCosmetics.clear();
     }
 
@@ -156,6 +157,7 @@ public class CosmeticUserImpl implements CosmeticUser {
             this.equippedCosmetics.get(category).unequip(message);
             this.equippedCosmetics.remove(category);
         }
+        this.updateData();
     }
 
     @Override
