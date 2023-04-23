@@ -62,7 +62,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         this.lastZ = player.getLocation().getZ();
 
         IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
-        if (session == null || session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
+        if (session != null && (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer()))
             return;
 
         this.equipCosmetics();
