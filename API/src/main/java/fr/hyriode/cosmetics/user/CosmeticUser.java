@@ -21,7 +21,11 @@ public interface CosmeticUser {
 
     PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message);
 
+    void unequipCosmetic(CosmeticCategory category, boolean message, boolean update);
+
     void unequipCosmetics(boolean message);
+
+    PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message, boolean update);
 
     void unequipCosmetic(CosmeticCategory category, boolean message);
 
