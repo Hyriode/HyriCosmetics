@@ -47,15 +47,13 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
     @Override
     public void deleteUser(Player player) {
         final CosmeticUser cosmeticUser = this.users.get(player.getUniqueId());
+        cosmeticUser.updateData();
         if (cosmeticUser.isUnequipping()) {
             cosmeticUser.reactivateCosmeticsTemporarilyUnequipped();
         }
-
         for (CosmeticCategory category : HyriCosmetics.get().getCategories()) {
-            cosmeticUser.unequipCosmetic(category, false, true);
+            cosmeticUser.unequipCosmetic(category, false);
         }
-
-        cosmeticUser.updateData();
 
         this.users.remove(player.getUniqueId());
     }
