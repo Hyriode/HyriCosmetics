@@ -239,8 +239,7 @@ public class CosmeticUserImpl implements CosmeticUser {
     @Override
     public void updateData() {
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.equippedCosmetics.entrySet()) {
-            if (entry.getKey() == null || entry.getValue() == null)
-                return;
+            if (entry.getKey() == null || entry.getValue() == null) continue;
             final PlayerCosmetic<?> playerCosmetic = entry.getValue();
             if (playerCosmetic.getAbstractCosmetic().hasVariants()) {
                 this.data.putEquippedCosmetics(
