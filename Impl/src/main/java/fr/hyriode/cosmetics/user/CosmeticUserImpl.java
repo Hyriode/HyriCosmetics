@@ -135,7 +135,6 @@ public class CosmeticUserImpl implements CosmeticUser {
         final PlayerCosmetic<?> equippedCosmetic = new PlayerCosmeticImpl<>(HyriCosmetics.get().createCosmetic(cosmetic, this), this);
         this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
         equippedCosmetic.equip(message);
-        this.updateData();
 
         return equippedCosmetic;
     }
@@ -145,7 +144,6 @@ public class CosmeticUserImpl implements CosmeticUser {
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.equippedCosmetics.entrySet()) {
             entry.getValue().unequip(message);
         }
-        this.updateData();
         this.equippedCosmetics.clear();
     }
 
