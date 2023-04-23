@@ -226,7 +226,7 @@ public enum Cosmetic {
         final IHyriRank playerRank = HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank();
         if (playerRank.isStaff() && rank instanceof StaffRank) {
             return playerRank.isSuperior((StaffRank) rank);
-        } else if (playerRank.isDefault() && rank instanceof PlayerRank) {
+        } else if (rank instanceof PlayerRank) {
             return playerRank.isSuperior((PlayerRank) rank);
         }
 
