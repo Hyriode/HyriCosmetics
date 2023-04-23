@@ -136,7 +136,7 @@ public class CosmeticUserImpl implements CosmeticUser {
     public PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message, boolean update) {
         Objects.requireNonNull(cosmetic, "cosmetic must not be null");
 
-        this.unequipCosmetic(cosmetic.getCategory(), false, false);
+        this.unequipCosmetic(cosmetic.getCategory(), false, true);
         final PlayerCosmetic<?> equippedCosmetic = new PlayerCosmeticImpl<>(HyriCosmetics.get().createCosmetic(cosmetic, this), this);
         this.equippedCosmetics.put(cosmetic.getCategory(), equippedCosmetic);
         equippedCosmetic.equip(message);
@@ -190,7 +190,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         if (!isUnequipping) return;
         this.isUnequipping = false;
         for (Cosmetic cosmetic : this.activeCosmetics) {
-            PlayerCosmetic<?> playerCosmetic = this.equipCosmetic(cosmetic, false, false);
+            PlayerCosmetic<?> playerCosmetic = this.equipCosmetic(cosmetic, false, true);
             if (activeVariant.containsKey(cosmetic) && playerCosmetic.getAbstractCosmetic().hasVariants()) {
                 playerCosmetic.getAbstractCosmetic().setVariant(activeVariant.get(cosmetic));
             }
