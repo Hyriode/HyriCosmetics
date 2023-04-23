@@ -55,6 +55,8 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
             cosmeticUser.unequipCosmetic(category, false, true);
         }
 
+        cosmeticUser.updateData();
+
         this.users.remove(player.getUniqueId());
     }
 
