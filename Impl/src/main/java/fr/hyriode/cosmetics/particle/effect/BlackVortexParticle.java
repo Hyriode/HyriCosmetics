@@ -35,6 +35,8 @@ public class BlackVortexParticle extends AbstractParticleImpl {
                     new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(Color.BLACK)),
                     new ParticleBuilder(ParticleEffect.PORTAL)
             );
+        } else {
+            new ParticleBuilder(ParticleEffect.REDSTONE, getLocation()).setParticleData(new RegularColor(Color.BLACK)).display();
         }
     }
 

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface CosmeticUser {
 
-    CosmeticUser init();
+    void init();
 
     void equipCosmetics();
 

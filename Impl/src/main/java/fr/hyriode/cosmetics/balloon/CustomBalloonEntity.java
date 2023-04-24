@@ -1,14 +1,17 @@
 package fr.hyriode.cosmetics.balloon;
 
+import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import net.minecraft.server.v1_8_R3.DamageSource;
 import net.minecraft.server.v1_8_R3.EntitySlime;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -37,7 +40,8 @@ public class CustomBalloonEntity extends EntitySlime {
         this.contents.setCustomNameVisible(false);
         this.contents.setGravity(false);
         this.contents.setHelmet(item);
-        this.contents.setMarker(false);
+        this.contents.setMarker(true);
+        this.getBukkitEntity().setMetadata("COSMETICS-BALLOON", new FixedMetadataValue(HyriCosmeticsPlugin.get(), player.getName()));
     }
 
     @Override
@@ -50,6 +54,8 @@ public class CustomBalloonEntity extends EntitySlime {
         updatePosition();
         setLocation(this.currentLoc.getX(), this.currentLoc.getY(), this.currentLoc.getZ(), this.currentLoc.getYaw(), this.currentLoc.getPitch());
         this.contents.teleport(getBukkitEntity().getLocation().clone().subtract(0.0D, 1.0D, 0.0D));
+
+        this.setLeashHolder(((CraftPlayer) this.player).getHandle(), true);
     }
 
     private void updatePosition() {
@@ -67,9 +73,9 @@ public class CustomBalloonEntity extends EntitySlime {
         }
         this.currentLoc.setYaw(this.i);
         this.currentLoc.add(this.currentLoc
-                .getDirection().multiply(-1.3D).getX(), 2.3D + (this.status ? 0.1D : 0.0D), this.currentLoc
+                .getDirection().multiply(-0.3D).getX(), 2.3D + (this.status ? 0.1D : 0.0D), this.currentLoc
 
-                .getDirection().multiply(-1.8D).getZ());
+                .getDirection().multiply(-0.8D).getZ());
         this.status = !this.status;
     }
 

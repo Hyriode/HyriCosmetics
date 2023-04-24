@@ -1,5 +1,7 @@
 {
 
+  "join.gift": "&bHyriode&f ┃ You have &breceived&f the &9Hyriode &d&lEXCLUSIVE&f ball as a welcome gift. Have a good game on the server!",
+
   "cosmetics.equip": "§3Cosmetics §f┃ You have §aequipped §fthe cosmetic: §b%cosmetic%§f.",
   "cosmetics.unequip": "§3Cosmetics §f┃ You have §cde-equipped §fthe cosmetic: §b%cosmetic%§f.",
 
@@ -20,6 +22,12 @@
   "cosmetic.particle.fire_invocation.name": "Invocation of fire",
   "cosmetic.particle.fire_invocation.description": "Invocation of the depths of the flames.",
 
+  "cosmetic.particle.gem_invocation.name": "Invocation of gems",
+  "cosmetic.particle.gem_invocation.description": "Invocation of the strength of gems.",
+
+  "cosmetic.particle.portal_invocation.name": "Interdimensional invocation",
+  "cosmetic.particle.portal_invocation.description": "Invocation of an interdimensional portal.",
+
   "cosmetic.particle.enchanted.name": "Enchanted",
   "cosmetic.particle.enchanted.description": "A magical particle effect.",
 
@@ -39,6 +47,12 @@
   "cosmetic.pet.mini_me.name": "Mini me",
   "cosmetic.pet.mini_me.description": "It looks strangely like you... strange...",
 
+  "cosmetic.pet.reaper.name": "Reaper",
+  "cosmetic.pet.reaper.description": "Do you really want to hang out with death? As you wish...",
+
+  "cosmetic.pet.ghost.name": "Ghost",
+  "cosmetic.pet.ghost.description": "He is nice, all migon, but.. BOUH!",
+
   "cosmetics.rarity.common": "Common",
   "cosmetics.rarity.rare": "Rare",
   "cosmetics.rarity.epic": "Epic",
@@ -56,8 +70,8 @@
   "cosmetic.balloon.tiktok.name": "TikTok",
   "cosmetic.balloon.tiktok.description": "Perfect balloon for people tok tok!",
 
-  "cosmetic.yellow.name": "Yellow balloon",
-  "cosmetic.yellow.description": "Single yellow balloon (only available with levels)",
+  "cosmetic.balloon.yellow.name": "Yellow balloon",
+  "cosmetic.balloon.yellow.description": "Single yellow balloon (only available with levels)",
   "cosmetic.balloon.red.name": "Red balloon",
   "cosmetic.balloon.red.description": "Simple red balloon. (only available with levels)",
   "cosmetic.balloon.blue.name": "Blue balloon",
@@ -66,18 +80,18 @@
   "cosmetic.balloon.green.description": "Simple green balloon. (only available with levels)",
   "cosmetic.balloon.purple.name": "Purple balloon",
   "cosmetic.balloon.purple.description": "Simple purple balloon. (only available with levels)",
-  "cosmetic.orange.name": "Orange balloon",
-  "cosmetic.orange.description": "Simple orange balloon. (only available with levels)",
+  "cosmetic.balloon.orange.name": "Orange balloon",
+  "cosmetic.balloon.orange.description": "Simple orange balloon. (only available with levels)",
   "cosmetic.balloon.pink.name": "Pink balloon",
   "cosmetic.balloon.pink.description": "Simple pink balloon. (only available with levels)",
   "cosmetic.balloon.white.name": "White balloon",
   "cosmetic.balloon.white.description": "Simple white balloon. (only available with levels)",
-  "cosmetic.black.name": "Black balloon",
-  "cosmetic.black.description": "Simple black balloon. (only available with levels)",
+  "cosmetic.balloon.black.name": "Black balloon",
+  "cosmetic.balloon.black.description": "Simple black balloon. (only available with levels)",
   "cosmetic.balloon.gray.name": "Gray balloon",
   "cosmetic.balloon.gray.description": "Simple gray balloon. (only available with levels)",
-  "cosmetic.balloon.brown.name": "Brown balloon",
-  "cosmetic.balloon.brown.description": "Simple brown balloon. (only available with levels)",
+  "cosmetic.balloon.dark_blue.name": "Dark blue balloon",
+  "cosmetic.balloon.dark_blue.description": "Simple dark blue balloon. (only available with levels)",
 
   "cosmetic.balloon.beach.name": "Beach ball",
   "cosmetic.balloon.beach.description": "Don't forget your beach ball!",
@@ -141,5 +155,8 @@
   "cosmetic.balloon.rubiks_cube.description": "If you are a headache, you might enjoy it!",
 
   "cosmetic.balloon.totem.name": "Totem",
-  "cosmetic.balloon.totem.description": "A totem to protect you from evil spirits! (so it protects you from modos, well normally...)"
+  "cosmetic.balloon.totem.description": "A totem to protect you from evil spirits! (so it protects you from modos, well normally...)",
+
+  "cosmetic.balloon.poop.name": "Poop",
+  "cosmetic.balloon.poop.description": "It's poop"
 }

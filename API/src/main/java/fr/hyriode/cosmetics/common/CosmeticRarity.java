@@ -2,8 +2,10 @@ package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.color.HyriChatColor;
 import fr.hyriode.api.language.HyriLanguageMessage;
-import fr.hyriode.api.language.IHyriLanguageManager;
 import org.bukkit.entity.Player;
+
+import java.util.Comparator;
+import java.util.List;
 
 public enum CosmeticRarity {
 
@@ -35,4 +37,7 @@ public enum CosmeticRarity {
         return HyriLanguageMessage.get("cosmetics.rarity." + this.name).getValue(player);
     }
 
+    public static void sortCosmeticsByRarity(List<Cosmetic> cosmetics) {
+        cosmetics.sort(Comparator.comparing(Cosmetic::getRarity));
+    }
 }

@@ -2,3 +2,4 @@ main: fr.hyriode.cosmetics.HyriCosmeticsPlugin
 name: HyriCosmetics
 version: @version@
 authors: [Pas2Pseudo_]
+depend: [Hyrame]

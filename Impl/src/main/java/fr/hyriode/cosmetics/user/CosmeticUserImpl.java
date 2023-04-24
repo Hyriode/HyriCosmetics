@@ -4,7 +4,9 @@ import fr.hyriode.api.HyriAPI;
 import fr.hyriode.api.player.IHyriPlayer;
 import fr.hyriode.api.player.IHyriPlayerSession;
 import fr.hyriode.api.player.model.IHyriTransaction;
+import fr.hyriode.api.rank.IHyriRank;
 import fr.hyriode.api.rank.PlayerRank;
+import fr.hyriode.api.rank.StaffRank;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
 import fr.hyriode.cosmetics.common.Cosmetic;
@@ -51,34 +53,49 @@ public class CosmeticUserImpl implements CosmeticUser {
     }
 
     @Override
-    public CosmeticUser init() {
-        for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
-            final List<Cosmetic> cosmetics = entry.getValue();
-
-            for (Cosmetic cosmetic : cosmetics) {
-                if (cosmetic.isAccessible(player)) {
-                    unlockedCosmetics.add(cosmetic);
-                }
-            }
-        }
-
-        if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
-            for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
-                CosmeticTransaction cosmeticTransaction = transaction.loadContent(new CosmeticTransaction());
-                unlockedCosmetics.add(HyriCosmetics.get().getCosmetic(cosmeticTransaction.getCosmeticId()));
-            }
-        }
+    public void init() {
+        final IHyriRank playerRank = IHyriPlayer.get(player.getUniqueId()).getRank();
+        this.addUnlockedCosmetic(playerRank.isStaff() && playerRank.isSuperior(StaffRank.MODERATOR_PLUS));
 
         this.lastX = player.getLocation().getX();
         this.lastY = player.getLocation().getY();
         this.lastZ = player.getLocation().getZ();
 
         IHyriPlayerSession session = IHyriPlayerSession.get(player.getUniqueId());
-        if (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer())
-            return this;
+        if (session != null && (session.isModerating() || session.isVanished() || !HyriCosmetics.get().isLobbyServer()))
+            return;
 
         this.equipCosmetics();
-        return this;
+    }
+
+    private void addUnlockedCosmetic(final boolean isStaff) {
+        if (isStaff) {
+            for (CosmeticCategory category : HyriCosmetics.get().getCosmetics().keySet()) {
+                for (Cosmetic cosmetic : HyriCosmetics.get().getCosmetics().get(category)) {
+                    if (cosmetic.isRequireRank() && !cosmetic.isAccessible(player)) {
+                        continue;
+                    }
+                    this.unlockedCosmetics.add(cosmetic);
+                }
+            }
+        } else {
+            for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
+                final List<Cosmetic> cosmetics = entry.getValue();
+                for (Cosmetic cosmetic : cosmetics) {
+                    if (cosmetic.isAccessible(player)) {
+                        unlockedCosmetics.add(cosmetic);
+                    }
+                }
+            }
+        }
+        if (this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
+            for (IHyriTransaction transaction : this.asHyriPlayer().getTransactions().getAll(CosmeticTransaction.TYPE)) {
+                Cosmetic cosmetic = HyriCosmetics.get().getCosmetic(transaction.loadContent(new CosmeticTransaction()).getCosmeticId());
+                if (unlockedCosmetics.contains(cosmetic))
+                    continue;
+                unlockedCosmetics.add(cosmetic);
+            }
+        }
     }
 
     @Override
@@ -222,8 +239,7 @@ public class CosmeticUserImpl implements CosmeticUser {
     @Override
     public void updateData() {
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.equippedCosmetics.entrySet()) {
-            if (entry.getKey() == null || entry.getValue() == null)
-                return;
+            if (entry.getKey() == null || entry.getValue() == null) continue;
             final PlayerCosmetic<?> playerCosmetic = entry.getValue();
             if (playerCosmetic.getAbstractCosmetic().hasVariants()) {
                 this.data.putEquippedCosmetics(
