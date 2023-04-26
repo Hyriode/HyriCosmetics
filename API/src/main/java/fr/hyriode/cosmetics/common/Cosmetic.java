@@ -47,6 +47,7 @@ public enum Cosmetic {
     TWITCH_BALLOON(Default.BALLOON, "twitch", CosmeticRarity.RARE, -1, -1, c -> c.headTexture.asItem(), Head.TWITCH),
     YOUTUBE_BALLOON(Default.BALLOON, "youtube", CosmeticRarity.RARE, -1, -1, c -> c.headTexture.asItem(), Head.YOUTUBE),
     TIKTOK_BALLOON(Default.BALLOON, "tiktok", CosmeticRarity.RARE, -1, -1, c -> c.headTexture.asItem(), Head.TIKTOK),
+    TWITTER_BALLOON(Default.BALLOON, "twitter", CosmeticRarity.RARE, -1, -1, c -> c.headTexture.asItem(), Head.TWITTER),
 
     YELLOW_BALLOON(Default.BALLOON, "yellow", CosmeticRarity.COMMON, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_YELLOW),
     RED_BALLOON(Default.BALLOON, "red", CosmeticRarity.COMMON, -1, -1, c -> c.headTexture.asItem(), Head.BALLOON_COLOR_RED),
