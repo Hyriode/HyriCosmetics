@@ -45,7 +45,7 @@ public class CosmeticGiveCommand extends HyriCommand<HyriCosmeticsPlugin> {
 
             if (target.getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
                 for (final IHyriTransaction transaction : target.getTransactions().getAll(CosmeticTransaction.TYPE)) {
-                    if (transaction.loadContent(new CosmeticTransaction()).getCosmeticId().equals(cosmetic.getId())) {
+                    if (transaction.loadContent(new CosmeticTransaction()).getCosmeticId().equals(cosmetic.getInfo().getId())) {
                         player.sendMessage("§cThis player already has this cosmetic");
                         return;
                     }
@@ -53,7 +53,7 @@ public class CosmeticGiveCommand extends HyriCommand<HyriCosmeticsPlugin> {
             }
 
             final IHyriPlayer account = HyriAPI.get().getPlayerManager().getPlayer(target.getUniqueId());
-            account.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
+            account.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getInfo().getId()));
             account.update();
             player.sendMessage("§aCosmetic given to " + target.getName() + " : " + cosmetic);
         });

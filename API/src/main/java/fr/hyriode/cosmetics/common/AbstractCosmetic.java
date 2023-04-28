@@ -1,7 +1,6 @@
 package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
-import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.utils.Pair;
 import org.bukkit.Location;

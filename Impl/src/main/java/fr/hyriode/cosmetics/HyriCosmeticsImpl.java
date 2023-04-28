@@ -8,9 +8,6 @@ import fr.hyriode.cosmetics.common.AbstractCosmetic;
 import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.CosmeticRarity;
-import fr.hyriode.cosmetics.common.Filters.Owned;
-import fr.hyriode.cosmetics.common.Filters.Price;
-import fr.hyriode.cosmetics.common.Filters.Rarity;
 import fr.hyriode.cosmetics.listener.AccountListener;
 import fr.hyriode.cosmetics.listener.ConnectionListener;
 import fr.hyriode.cosmetics.listener.PlayerListener;
@@ -34,7 +31,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HyriCosmeticsImpl extends HyriCosmetics {
@@ -118,8 +118,8 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     @Override @SuppressWarnings("all")
     public <T extends AbstractCosmetic> T createCosmetic(Cosmetic cosmetic, CosmeticUser user) {
         try {
-            if (cosmetic.getCategory() == CosmeticCategory.Default.BALLOON) {
-                return (T) new BalloonImpl(user, cosmetic, cosmetic.getTexture().getTexture());
+            if (cosmetic.getInfo().getCategory() == CosmeticCategory.Default.BALLOON) {
+                return (T) new BalloonImpl(user, cosmetic, cosmetic.getInfo().getHead().getTexture());
             }
             return (T) this.getCosmeticClass(cosmetic).getConstructor(CosmeticUser.class).newInstance(user);
         } catch (Exception e) {
@@ -216,7 +216,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     public Cosmetic getCosmetic(final String name) {
         for (CosmeticCategory category : this.getCosmetics().keySet()) {
             for (Cosmetic cosmetic : this.getCosmetics().get(category)) {
-                if (cosmetic.getId().equalsIgnoreCase(name)) {
+                if (cosmetic.getInfo().getId().equalsIgnoreCase(name)) {
                     return cosmetic;
                 }
             }
@@ -227,7 +227,7 @@ public class HyriCosmeticsImpl extends HyriCosmetics {
     @Override
     public Cosmetic getCosmetic(final String name, final CosmeticCategory category) {
         for (Cosmetic cosmetic : this.getCosmetics().get(category)) {
-            if (cosmetic.getId().equalsIgnoreCase(name)) {
+            if (cosmetic.getInfo().getId().equalsIgnoreCase(name)) {
                 return cosmetic;
             }
         }
