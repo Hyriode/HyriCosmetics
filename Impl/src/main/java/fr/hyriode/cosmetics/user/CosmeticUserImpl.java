@@ -48,7 +48,7 @@ public class CosmeticUserImpl implements CosmeticUser {
         } else {
             this.data = data;
         }
-
+ 
         this.data.setUser(this);
     }
 
