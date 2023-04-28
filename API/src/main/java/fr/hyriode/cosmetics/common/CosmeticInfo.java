@@ -37,6 +37,10 @@ public interface CosmeticInfo {
 
     boolean isAccessible(Player player);
 
+    /*
+    * Do not use this method
+    * only usable by Cosmetic.java class
+     */
     void setCosmetic(Cosmetic cosmetic);
 
     Cosmetic getCosmetic();

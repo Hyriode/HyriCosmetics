@@ -52,8 +52,8 @@ public enum Cosmetic {
     PURPLE_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "purple").withHead(Head.BALLOON_COLOR_PURPLE)),
     ORANGE_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "orange").withHead(Head.BALLOON_COLOR_ORANGE)),
     PINK_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "pink").withHead(Head.BALLOON_COLOR_PINK)),
-    LIGHT_BLUE_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "white").withHead(Head.BALLOON_COLOR_LIGHT_BLUE)),
-    LIME_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "black").withHead(Head.BALLOON_COLOR_LIME)),
+    LIGHT_BLUE_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "light_blue").withHead(Head.BALLOON_COLOR_LIGHT_BLUE)),
+    LIME_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "lime").withHead(Head.BALLOON_COLOR_LIME)),
     GRAY_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "gray").withHead(Head.BALLOON_COLOR_GRAY)),
     DARK_BLUE_BALLOON(new CosmeticInfoBuilder(Default.BALLOON, "dark_blue").withHead(Head.BALLOON_COLOR_DARK_BLUE)),
 
