@@ -41,7 +41,7 @@ public interface CosmeticInfo {
     * Do not use this method
     * only usable by Cosmetic.java class
      */
-    void setCosmetic(Cosmetic cosmetic);
+    @Deprecated void setCosmetic(Cosmetic cosmetic);
 
     Cosmetic getCosmetic();
 }

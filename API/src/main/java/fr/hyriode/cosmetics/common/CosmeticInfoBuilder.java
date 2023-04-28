@@ -166,7 +166,7 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
     }
 
     @Override
-    public void setCosmetic(final Cosmetic cosmetic) {
+    public final void setCosmetic(final Cosmetic cosmetic) {
         this.cosmetic = cosmetic;
     }
 
