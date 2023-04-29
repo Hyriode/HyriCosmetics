@@ -139,7 +139,7 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
 
     @Override
     public boolean isBuyable() {
-        return hyodesPrice != -1 || hyrisPrice != -1;
+        return hyodesPrice > 0 || hyrisPrice > 0;
     }
 
     @Override
