@@ -48,14 +48,14 @@ public class CosmeticUserImpl implements CosmeticUser {
         } else {
             this.data = data;
         }
- 
+
         this.data.setUser(this);
     }
 
     @Override
     public void init() {
         final IHyriRank playerRank = IHyriPlayer.get(player.getUniqueId()).getRank();
-        this.addUnlockedCosmetic(playerRank.isStaff() && playerRank.isSuperior(StaffRank.MODERATOR_PLUS));
+        this.addUnlockedCosmetics(playerRank.isStaff() && playerRank.isSuperior(StaffRank.MODERATOR_PLUS));
 
         this.lastX = player.getLocation().getX();
         this.lastY = player.getLocation().getY();
@@ -68,7 +68,8 @@ public class CosmeticUserImpl implements CosmeticUser {
         this.equipCosmetics();
     }
 
-    private void addUnlockedCosmetic(final boolean isStaff) {
+    private void addUnlockedCosmetics(final boolean isStaff) {
+        Bukkit.broadcastMessage("?" + isStaff);
         if (isStaff) {
             for (CosmeticCategory category : HyriCosmetics.get().getCosmetics().keySet()) {
                 for (Cosmetic cosmetic : HyriCosmetics.get().getCosmetics().get(category)) {
@@ -82,6 +83,7 @@ public class CosmeticUserImpl implements CosmeticUser {
             for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
                 final List<Cosmetic> cosmetics = entry.getValue();
                 for (Cosmetic cosmetic : cosmetics) {
+                    Bukkit.broadcastMessage("!" + cosmetic.getInfo().isAccessible(player));
                     if (cosmetic.getInfo().isAccessible(player)) {
                         unlockedCosmetics.add(cosmetic);
                     }
