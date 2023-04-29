@@ -22,7 +22,7 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
     private Cosmetic cosmetic;
 
     private CosmeticRarity rarity = CosmeticRarity.COMMON;
-    private IHyriRankType rank = PlayerRank.PLAYER;
+    private IHyriRankType rank = null;
     private boolean requireRank = false;
     private int hyodesPrice = -1;
     private int hyrisPrice = -1;
