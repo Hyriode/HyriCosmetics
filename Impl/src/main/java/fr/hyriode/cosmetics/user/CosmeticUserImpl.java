@@ -69,7 +69,6 @@ public class CosmeticUserImpl implements CosmeticUser {
     }
 
     private void addUnlockedCosmetics(final boolean isStaff) {
-        Bukkit.broadcastMessage("?" + isStaff);
         if (isStaff) {
             for (CosmeticCategory category : HyriCosmetics.get().getCosmetics().keySet()) {
                 for (Cosmetic cosmetic : HyriCosmetics.get().getCosmetics().get(category)) {
@@ -83,7 +82,6 @@ public class CosmeticUserImpl implements CosmeticUser {
             for (Map.Entry<CosmeticCategory, List<Cosmetic>> entry : HyriCosmetics.get().getCosmetics().entrySet()) {
                 final List<Cosmetic> cosmetics = entry.getValue();
                 for (Cosmetic cosmetic : cosmetics) {
-                    Bukkit.broadcastMessage("!" + cosmetic.getInfo().isAccessible(player));
                     if (cosmetic.getInfo().isAccessible(player)) {
                         unlockedCosmetics.add(cosmetic);
                     }
