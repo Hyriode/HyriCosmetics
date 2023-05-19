@@ -6,6 +6,8 @@ import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.api.rank.PlayerRank;
 import fr.hyriode.api.rank.StaffRank;
 import fr.hyriode.cosmetics.HyriCosmetics;
+import fr.hyriode.cosmetics.transaction.CosmeticPrice;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Material;
@@ -19,15 +21,13 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
     private final CosmeticCategory category;
     private final String id;
 
-    private Cosmetic cosmetic;
-
     private CosmeticRarity rarity = CosmeticRarity.COMMON;
+
     private IHyriRankType rank = null;
-    private boolean requireRank = false;
-    private int hyodesPrice = -1;
-    private int hyrisPrice = -1;
-    private Function<Cosmetic, ItemStack> icon = cosmetic -> new ItemStack(Material.BARRIER);
-    private Head head = Head.AMONG_US;
+    private boolean onlyWithRank = false;
+
+    private CosmeticPrice price = new CosmeticPrice();
+    private ItemStack icon = new ItemStack(Material.BARRIER);
 
     public CosmeticInfoBuilder(CosmeticCategory category, String id) {
         this.category = category;
@@ -64,67 +64,48 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
         return this.rank;
     }
 
-    public CosmeticInfoBuilder withRequireRank(final boolean requireRank) {
-        this.requireRank = requireRank;
+    public CosmeticInfoBuilder onlyWithRank() {
+        this.onlyWithRank = true;
         return this;
     }
 
     @Override
-    public boolean isRequireRank() {
-        return this.requireRank;
-    }
-
-    public CosmeticInfoBuilder withHyodesPrice(final int hyodesPrice) {
-        this.hyodesPrice = hyodesPrice;
-        return this;
+    public boolean isOnlyWithRank() {
+        return this.onlyWithRank;
     }
 
     @Override
-    public int getHyodesPrice() {
-        return this.hyodesPrice;
+    public CosmeticPrice getPrice() {
+        return this.price == null ? this.category.getDefaultPrice(this.rarity) : this.price;
     }
 
-    public CosmeticInfoBuilder withHyrisPrice(final int hyrisPrice) {
-        this.hyrisPrice = hyrisPrice;
+    public CosmeticInfoBuilder withPrice(CosmeticPrice price) {
+        this.price = price;
         return this;
     }
 
-    @Override
-    public int getHyrisPrice() {
-        return this.hyrisPrice;
-    }
-
-    public CosmeticInfoBuilder withIcon(final Function<Cosmetic, ItemStack> icon) {
-        this.icon = icon;
+    public CosmeticInfoBuilder withPrice(CosmeticPrice.Currency currency, int value) {
+        this.price.newValue(currency, value);
         return this;
     }
 
     public CosmeticInfoBuilder withIcon(final ItemStack icon) {
-        return withIcon(cosmetic -> new ItemBuilder(icon.clone()).withAllItemFlags().build());
+        this.icon = new ItemBuilder(icon).withAllItemFlags().build();
+        return this;
     }
 
     public CosmeticInfoBuilder withIcon(final Head icon) {
-        return withIcon(cosmetic -> new ItemBuilder(icon.asItem().clone()).withAllItemFlags().build());
+        this.icon = new ItemBuilder(icon.asItem()).withAllItemFlags().build();
+        return this;
     }
 
     public CosmeticInfoBuilder withIcon(final Material material) {
-        return withIcon(cosmetic -> new ItemBuilder(material).withAllItemFlags().build());
+        return this.withIcon(new ItemStack(material));
     }
 
     @Override
     public ItemStack getIcon() {
-        return this.icon.apply(cosmetic).clone();
-    }
-
-    public CosmeticInfoBuilder withHead(final Head head) {
-        this.head = head;
-        this.withIcon(head);
-        return this;
-    }
-
-    @Override
-    public Head getHead() {
-        return this.head;
+        return this.icon.clone();
     }
 
     @Override
@@ -137,26 +118,33 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
         return HyriLanguageMessage.get("cosmetic." + this.category.getName() + "." + this.id + ".description");
     }
 
+    public CosmeticInfoBuilder notPurchasable() {
+        this.price = new CosmeticPrice();
+        return this;
+    }
+
     @Override
-    public boolean isBuyable() {
-        return hyodesPrice > 0 || hyrisPrice > 0;
+    public boolean isPurchasable() {
+        return !this.getPrice().empty();
     }
 
     @Override
     public boolean hasRequiredRank(final Player player) {
         final IHyriRank playerRank = HyriCosmetics.get().getUserProvider().getUser(player).asHyriPlayer().getRank();
-        if (rank instanceof StaffRank && playerRank.isStaff()) {
-            return playerRank.isSuperior((StaffRank) rank);
-        } else if (rank instanceof PlayerRank) {
-            return playerRank.isSuperior((PlayerRank) rank);
-        }
 
+        if (this.rank instanceof StaffRank && playerRank.isStaff()) {
+            return playerRank.isSuperior((StaffRank) this.rank);
+        } else if (this.rank  instanceof PlayerRank) {
+            return playerRank.isSuperior((PlayerRank) this.rank);
+        }
         return false;
     }
 
     @Override
     public boolean canBuyIt(final Player player) {
-        if (!this.requireRank) return true;
+        if (!this.onlyWithRank) {
+            return true;
+        }
         return this.hasRequiredRank(player);
     }
 
@@ -165,13 +153,4 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
         return this.hasRequiredRank(player);
     }
 
-    @Override
-    public final void setCosmetic(final Cosmetic cosmetic) {
-        this.cosmetic = cosmetic;
-    }
-
-    @Override
-    public Cosmetic getCosmetic() {
-        return this.cosmetic;
-    }
 }

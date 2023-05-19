@@ -1,10 +1,10 @@
 package fr.hyriode.cosmetics.common;
 
-public interface Filters<T> {
+public interface Filters {
 
     String getName();
 
-    enum Owned implements Filters<Boolean> {
+    enum Owned implements Filters {
         ALL("all"),
         YES("yes"),
         NO("no");

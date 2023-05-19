@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.pet.pets;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.pet.AbstractMinionPet;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 public class ReaperPet extends AbstractMinionPet<Color> {
 
     public ReaperPet(CosmeticUser user) {
-        super(user, Cosmetic.REAPER, false);
+        super(user, DefaultCosmetics.REAPER, false);
     }
 
     @Override

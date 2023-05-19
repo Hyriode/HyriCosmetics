@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.pet.pets;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.pet.AbstractComplexPet;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
@@ -16,7 +16,7 @@ public class SnowManComplexPet extends AbstractComplexPet {
     private ArmorStand body;
 
     public SnowManComplexPet(CosmeticUser user) {
-        super(user, Cosmetic.SNOWMAN, false);
+        super(user, DefaultCosmetics.SNOWMAN, false);
     }
 
     @Override

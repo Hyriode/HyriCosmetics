@@ -2,6 +2,7 @@ package fr.hyriode.cosmetics.user;
 
 import fr.hyriode.api.mongodb.MongoDocument;
 import fr.hyriode.api.mongodb.MongoSerializable;
+import fr.hyriode.api.mongodb.MongoSerializer;
 import fr.hyriode.api.player.model.IHyriPlayerData;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
 import fr.hyriode.cosmetics.common.Filters.Owned;
@@ -26,20 +27,22 @@ public class UserData implements IHyriPlayerData {
     @Override
     public void save(MongoDocument document) {
         final MongoDocument equippedDocument = new MongoDocument();
+
         for (Map.Entry<CosmeticCategory, PlayerCosmetic<?>> entry : this.user.getEquippedCosmetics().entrySet()) {
             final PlayerCosmetic<?> cosmetic = entry.getValue();
+
             if (cosmetic.getAbstractCosmetic().hasVariants()) {
-                MongoDocument cosmeticDocument = new MongoDocument();
-                cosmeticDocument.append(entry.getValue().getAbstractCosmetic().getType().getInfo().getId(), cosmetic.getAbstractCosmetic().getVariant());
+                final MongoDocument cosmeticDocument = new MongoDocument();
+
+                cosmeticDocument.append(entry.getValue().getAbstractCosmetic().getInfo().getId(), cosmetic.getAbstractCosmetic().getVariant());
                 equippedDocument.append(entry.getKey().getName(), cosmeticDocument);
             } else {
-                equippedDocument.append(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getType().getInfo().getId());
+                equippedDocument.append(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getInfo().getId());
             }
         }
-        final MongoDocument filtersDocument = new MongoDocument();
-        filters.save(filtersDocument);
+
         document.append("equipped", equippedDocument);
-        document.append("filters", filtersDocument);
+        document.append("filters", MongoSerializer.serialize(this.filters));
     }
 
     @Override
@@ -56,12 +59,16 @@ public class UserData implements IHyriPlayerData {
                 }
             }
         }
+
         final FilterData filterData = new FilterData();
+
         if (!document.containsKey("filters")) {
             this.filters = filterData;
             return;
         }
+
         filterData.load(MongoDocument.of((Document) document.get("filters")));
+
         this.filters = filterData;
     }
 

@@ -2,7 +2,7 @@ package fr.hyriode.cosmetics.particle.effect;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.algorithm.PowerConsciousHSV;
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
@@ -35,7 +35,7 @@ public class RainbowTwinsParticle extends AbstractParticleImpl<RegularColor> {
     private RegularColor color;
 
     public RainbowTwinsParticle(CosmeticUser user) {
-        super(user, Cosmetic.RAINBOW_TWINS, true);
+        super(user, DefaultCosmetics.RAINBOW_TWINS, true);
         this.hsv = new PowerConsciousHSV();
         this.updateVariant();
     }

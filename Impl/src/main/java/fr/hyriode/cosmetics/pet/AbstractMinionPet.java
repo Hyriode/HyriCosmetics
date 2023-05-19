@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.pet;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.CosmeticInfo;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
@@ -11,8 +11,8 @@ public abstract class AbstractMinionPet<T> extends AbstractPetImpl<T> {
 
     protected ArmorStand minion;
 
-    public AbstractMinionPet(CosmeticUser user, Cosmetic cosmetic, boolean hasVariants) {
-        super(user, cosmetic, hasVariants);
+    public AbstractMinionPet(CosmeticUser user, CosmeticInfo info, boolean hasVariants) {
+        super(user, info, hasVariants);
     }
 
     @Override

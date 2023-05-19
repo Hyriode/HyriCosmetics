@@ -13,17 +13,17 @@ import java.util.Map;
 
 public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
 
-    private final CosmeticUser user;
-    private final Cosmetic cosmetic;
+    protected final CosmeticUser user;
+    protected final CosmeticInfo info;
 
     protected String variant;
 
     protected Map<String, Pair<ItemStack, T>> variants;
     private final boolean hasVariants;
 
-    public AbstractCosmetic(CosmeticUser user, Cosmetic cosmetic, boolean hasVariants) {
+    public AbstractCosmetic(CosmeticUser user, CosmeticInfo info, boolean hasVariants) {
         this.user = user;
-        this.cosmetic = cosmetic;
+        this.info = info;
 
         this.variant = getDefaultVariant();
         this.reloadVariants();
@@ -31,7 +31,7 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
     }
 
     public String getId() {
-        return cosmetic.getInfo().getId();
+        return this.info.getId();
     }
 
     public abstract void onEquip(final CosmeticUser user);
@@ -39,23 +39,23 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
     public abstract void onUnequip(final CosmeticUser user);
 
     public CosmeticCategory getCategory() {
-        return cosmetic.getInfo().getCategory();
+        return this.info.getCategory();
     }
 
     public HyriLanguageMessage getTranslatedName() {
-        return cosmetic.getInfo().getTranslatedName();
+        return this.info.getTranslatedName();
     }
 
     public HyriLanguageMessage getTranslatedDescription() {
-        return cosmetic.getInfo().getTranslatedDescription();
+        return this.info.getTranslatedDescription();
     }
 
     public CosmeticUser getUser() {
         return user;
     }
 
-    public Cosmetic getType() {
-        return cosmetic;
+    public CosmeticInfo getInfo() {
+        return this.info;
     }
 
     public boolean isMoving() {

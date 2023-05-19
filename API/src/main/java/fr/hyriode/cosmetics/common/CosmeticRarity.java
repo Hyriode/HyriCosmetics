@@ -37,7 +37,7 @@ public enum CosmeticRarity {
         return HyriLanguageMessage.get("cosmetics.rarity." + this.name).getValue(player);
     }
 
-    public static void sortCosmeticsByRarity(List<Cosmetic> cosmetics) {
-        cosmetics.sort(Comparator.comparing(cosmetic -> cosmetic.getInfo().getRarity()));
+    public static void sortCosmeticsByRarity(List<CosmeticInfo> cosmetics) {
+        cosmetics.sort(Comparator.comparing(CosmeticInfo::getRarity));
     }
 }

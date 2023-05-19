@@ -2,9 +2,10 @@ package fr.hyriode.cosmetics.utils;
 
 import com.avaje.ebeaninternal.server.lib.util.NotFoundException;
 import fr.hyriode.hyrame.item.ItemBuilder;
+import fr.hyriode.hyrame.item.ItemHead;
 import org.bukkit.inventory.ItemStack;
 
-public enum Head {
+public enum Head implements ItemHead {
 
     WHITE_MINUS("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzNlNGI1MzNlNGJhMmRmZjdjMGZhOTBmNjdlOGJlZjM2NDI4YjZjYjA2YzQ1MjYyNjMxYjBiMjVkYjg1YiJ9fX0="),
     WHITE_PLUS("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjBiNTVmNzQ2ODFjNjgyODNhMWMxY2U1MWYxYzgzYjUyZTI5NzFjOTFlZTM0ZWZjYjU5OGRmMzk5MGE3ZTcifX19"),
@@ -85,6 +86,7 @@ public enum Head {
         throw new NotFoundException("Head with name " + name + " not found");
     }
 
+    @Override
     public String getTexture() {
         return this.texture;
     }
@@ -94,6 +96,6 @@ public enum Head {
     }
 
     public ItemBuilder asItemBuilder() {
-        return ItemBuilder.asHead().withHeadTexture(this.texture);
+        return ItemBuilder.asHead(this);
     }
 }

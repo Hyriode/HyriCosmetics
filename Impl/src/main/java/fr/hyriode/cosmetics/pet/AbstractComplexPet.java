@@ -1,7 +1,7 @@
 package fr.hyriode.cosmetics.pet;
 
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.CosmeticInfo;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import net.minecraft.server.v1_8_R3.EntitySilverfish;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
@@ -16,8 +16,8 @@ public abstract class AbstractComplexPet<T> extends AbstractPetImpl<T> {
 
     protected Silverfish referenceEntity;
 
-    public AbstractComplexPet(CosmeticUser user, Cosmetic cosmetic, boolean hasVariants) {
-        super(user, cosmetic, hasVariants);
+    public AbstractComplexPet(CosmeticUser user, CosmeticInfo info, boolean hasVariants) {
+        super(user, info, hasVariants);
         this.referenceEntity = (Silverfish) user.asBukkit().getWorld().spawnEntity(user.asBukkit().getLocation(), EntityType.SILVERFISH);
         this.setEntitySilent();
 

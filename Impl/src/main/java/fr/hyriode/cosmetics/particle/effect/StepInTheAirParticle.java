@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.particle.effect;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
@@ -21,7 +21,7 @@ public class StepInTheAirParticle  extends AbstractParticleImpl {
     private int ticks = 0;
 
     public StepInTheAirParticle(CosmeticUser user) {
-        super(user, Cosmetic.STEP_IN_THE_AIR, false);
+        super(user, DefaultCosmetics.STEP_IN_THE_AIR, false);
 
         this.player = user.asBukkit();
     }

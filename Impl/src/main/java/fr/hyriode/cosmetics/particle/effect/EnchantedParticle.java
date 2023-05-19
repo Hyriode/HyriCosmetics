@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.particle.effect;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
@@ -18,7 +18,7 @@ public class EnchantedParticle extends AbstractParticleImpl {
 
 
     public EnchantedParticle(CosmeticUser user) {
-        super(user, Cosmetic.ENCHANTED, false);
+        super(user, DefaultCosmetics.ENCHANTED, false);
     }
 
     @Override

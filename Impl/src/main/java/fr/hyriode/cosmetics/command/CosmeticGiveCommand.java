@@ -6,7 +6,7 @@ import fr.hyriode.api.player.model.IHyriTransaction;
 import fr.hyriode.api.rank.StaffRank;
 import fr.hyriode.cosmetics.HyriCosmetics;
 import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.CosmeticInfo;
 import fr.hyriode.cosmetics.transaction.CosmeticTransaction;
 import fr.hyriode.hyrame.command.CommandContext;
 import fr.hyriode.hyrame.command.CommandInfo;
@@ -37,7 +37,7 @@ public class CosmeticGiveCommand extends HyriCommand<HyriCosmeticsPlugin> {
             final IHyriPlayer target = output.get(IHyriPlayer.class);
             final String comseticId = output.get(String.class);
 
-            final Cosmetic cosmetic = HyriCosmetics.get().getCosmetic(comseticId);
+            final CosmeticInfo cosmetic = HyriCosmetics.get().getRegistry().getCosmetic(comseticId);
             if (cosmetic == null) {
                 player.sendMessage("§cCosmetic not found");
                 return;
@@ -45,7 +45,7 @@ public class CosmeticGiveCommand extends HyriCommand<HyriCosmeticsPlugin> {
 
             if (target.getTransactions().getAll(CosmeticTransaction.TYPE) != null) {
                 for (final IHyriTransaction transaction : target.getTransactions().getAll(CosmeticTransaction.TYPE)) {
-                    if (transaction.loadContent(new CosmeticTransaction()).getCosmeticId().equals(cosmetic.getInfo().getId())) {
+                    if (transaction.loadContent(new CosmeticTransaction()).getCosmeticId().equals(cosmetic.getId())) {
                         player.sendMessage("§cThis player already has this cosmetic");
                         return;
                     }
@@ -53,7 +53,7 @@ public class CosmeticGiveCommand extends HyriCommand<HyriCosmeticsPlugin> {
             }
 
             final IHyriPlayer account = HyriAPI.get().getPlayerManager().getPlayer(target.getUniqueId());
-            account.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getInfo().getId()));
+            account.getTransactions().add(CosmeticTransaction.TYPE, new CosmeticTransaction(cosmetic.getId()));
             account.update();
             player.sendMessage("§aCosmetic given to " + target.getName() + " : " + cosmetic);
         });

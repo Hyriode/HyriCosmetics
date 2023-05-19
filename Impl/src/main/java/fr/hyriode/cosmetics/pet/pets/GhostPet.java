@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.pet.pets;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.pet.AbstractMinionPet;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
@@ -11,7 +11,7 @@ import org.bukkit.Material;
 public class GhostPet extends AbstractMinionPet<Color> {
 
     public GhostPet(CosmeticUser user) {
-        super(user, Cosmetic.GHOST, false);
+        super(user, DefaultCosmetics.GHOST, false);
     }
 
     @Override

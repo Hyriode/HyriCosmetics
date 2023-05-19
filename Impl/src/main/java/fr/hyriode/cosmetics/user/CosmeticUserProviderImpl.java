@@ -1,12 +1,7 @@
 package fr.hyriode.cosmetics.user;
 
-import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.cosmetics.HyriCosmetics;
-import fr.hyriode.cosmetics.HyriCosmeticsPlugin;
-import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -41,7 +36,7 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
         if (cosmeticUser.isUnequipping()) {
             cosmeticUser.reactivateCosmeticsTemporarilyUnequipped();
         }
-        for (CosmeticCategory category : HyriCosmetics.get().getCategories()) {
+        for (CosmeticCategory category : HyriCosmetics.get().getRegistry().getCategories()) {
             cosmeticUser.unequipCosmetic(category, false);
         }
 

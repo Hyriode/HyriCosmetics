@@ -1,6 +1,6 @@
 package fr.hyriode.cosmetics.particle.effect;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import org.bukkit.Location;
@@ -20,7 +20,7 @@ public class BlackVortexParticle extends AbstractParticleImpl {
     private int tick = 0;
 
     public BlackVortexParticle(CosmeticUser user) {
-        super(user, Cosmetic.BLACK_VORTEX, false);
+        super(user, DefaultCosmetics.BLACK_VORTEX, false);
     }
 
     @Override

@@ -2,11 +2,14 @@ package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
 import fr.hyriode.api.rank.IHyriRankType;
+import fr.hyriode.cosmetics.transaction.CosmeticPrice;
+import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.Head;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public interface CosmeticInfo {
+
     CosmeticCategory getCategory();
 
     String getId();
@@ -15,21 +18,17 @@ public interface CosmeticInfo {
 
     IHyriRankType getRank();
 
-    boolean isRequireRank();
+    boolean isOnlyWithRank();
 
-    int getHyodesPrice();
-
-    int getHyrisPrice();
+    CosmeticPrice getPrice();
 
     ItemStack getIcon();
-
-    Head getHead();
 
     HyriLanguageMessage getTranslatedName();
 
     HyriLanguageMessage getTranslatedDescription();
 
-    boolean isBuyable();
+    boolean isPurchasable();
 
     boolean hasRequiredRank(Player player);
 
@@ -37,11 +36,4 @@ public interface CosmeticInfo {
 
     boolean isAccessible(Player player);
 
-    /*
-    * Do not use this method
-    * only usable by Cosmetic.java class
-     */
-    @Deprecated void setCosmetic(Cosmetic cosmetic);
-
-    Cosmetic getCosmetic();
 }

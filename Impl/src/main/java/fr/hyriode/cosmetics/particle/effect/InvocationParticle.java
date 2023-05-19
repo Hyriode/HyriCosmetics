@@ -1,6 +1,7 @@
 package fr.hyriode.cosmetics.particle.effect;
 
-import fr.hyriode.cosmetics.common.Cosmetic;
+import fr.hyriode.cosmetics.common.CosmeticInfo;
+import fr.hyriode.cosmetics.common.DefaultCosmetics;
 import fr.hyriode.cosmetics.particle.AbstractParticleImpl;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.cosmetics.utils.MathUtil;
@@ -22,8 +23,8 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
 
     private final ParticleBuilder particleBuilder;
 
-    public InvocationParticle(CosmeticUser user, Cosmetic cosmetic, ParticleBuilder particleBuilder) {
-        super(user, cosmetic, false);
+    public InvocationParticle(CosmeticUser user, CosmeticInfo info, ParticleBuilder particleBuilder) {
+        super(user, info, false);
         this.particleBuilder = particleBuilder;
     }
 
@@ -59,19 +60,19 @@ public abstract class InvocationParticle extends AbstractParticleImpl {
 
     public static class FireInvocationParticle extends InvocationParticle {
         public FireInvocationParticle(CosmeticUser user) {
-            super(user, Cosmetic.FIRE_INVOCATION, new ParticleBuilder(ParticleEffect.FLAME));
+            super(user, DefaultCosmetics.FIRE_INVOCATION, new ParticleBuilder(ParticleEffect.FLAME));
         }
     }
 
     public static class GemInvocationParticle extends InvocationParticle {
         public GemInvocationParticle(CosmeticUser user) {
-            super(user, Cosmetic.GEM_INVOCATION, new ParticleBuilder(ParticleEffect.VILLAGER_HAPPY));
+            super(user, DefaultCosmetics.GEM_INVOCATION, new ParticleBuilder(ParticleEffect.VILLAGER_HAPPY));
         }
     }
 
     public static class PortalInvocationParticle extends InvocationParticle {
         public PortalInvocationParticle(CosmeticUser user) {
-            super(user, Cosmetic.PORTAL_INVOCATION, new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(84, 31, 122)));
+            super(user, DefaultCosmetics.PORTAL_INVOCATION, new ParticleBuilder(ParticleEffect.REDSTONE).setParticleData(new RegularColor(84, 31, 122)));
         }
     }
 }

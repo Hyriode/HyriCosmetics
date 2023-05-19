@@ -1,8 +1,8 @@
 package fr.hyriode.cosmetics.user;
 
 import fr.hyriode.api.player.IHyriPlayer;
-import fr.hyriode.cosmetics.common.Cosmetic;
 import fr.hyriode.cosmetics.common.CosmeticCategory;
+import fr.hyriode.cosmetics.common.CosmeticInfo;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -19,7 +19,7 @@ public interface CosmeticUser {
 
     IHyriPlayer asHyriPlayer();
 
-    PlayerCosmetic<?> equipCosmetic(Cosmetic cosmetic, boolean message);
+    PlayerCosmetic<?> equipCosmetic(CosmeticInfo cosmetic, boolean message);
 
     void unequipCosmetics(boolean message);
 
@@ -29,15 +29,15 @@ public interface CosmeticUser {
 
     void reactivateCosmeticsTemporarilyUnequipped();
 
-    List<Cosmetic> getUnlockedCosmetics();
+    List<CosmeticInfo> getUnlockedCosmetics();
 
-    List<Cosmetic> getUnlockedCosmetics(CosmeticCategory category);
+    List<CosmeticInfo> getUnlockedCosmetics(CosmeticCategory category);
 
-    void addUnlockedCosmetic(Cosmetic cosmetic);
+    void addUnlockedCosmetic(CosmeticInfo cosmetic);
 
-    void removeUnlockedCosmetic(Cosmetic cosmetic);
+    void removeUnlockedCosmetic(CosmeticInfo cosmetic);
 
-    boolean hasUnlockedCosmetic(Cosmetic cosmetic);
+    boolean hasUnlockedCosmetic(CosmeticInfo cosmetic);
 
     PlayerCosmetic<?> getPlayerCosmetic(CosmeticCategory category);
 
@@ -65,13 +65,13 @@ public interface CosmeticUser {
 
     boolean hasEquippedCosmetic(CosmeticCategory category);
 
-    Cosmetic getEquippedCosmetic(CosmeticCategory category);
+    CosmeticInfo getEquippedCosmetic(CosmeticCategory category);
 
     boolean isInitialized();
 
-    Collection<Cosmetic> getActiveCosmetics();
+    Collection<CosmeticInfo> getActiveCosmetics();
 
-    Map<Cosmetic, String> getActiveVariant();
+    Map<CosmeticInfo, String> getActiveVariant();
 
     boolean isUnequipping();
 }
