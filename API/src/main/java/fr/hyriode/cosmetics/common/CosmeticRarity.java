@@ -40,4 +40,5 @@ public enum CosmeticRarity {
     public static void sortCosmeticsByRarity(List<CosmeticInfo> cosmetics) {
         cosmetics.sort(Comparator.comparing(CosmeticInfo::getRarity));
     }
+
 }

@@ -39,7 +39,7 @@ public interface CosmeticCategory {
     Map<CosmeticRarity, CosmeticPrice> getDefaultPrices();
 
     default CosmeticPrice getDefaultPrice(CosmeticRarity rarity) {
-        return this.getDefaultPrices().get(rarity);
+        return this.getDefaultPrices().getOrDefault(rarity, new CosmeticPrice());
     }
 
     enum Default implements CosmeticCategory {
