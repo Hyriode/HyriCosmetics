@@ -30,10 +30,10 @@ public class UserData implements IHyriPlayerData {
             final PlayerCosmetic<?> cosmetic = entry.getValue();
             if (cosmetic.getAbstractCosmetic().hasVariants()) {
                 MongoDocument cosmeticDocument = new MongoDocument();
-                cosmeticDocument.append(entry.getValue().getAbstractCosmetic().getType().getId(), cosmetic.getAbstractCosmetic().getVariant());
+                cosmeticDocument.append(entry.getValue().getAbstractCosmetic().getType().getInfo().getId(), cosmetic.getAbstractCosmetic().getVariant());
                 equippedDocument.append(entry.getKey().getName(), cosmeticDocument);
             } else {
-                equippedDocument.append(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getType().getId());
+                equippedDocument.append(entry.getKey().getName(), entry.getValue().getAbstractCosmetic().getType().getInfo().getId());
             }
         }
         final MongoDocument filtersDocument = new MongoDocument();

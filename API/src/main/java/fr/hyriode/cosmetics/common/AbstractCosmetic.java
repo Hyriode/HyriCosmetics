@@ -1,7 +1,6 @@
 package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.language.HyriLanguageMessage;
-import fr.hyriode.api.rank.IHyriRankType;
 import fr.hyriode.cosmetics.user.CosmeticUser;
 import fr.hyriode.hyrame.utils.Pair;
 import org.bukkit.Location;
@@ -32,27 +31,7 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
     }
 
     public String getId() {
-        return cosmetic.getId();
-    }
-
-    public CosmeticRarity getRarity() {
-        return cosmetic.getRarity();
-    }
-
-    public IHyriRankType getRequireRank() {
-        return cosmetic.getRank();
-    }
-
-    public int getHyodesPrice() {
-        return cosmetic.getHyodesPrice();
-    }
-
-    public int getHyrisPrice() {
-        return cosmetic.getHyrisPrice();
-    }
-
-    public ItemStack getIcon() {
-        return cosmetic.getIcon().clone();
+        return cosmetic.getInfo().getId();
     }
 
     public abstract void onEquip(final CosmeticUser user);
@@ -60,15 +39,15 @@ public abstract class AbstractCosmetic<T> implements CosmeticVariants<T> {
     public abstract void onUnequip(final CosmeticUser user);
 
     public CosmeticCategory getCategory() {
-        return cosmetic.getCategory();
+        return cosmetic.getInfo().getCategory();
     }
 
     public HyriLanguageMessage getTranslatedName() {
-        return cosmetic.getTranslatedName();
+        return cosmetic.getInfo().getTranslatedName();
     }
 
     public HyriLanguageMessage getTranslatedDescription() {
-        return cosmetic.getTranslatedDescription();
+        return cosmetic.getInfo().getTranslatedDescription();
     }
 
     public CosmeticUser getUser() {

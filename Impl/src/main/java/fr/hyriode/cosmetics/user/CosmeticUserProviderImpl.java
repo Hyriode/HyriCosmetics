@@ -32,16 +32,6 @@ public class CosmeticUserProviderImpl implements CosmeticUserProvider {
         this.users.put(player.getUniqueId(), new CosmeticUserImpl(player));
         CosmeticUser cosmeticUser = this.users.get(player.getUniqueId());
         cosmeticUser.init();
-
-        //TODO: delete the suite only for the opening
-        if (!cosmeticUser.hasUnlockedCosmetic(Cosmetic.HYRIODE_BALLOON)) {
-            cosmeticUser.addUnlockedCosmetic(Cosmetic.HYRIODE_BALLOON);
-
-            Bukkit.getScheduler().runTaskLater(HyriCosmeticsPlugin.get(), () -> {
-                player.sendMessage(HyriLanguageMessage.get("join.gift").getValue(player));
-                player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
-            }, 40L);
-        }
     }
 
     @Override
