@@ -26,7 +26,7 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
     private IHyriRankType rank = null;
     private boolean onlyWithRank = false;
 
-    private CosmeticPrice price = new CosmeticPrice();
+    private CosmeticPrice price = null;
     private ItemStack icon = new ItemStack(Material.BARRIER);
 
     public CosmeticInfoBuilder(CosmeticCategory category, String id) {
@@ -85,6 +85,10 @@ public class CosmeticInfoBuilder implements CosmeticInfo {
     }
 
     public CosmeticInfoBuilder withPrice(CosmeticPrice.Currency currency, int value) {
+        if (this.price == null) {
+            this.price = new CosmeticPrice();
+        }
+
         this.price.newValue(currency, value);
         return this;
     }
