@@ -2,9 +2,6 @@ package fr.hyriode.cosmetics.common;
 
 import fr.hyriode.api.rank.PlayerRank;
 import fr.hyriode.api.rank.StaffRank;
-import fr.hyriode.cosmetics.common.CosmeticInfo;
-import fr.hyriode.cosmetics.common.CosmeticInfoBuilder;
-import fr.hyriode.cosmetics.common.CosmeticRarity;
 import fr.hyriode.cosmetics.utils.Head;
 import fr.hyriode.hyrame.item.ItemBuilder;
 import org.bukkit.Material;
@@ -20,6 +17,8 @@ import static fr.hyriode.cosmetics.common.CosmeticCategory.Default;
  * on 19/05/2023 at 14:08
  */
 public class DefaultCosmetics {
+
+    public static final Set<CosmeticInfo> BALLOONS = new HashSet<>();
 
     // == Particles ==
     public static final CosmeticInfo ENCHANTED = new CosmeticInfoBuilder(Default.PARTICLE, "enchanted")
@@ -203,8 +202,6 @@ public class DefaultCosmetics {
     public static final CosmeticInfo JACK_O_LANTERN_BROWN_BALLOON = new Balloon("jack_o_lantern_brown")
             .withIcon(Head.JACK_O_LANTERN_BROWN)
             .withRarity(CosmeticRarity.EPIC);
-    
-    public static final Set<CosmeticInfo> BALLOONS = new HashSet<>();
 
 
     private static class LevelingBalloon extends Balloon {
